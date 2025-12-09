@@ -1,0 +1,2283 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="application/xhtml+xml; charset=ISO-8859-1" />
+<title>Dictionary object- CRHD</title>
+<style type="text/css">
+  th{text-align:left}
+  .cell{
+     font-family:"Courier New", Courier, monospace;
+     color:#000;
+     font-size:12px;
+     background-color:#F2F4F7;
+  }
+  .cell td { border: thin solid #ccc; }
+</style>
+<style type="text/css">
+  .normal{ font-family:Arial, Helvetica, sans-serif; color:#000; font-size:12px }
+  .footer{ font-family:Arial, Helvetica, sans-serif; color:#000; font-size:12px; text-align: center }
+  h2{ font-family:Arial, Helvetica, sans-serif; color:#000; font-size:16px; font-weight:800 }
+  h3{ font-family:Arial, Helvetica, sans-serif; color:#000; font-size:14px; font-weight:800 }
+  .outerTable{
+   background-color:#E0E7ED;
+   width:100%;
+   border-top-width: thin;
+   border-right-width: thin;
+   border-right-width: thin;
+   border-left-width: thin;
+   border-top-style: solid;
+   border-right-style: solid;
+   border-bottom-style: solid;
+   border-left-style: solid;
+  }
+  .innerTable{
+   background-color:#F2F4F7;
+   width:100%;
+   border-top-width: thin;
+   border-right-width: thin;
+   border-bottom-width: thin;
+   border-left-width: thin;
+   border-top-style: solid;
+   border-right-style: solid;
+   border-bottom-style: solid;
+   border-left-style: solid;
+  }
+</style>
+</head>
+<body>
+  <table class="outerTable">
+    <tr>
+      <td><h2>Table: CRHD</h2>
+  <h3>Description: Work Center Header</h3></td>
+    </tr>
+    <tr>
+      <td><!--This is where our main table begins  -->
+<table class="innerTable">
+<tr>
+  <th>Row</th>
+  <th>Field name</th>
+  <th>Position</th>
+  <th>Key</th>
+  <th>Data element</th>
+  <th>Domain</th>
+  <th>Datatype</th>
+  <th>Length</th>
+  <th>Lowercase</th>
+  <th>Domain text</th>
+</tr>
+<tr class="cell">
+  <td> 1</td>
+  <td>MANDT</td>
+  <td>1</td>
+  <td>X</td>
+  <td>MANDT</td>
+  <td>MANDT</td>
+  <td>CLNT</td>
+  <td>3</td>
+  <td>&nbsp;</td>
+  <td>Client</td>
+</tr>
+<tr class="cell">
+  <td> 2</td>
+  <td>OBJTY</td>
+  <td>2</td>
+  <td>X</td>
+  <td>CR_OBJTY</td>
+  <td>CR_OBJTY</td>
+  <td>CHAR</td>
+  <td>2</td>
+  <td>&nbsp;</td>
+  <td>Object types of the CIM resource</td>
+</tr>
+<tr class="cell">
+  <td> 3</td>
+  <td>OBJID</td>
+  <td>3</td>
+  <td>X</td>
+  <td>CR_OBJID</td>
+  <td>CR_OBJID</td>
+  <td>NUMC</td>
+  <td>8</td>
+  <td>&nbsp;</td>
+  <td>Object ID of the resource</td>
+</tr>
+<tr class="cell">
+  <td> 4</td>
+  <td>BEGDA</td>
+  <td>4</td>
+  <td>&nbsp;</td>
+  <td>BEGDATUM</td>
+  <td>DATUM</td>
+  <td>DATS</td>
+  <td>8</td>
+  <td>&nbsp;</td>
+  <td>Start Date</td>
+</tr>
+<tr class="cell">
+  <td> 5</td>
+  <td>ENDDA</td>
+  <td>5</td>
+  <td>&nbsp;</td>
+  <td>ENDDATUM</td>
+  <td>DATUM</td>
+  <td>DATS</td>
+  <td>8</td>
+  <td>&nbsp;</td>
+  <td>End Date</td>
+</tr>
+<tr class="cell">
+  <td> 6</td>
+  <td>AEDAT_GRND</td>
+  <td>6</td>
+  <td>&nbsp;</td>
+  <td>AEDTM</td>
+  <td>DATUM</td>
+  <td>DATS</td>
+  <td>8</td>
+  <td>&nbsp;</td>
+  <td>Changed on</td>
+</tr>
+<tr class="cell">
+  <td> 7</td>
+  <td>AENAM_GRND</td>
+  <td>7</td>
+  <td>&nbsp;</td>
+  <td>USRNAME</td>
+  <td>CHAR12</td>
+  <td>CHAR</td>
+  <td>12</td>
+  <td>&nbsp;</td>
+  <td>User Name</td>
+</tr>
+<tr class="cell">
+  <td> 8</td>
+  <td>AEDAT_VORA</td>
+  <td>8</td>
+  <td>&nbsp;</td>
+  <td>AEDTM</td>
+  <td>DATUM</td>
+  <td>DATS</td>
+  <td>8</td>
+  <td>&nbsp;</td>
+  <td>Changed on</td>
+</tr>
+<tr class="cell">
+  <td> 9</td>
+  <td>AENAM_VORA</td>
+  <td>9</td>
+  <td>&nbsp;</td>
+  <td>USRNAME</td>
+  <td>CHAR12</td>
+  <td>CHAR</td>
+  <td>12</td>
+  <td>&nbsp;</td>
+  <td>User Name</td>
+</tr>
+<tr class="cell">
+  <td>10</td>
+  <td>AEDAT_TERM</td>
+  <td>10</td>
+  <td>&nbsp;</td>
+  <td>AEDTM</td>
+  <td>DATUM</td>
+  <td>DATS</td>
+  <td>8</td>
+  <td>&nbsp;</td>
+  <td>Changed on</td>
+</tr>
+<tr class="cell">
+  <td>11</td>
+  <td>AENAM_TERM</td>
+  <td>11</td>
+  <td>&nbsp;</td>
+  <td>USRNAME</td>
+  <td>CHAR12</td>
+  <td>CHAR</td>
+  <td>12</td>
+  <td>&nbsp;</td>
+  <td>User Name</td>
+</tr>
+<tr class="cell">
+  <td>12</td>
+  <td>AEDAT_TECH</td>
+  <td>12</td>
+  <td>&nbsp;</td>
+  <td>AEDTM</td>
+  <td>DATUM</td>
+  <td>DATS</td>
+  <td>8</td>
+  <td>&nbsp;</td>
+  <td>Changed on</td>
+</tr>
+<tr class="cell">
+  <td>13</td>
+  <td>AENAM_TECH</td>
+  <td>13</td>
+  <td>&nbsp;</td>
+  <td>USRNAME</td>
+  <td>CHAR12</td>
+  <td>CHAR</td>
+  <td>12</td>
+  <td>&nbsp;</td>
+  <td>User Name</td>
+</tr>
+<tr class="cell">
+  <td>14</td>
+  <td>ARBPL</td>
+  <td>14</td>
+  <td>&nbsp;</td>
+  <td>ARBPL</td>
+  <td>ARBPL</td>
+  <td>CHAR</td>
+  <td>8</td>
+  <td>&nbsp;</td>
+  <td>Work center</td>
+</tr>
+<tr class="cell">
+  <td>15</td>
+  <td>WERKS</td>
+  <td>15</td>
+  <td>&nbsp;</td>
+  <td>WERKS_D</td>
+  <td>WERKS</td>
+  <td>CHAR</td>
+  <td>4</td>
+  <td>&nbsp;</td>
+  <td>Plant</td>
+</tr>
+<tr class="cell">
+  <td>16</td>
+  <td>VERWE</td>
+  <td>16</td>
+  <td>&nbsp;</td>
+  <td>AP_VERWE</td>
+  <td>AP_VERWE</td>
+  <td>CHAR</td>
+  <td>4</td>
+  <td>&nbsp;</td>
+  <td>Work Center Category</td>
+</tr>
+<tr class="cell">
+  <td>17</td>
+  <td>LVORM</td>
+  <td>17</td>
+  <td>&nbsp;</td>
+  <td>AP_LOEVORM</td>
+  <td>FLAG</td>
+  <td>CHAR</td>
+  <td>1</td>
+  <td>&nbsp;</td>
+  <td>Deletion flag for work center</td>
+</tr>
+<tr class="cell">
+  <td>18</td>
+  <td>PAR01</td>
+  <td>18</td>
+  <td>&nbsp;</td>
+  <td>AP_PAR01</td>
+  <td>PARAMID</td>
+  <td>CHAR</td>
+  <td>6</td>
+  <td>&nbsp;</td>
+  <td>First work center parameter (for formulas)</td>
+</tr>
+<tr class="cell">
+  <td>19</td>
+  <td>PAR02</td>
+  <td>19</td>
+  <td>&nbsp;</td>
+  <td>AP_PAR02</td>
+  <td>PARAMID</td>
+  <td>CHAR</td>
+  <td>6</td>
+  <td>&nbsp;</td>
+  <td>Second work center parameter (for formulas)</td>
+</tr>
+<tr class="cell">
+  <td>20</td>
+  <td>PAR03</td>
+  <td>20</td>
+  <td>&nbsp;</td>
+  <td>AP_PAR03</td>
+  <td>PARAMID</td>
+  <td>CHAR</td>
+  <td>6</td>
+  <td>&nbsp;</td>
+  <td>Third work center parameter (for formulas)</td>
+</tr>
+<tr class="cell">
+  <td>21</td>
+  <td>PAR04</td>
+  <td>21</td>
+  <td>&nbsp;</td>
+  <td>AP_PAR04</td>
+  <td>PARAMID</td>
+  <td>CHAR</td>
+  <td>6</td>
+  <td>&nbsp;</td>
+  <td>Fourth work center parameter (for formulas)</td>
+</tr>
+<tr class="cell">
+  <td>22</td>
+  <td>PAR05</td>
+  <td>22</td>
+  <td>&nbsp;</td>
+  <td>AP_PAR05</td>
+  <td>PARAMID</td>
+  <td>CHAR</td>
+  <td>6</td>
+  <td>&nbsp;</td>
+  <td>Fifth work center parameter (for formulas)</td>
+</tr>
+<tr class="cell">
+  <td>23</td>
+  <td>PAR06</td>
+  <td>23</td>
+  <td>&nbsp;</td>
+  <td>AP_PAR06</td>
+  <td>PARAMID</td>
+  <td>CHAR</td>
+  <td>6</td>
+  <td>&nbsp;</td>
+  <td>Sixth work center parameter (for formulas)</td>
+</tr>
+<tr class="cell">
+  <td>24</td>
+  <td>PARU1</td>
+  <td>24</td>
+  <td>&nbsp;</td>
+  <td>AP_PARUNIT</td>
+  <td>MEINS</td>
+  <td>UNIT</td>
+  <td>3</td>
+  <td>X</td>
+  <td>Parameter unit</td>
+</tr>
+<tr class="cell">
+  <td>25</td>
+  <td>PARU2</td>
+  <td>25</td>
+  <td>&nbsp;</td>
+  <td>AP_PARUNIT</td>
+  <td>MEINS</td>
+  <td>UNIT</td>
+  <td>3</td>
+  <td>X</td>
+  <td>Parameter unit</td>
+</tr>
+<tr class="cell">
+  <td>26</td>
+  <td>PARU3</td>
+  <td>26</td>
+  <td>&nbsp;</td>
+  <td>AP_PARUNIT</td>
+  <td>MEINS</td>
+  <td>UNIT</td>
+  <td>3</td>
+  <td>X</td>
+  <td>Parameter unit</td>
+</tr>
+<tr class="cell">
+  <td>27</td>
+  <td>PARU4</td>
+  <td>27</td>
+  <td>&nbsp;</td>
+  <td>AP_PARUNIT</td>
+  <td>MEINS</td>
+  <td>UNIT</td>
+  <td>3</td>
+  <td>X</td>
+  <td>Parameter unit</td>
+</tr>
+<tr class="cell">
+  <td>28</td>
+  <td>PARU5</td>
+  <td>28</td>
+  <td>&nbsp;</td>
+  <td>AP_PARUNIT</td>
+  <td>MEINS</td>
+  <td>UNIT</td>
+  <td>3</td>
+  <td>X</td>
+  <td>Parameter unit</td>
+</tr>
+<tr class="cell">
+  <td>29</td>
+  <td>PARU6</td>
+  <td>29</td>
+  <td>&nbsp;</td>
+  <td>AP_PARUNIT</td>
+  <td>MEINS</td>
+  <td>UNIT</td>
+  <td>3</td>
+  <td>X</td>
+  <td>Parameter unit</td>
+</tr>
+<tr class="cell">
+  <td>30</td>
+  <td>PARV1</td>
+  <td>30</td>
+  <td>&nbsp;</td>
+  <td>AP_PARVAL</td>
+  <td>VGWRT</td>
+  <td>QUAN</td>
+  <td>9</td>
+  <td>&nbsp;</td>
+  <td>Parameter value</td>
+</tr>
+<tr class="cell">
+  <td>31</td>
+  <td>PARV2</td>
+  <td>31</td>
+  <td>&nbsp;</td>
+  <td>AP_PARVAL</td>
+  <td>VGWRT</td>
+  <td>QUAN</td>
+  <td>9</td>
+  <td>&nbsp;</td>
+  <td>Parameter value</td>
+</tr>
+<tr class="cell">
+  <td>32</td>
+  <td>PARV3</td>
+  <td>32</td>
+  <td>&nbsp;</td>
+  <td>AP_PARVAL</td>
+  <td>VGWRT</td>
+  <td>QUAN</td>
+  <td>9</td>
+  <td>&nbsp;</td>
+  <td>Parameter value</td>
+</tr>
+<tr class="cell">
+  <td>33</td>
+  <td>PARV4</td>
+  <td>33</td>
+  <td>&nbsp;</td>
+  <td>AP_PARVAL</td>
+  <td>VGWRT</td>
+  <td>QUAN</td>
+  <td>9</td>
+  <td>&nbsp;</td>
+  <td>Parameter value</td>
+</tr>
+<tr class="cell">
+  <td>34</td>
+  <td>PARV5</td>
+  <td>34</td>
+  <td>&nbsp;</td>
+  <td>AP_PARVAL</td>
+  <td>VGWRT</td>
+  <td>QUAN</td>
+  <td>9</td>
+  <td>&nbsp;</td>
+  <td>Parameter value</td>
+</tr>
+<tr class="cell">
+  <td>35</td>
+  <td>PARV6</td>
+  <td>35</td>
+  <td>&nbsp;</td>
+  <td>AP_PARVAL</td>
+  <td>VGWRT</td>
+  <td>QUAN</td>
+  <td>9</td>
+  <td>&nbsp;</td>
+  <td>Parameter value</td>
+</tr>
+<tr class="cell">
+  <td>36</td>
+  <td>PLANV</td>
+  <td>36</td>
+  <td>&nbsp;</td>
+  <td>AP_PLANV</td>
+  <td>AP_PLANV</td>
+  <td>CHAR</td>
+  <td>3</td>
+  <td>&nbsp;</td>
+  <td>Key for task list usage</td>
+</tr>
+<tr class="cell">
+  <td>37</td>
+  <td>STAND</td>
+  <td>37</td>
+  <td>&nbsp;</td>
+  <td>AP_STAND</td>
+  <td>AP_STAND</td>
+  <td>CHAR</td>
+  <td>10</td>
+  <td>&nbsp;</td>
+  <td>Work center location</td>
+</tr>
+<tr class="cell">
+  <td>38</td>
+  <td>VERAN</td>
+  <td>38</td>
+  <td>&nbsp;</td>
+  <td>AP_VERAN</td>
+  <td>AP_VERAN</td>
+  <td>CHAR</td>
+  <td>3</td>
+  <td>&nbsp;</td>
+  <td>Person Responsible for the Work Center</td>
+</tr>
+<tr class="cell">
+  <td>39</td>
+  <td>VGWTS</td>
+  <td>39</td>
+  <td>&nbsp;</td>
+  <td>VORGSCHL</td>
+  <td>VORGSCHL</td>
+  <td>CHAR</td>
+  <td>4</td>
+  <td>&nbsp;</td>
+  <td>Standard Value Key</td>
+</tr>
+<tr class="cell">
+  <td>40</td>
+  <td>VGM01</td>
+  <td>40</td>
+  <td>&nbsp;</td>
+  <td>AP_VGW_MES</td>
+  <td>AP_VGW_FLG</td>
+  <td>CHAR</td>
+  <td>1</td>
+  <td>&nbsp;</td>
+  <td>Rule for standard value maintenance</td>
+</tr>
+<tr class="cell">
+  <td>41</td>
+  <td>VGM02</td>
+  <td>41</td>
+  <td>&nbsp;</td>
+  <td>AP_VGW_MES</td>
+  <td>AP_VGW_FLG</td>
+  <td>CHAR</td>
+  <td>1</td>
+  <td>&nbsp;</td>
+  <td>Rule for standard value maintenance</td>
+</tr>
+<tr class="cell">
+  <td>42</td>
+  <td>VGM03</td>
+  <td>42</td>
+  <td>&nbsp;</td>
+  <td>AP_VGW_MES</td>
+  <td>AP_VGW_FLG</td>
+  <td>CHAR</td>
+  <td>1</td>
+  <td>&nbsp;</td>
+  <td>Rule for standard value maintenance</td>
+</tr>
+<tr class="cell">
+  <td>43</td>
+  <td>VGM04</td>
+  <td>43</td>
+  <td>&nbsp;</td>
+  <td>AP_VGW_MES</td>
+  <td>AP_VGW_FLG</td>
+  <td>CHAR</td>
+  <td>1</td>
+  <td>&nbsp;</td>
+  <td>Rule for standard value maintenance</td>
+</tr>
+<tr class="cell">
+  <td>44</td>
+  <td>VGM05</td>
+  <td>44</td>
+  <td>&nbsp;</td>
+  <td>AP_VGW_MES</td>
+  <td>AP_VGW_FLG</td>
+  <td>CHAR</td>
+  <td>1</td>
+  <td>&nbsp;</td>
+  <td>Rule for standard value maintenance</td>
+</tr>
+<tr class="cell">
+  <td>45</td>
+  <td>VGM06</td>
+  <td>45</td>
+  <td>&nbsp;</td>
+  <td>AP_VGW_MES</td>
+  <td>AP_VGW_FLG</td>
+  <td>CHAR</td>
+  <td>1</td>
+  <td>&nbsp;</td>
+  <td>Rule for standard value maintenance</td>
+</tr>
+<tr class="cell">
+  <td>46</td>
+  <td>XDEFA</td>
+  <td>46</td>
+  <td>&nbsp;</td>
+  <td>AP_DEFAULT</td>
+  <td>XFELD</td>
+  <td>CHAR</td>
+  <td>1</td>
+  <td>&nbsp;</td>
+  <td>Indicator: Work center for default values</td>
+</tr>
+<tr class="cell">
+  <td>47</td>
+  <td>XKOST</td>
+  <td>47</td>
+  <td>&nbsp;</td>
+  <td>AP_XKOST</td>
+  <td>XFELD</td>
+  <td>CHAR</td>
+  <td>1</td>
+  <td>&nbsp;</td>
+  <td>Indicator: Work center is maintained for costing</td>
+</tr>
+<tr class="cell">
+  <td>48</td>
+  <td>XSPRR</td>
+  <td>48</td>
+  <td>&nbsp;</td>
+  <td>AP_XSPRR</td>
+  <td>XFELD</td>
+  <td>CHAR</td>
+  <td>1</td>
+  <td>&nbsp;</td>
+  <td>Indicator: Work center is locked</td>
+</tr>
+<tr class="cell">
+  <td>49</td>
+  <td>XTERM</td>
+  <td>49</td>
+  <td>&nbsp;</td>
+  <td>AP_XTERM</td>
+  <td>XFELD</td>
+  <td>CHAR</td>
+  <td>1</td>
+  <td>&nbsp;</td>
+  <td>Indicator: Work center is maintained for scheduling</td>
+</tr>
+<tr class="cell">
+  <td>50</td>
+  <td>ZGR01</td>
+  <td>50</td>
+  <td>&nbsp;</td>
+  <td>IDZEITGRAD</td>
+  <td>IDZEITGRAD</td>
+  <td>CHAR</td>
+  <td>3</td>
+  <td>&nbsp;</td>
+  <td>Key for performance efficiency rate</td>
+</tr>
+<tr class="cell">
+  <td>51</td>
+  <td>ZGR02</td>
+  <td>51</td>
+  <td>&nbsp;</td>
+  <td>IDZEITGRAD</td>
+  <td>IDZEITGRAD</td>
+  <td>CHAR</td>
+  <td>3</td>
+  <td>&nbsp;</td>
+  <td>Key for performance efficiency rate</td>
+</tr>
+<tr class="cell">
+  <td>52</td>
+  <td>ZGR03</td>
+  <td>52</td>
+  <td>&nbsp;</td>
+  <td>IDZEITGRAD</td>
+  <td>IDZEITGRAD</td>
+  <td>CHAR</td>
+  <td>3</td>
+  <td>&nbsp;</td>
+  <td>Key for performance efficiency rate</td>
+</tr>
+<tr class="cell">
+  <td>53</td>
+  <td>ZGR04</td>
+  <td>53</td>
+  <td>&nbsp;</td>
+  <td>IDZEITGRAD</td>
+  <td>IDZEITGRAD</td>
+  <td>CHAR</td>
+  <td>3</td>
+  <td>&nbsp;</td>
+  <td>Key for performance efficiency rate</td>
+</tr>
+<tr class="cell">
+  <td>54</td>
+  <td>ZGR05</td>
+  <td>54</td>
+  <td>&nbsp;</td>
+  <td>IDZEITGRAD</td>
+  <td>IDZEITGRAD</td>
+  <td>CHAR</td>
+  <td>3</td>
+  <td>&nbsp;</td>
+  <td>Key for performance efficiency rate</td>
+</tr>
+<tr class="cell">
+  <td>55</td>
+  <td>ZGR06</td>
+  <td>55</td>
+  <td>&nbsp;</td>
+  <td>IDZEITGRAD</td>
+  <td>IDZEITGRAD</td>
+  <td>CHAR</td>
+  <td>3</td>
+  <td>&nbsp;</td>
+  <td>Key for performance efficiency rate</td>
+</tr>
+<tr class="cell">
+  <td>56</td>
+  <td>KTSCH</td>
+  <td>56</td>
+  <td>&nbsp;</td>
+  <td>KTSCH</td>
+  <td>KTSCH</td>
+  <td>CHAR</td>
+  <td>7</td>
+  <td>&nbsp;</td>
+  <td>Standard Text Key</td>
+</tr>
+<tr class="cell">
+  <td>57</td>
+  <td>LOANZ</td>
+  <td>57</td>
+  <td>&nbsp;</td>
+  <td>LOHNANZ</td>
+  <td>LOHNANZ</td>
+  <td>DEC</td>
+  <td>3</td>
+  <td>&nbsp;</td>
+  <td>Number of Time Tickets</td>
+</tr>
+<tr class="cell">
+  <td>58</td>
+  <td>LOART</td>
+  <td>58</td>
+  <td>&nbsp;</td>
+  <td>LOHNART</td>
+  <td>LOART</td>
+  <td>CHAR</td>
+  <td>4</td>
+  <td>&nbsp;</td>
+  <td>Wage type</td>
+</tr>
+<tr class="cell">
+  <td>59</td>
+  <td>LOGRP</td>
+  <td>59</td>
+  <td>&nbsp;</td>
+  <td>LOHNGRP</td>
+  <td>LOHNGRP</td>
+  <td>CHAR</td>
+  <td>3</td>
+  <td>&nbsp;</td>
+  <td>Wage Group</td>
+</tr>
+<tr class="cell">
+  <td>60</td>
+  <td>QUALF</td>
+  <td>60</td>
+  <td>&nbsp;</td>
+  <td>QUALF</td>
+  <td>QUALF</td>
+  <td>CHAR</td>
+  <td>2</td>
+  <td>&nbsp;</td>
+  <td>Suitability</td>
+</tr>
+<tr class="cell">
+  <td>61</td>
+  <td>RASCH</td>
+  <td>61</td>
+  <td>&nbsp;</td>
+  <td>RUEARSCHLU</td>
+  <td>RUEARSCHLU</td>
+  <td>CHAR</td>
+  <td>2</td>
+  <td>&nbsp;</td>
+  <td>Setup Type Key</td>
+</tr>
+<tr class="cell">
+  <td>62</td>
+  <td>STEUS</td>
+  <td>62</td>
+  <td>&nbsp;</td>
+  <td>STEUS</td>
+  <td>STEUS</td>
+  <td>CHAR</td>
+  <td>4</td>
+  <td>&nbsp;</td>
+  <td>Control key</td>
+</tr>
+<tr class="cell">
+  <td>63</td>
+  <td>VGE01</td>
+  <td>63</td>
+  <td>&nbsp;</td>
+  <td>VGWRTEH</td>
+  <td>MEINS</td>
+  <td>UNIT</td>
+  <td>3</td>
+  <td>X</td>
+  <td>Unit of Measurement of Standard Value</td>
+</tr>
+<tr class="cell">
+  <td>64</td>
+  <td>VGE02</td>
+  <td>64</td>
+  <td>&nbsp;</td>
+  <td>VGWRTEH</td>
+  <td>MEINS</td>
+  <td>UNIT</td>
+  <td>3</td>
+  <td>X</td>
+  <td>Unit of Measurement of Standard Value</td>
+</tr>
+<tr class="cell">
+  <td>65</td>
+  <td>VGE03</td>
+  <td>65</td>
+  <td>&nbsp;</td>
+  <td>VGWRTEH</td>
+  <td>MEINS</td>
+  <td>UNIT</td>
+  <td>3</td>
+  <td>X</td>
+  <td>Unit of Measurement of Standard Value</td>
+</tr>
+<tr class="cell">
+  <td>66</td>
+  <td>VGE04</td>
+  <td>66</td>
+  <td>&nbsp;</td>
+  <td>VGWRTEH</td>
+  <td>MEINS</td>
+  <td>UNIT</td>
+  <td>3</td>
+  <td>X</td>
+  <td>Unit of Measurement of Standard Value</td>
+</tr>
+<tr class="cell">
+  <td>67</td>
+  <td>VGE05</td>
+  <td>67</td>
+  <td>&nbsp;</td>
+  <td>VGWRTEH</td>
+  <td>MEINS</td>
+  <td>UNIT</td>
+  <td>3</td>
+  <td>X</td>
+  <td>Unit of Measurement of Standard Value</td>
+</tr>
+<tr class="cell">
+  <td>68</td>
+  <td>VGE06</td>
+  <td>68</td>
+  <td>&nbsp;</td>
+  <td>VGWRTEH</td>
+  <td>MEINS</td>
+  <td>UNIT</td>
+  <td>3</td>
+  <td>X</td>
+  <td>Unit of Measurement of Standard Value</td>
+</tr>
+<tr class="cell">
+  <td>69</td>
+  <td>KTSCH_REF</td>
+  <td>69</td>
+  <td>&nbsp;</td>
+  <td>KTSCH_REF</td>
+  <td>XFELD</td>
+  <td>CHAR</td>
+  <td>1</td>
+  <td>&nbsp;</td>
+  <td>Indicator: Standard Text ID is Referenced</td>
+</tr>
+<tr class="cell">
+  <td>70</td>
+  <td>LOART_REF</td>
+  <td>70</td>
+  <td>&nbsp;</td>
+  <td>LOART_REF</td>
+  <td>XFELD</td>
+  <td>CHAR</td>
+  <td>1</td>
+  <td>&nbsp;</td>
+  <td>Indicator: Wage Type is Referenced</td>
+</tr>
+<tr class="cell">
+  <td>71</td>
+  <td>LOANZ_REF</td>
+  <td>71</td>
+  <td>&nbsp;</td>
+  <td>LOANZ_REF</td>
+  <td>XFELD</td>
+  <td>CHAR</td>
+  <td>1</td>
+  <td>&nbsp;</td>
+  <td>Indicator: Number of Time Tickets is Referenced</td>
+</tr>
+<tr class="cell">
+  <td>72</td>
+  <td>LOGRP_REF</td>
+  <td>72</td>
+  <td>&nbsp;</td>
+  <td>LOGRP_REF</td>
+  <td>XFELD</td>
+  <td>CHAR</td>
+  <td>1</td>
+  <td>&nbsp;</td>
+  <td>Indicator: Wage Group is Referenced</td>
+</tr>
+<tr class="cell">
+  <td>73</td>
+  <td>QUALF_REF</td>
+  <td>73</td>
+  <td>&nbsp;</td>
+  <td>QUALF_REF</td>
+  <td>XFELD</td>
+  <td>CHAR</td>
+  <td>1</td>
+  <td>&nbsp;</td>
+  <td>Indicator: Suitability is Referenced</td>
+</tr>
+<tr class="cell">
+  <td>74</td>
+  <td>RASCH_REF</td>
+  <td>74</td>
+  <td>&nbsp;</td>
+  <td>RASCH_REF</td>
+  <td>XFELD</td>
+  <td>CHAR</td>
+  <td>1</td>
+  <td>&nbsp;</td>
+  <td>Indicator: Setup Type Key is Referenced</td>
+</tr>
+<tr class="cell">
+  <td>75</td>
+  <td>STEUS_REF</td>
+  <td>75</td>
+  <td>&nbsp;</td>
+  <td>STEUS_REF</td>
+  <td>XFELD</td>
+  <td>CHAR</td>
+  <td>1</td>
+  <td>&nbsp;</td>
+  <td>Indicator: Control Profile is Referenced</td>
+</tr>
+<tr class="cell">
+  <td>76</td>
+  <td>FORT1</td>
+  <td>76</td>
+  <td>&nbsp;</td>
+  <td>AP_FORM_T1</td>
+  <td>AP_FORMEL</td>
+  <td>CHAR</td>
+  <td>6</td>
+  <td>&nbsp;</td>
+  <td>Formula for setup time</td>
+</tr>
+<tr class="cell">
+  <td>77</td>
+  <td>FORT2</td>
+  <td>77</td>
+  <td>&nbsp;</td>
+  <td>AP_FORM_T2</td>
+  <td>AP_FORMEL</td>
+  <td>CHAR</td>
+  <td>6</td>
+  <td>&nbsp;</td>
+  <td>Formula for the duration of processing time</td>
+</tr>
+<tr class="cell">
+  <td>78</td>
+  <td>FORT3</td>
+  <td>78</td>
+  <td>&nbsp;</td>
+  <td>AP_FORM_T3</td>
+  <td>AP_FORMEL</td>
+  <td>CHAR</td>
+  <td>6</td>
+  <td>&nbsp;</td>
+  <td>Formula for teardown time</td>
+</tr>
+<tr class="cell">
+  <td>79</td>
+  <td>KAPID</td>
+  <td>79</td>
+  <td>&nbsp;</td>
+  <td>KAPID</td>
+  <td>KAPID</td>
+  <td>NUMC</td>
+  <td>8</td>
+  <td>&nbsp;</td>
+  <td>Capacity ID</td>
+</tr>
+<tr class="cell">
+  <td>80</td>
+  <td>ORTGR</td>
+  <td>80</td>
+  <td>&nbsp;</td>
+  <td>ORTSGRUPPE</td>
+  <td>ORTSGRUPPE</td>
+  <td>CHAR</td>
+  <td>4</td>
+  <td>&nbsp;</td>
+  <td>Location Group</td>
+</tr>
+<tr class="cell">
+  <td>81</td>
+  <td>ZEIWN</td>
+  <td>81</td>
+  <td>&nbsp;</td>
+  <td>DZEIWN</td>
+  <td>MEINS</td>
+  <td>UNIT</td>
+  <td>3</td>
+  <td>X</td>
+  <td>Unit for the Standard Queue Time</td>
+</tr>
+<tr class="cell">
+  <td>82</td>
+  <td>ZWNOR</td>
+  <td>82</td>
+  <td>&nbsp;</td>
+  <td>DZWNOR</td>
+  <td>VGWRT</td>
+  <td>QUAN</td>
+  <td>9</td>
+  <td>&nbsp;</td>
+  <td>Standard Queue Time</td>
+</tr>
+<tr class="cell">
+  <td>83</td>
+  <td>ZEIWM</td>
+  <td>83</td>
+  <td>&nbsp;</td>
+  <td>DZEIWM</td>
+  <td>MEINS</td>
+  <td>UNIT</td>
+  <td>3</td>
+  <td>X</td>
+  <td>Unit for the Minimum Queue Time</td>
+</tr>
+<tr class="cell">
+  <td>84</td>
+  <td>ZWMIN</td>
+  <td>84</td>
+  <td>&nbsp;</td>
+  <td>DZWMIN</td>
+  <td>VGWRT</td>
+  <td>QUAN</td>
+  <td>9</td>
+  <td>&nbsp;</td>
+  <td>Minimum Queue Time</td>
+</tr>
+<tr class="cell">
+  <td>85</td>
+  <td>FORMR</td>
+  <td>85</td>
+  <td>&nbsp;</td>
+  <td>FLGFORMART</td>
+  <td>FLAG</td>
+  <td>CHAR</td>
+  <td>1</td>
+  <td>&nbsp;</td>
+  <td>Indicator: same formulas as in capacity</td>
+</tr>
+<tr class="cell">
+  <td>86</td>
+  <td>MATYP</td>
+  <td>86</td>
+  <td>&nbsp;</td>
+  <td>MATYP</td>
+  <td>MATYP</td>
+  <td>CHAR</td>
+  <td>10</td>
+  <td>&nbsp;</td>
+  <td>Machine Type</td>
+</tr>
+<tr class="cell">
+  <td>87</td>
+  <td>CPLGR</td>
+  <td>87</td>
+  <td>&nbsp;</td>
+  <td>CPLGR</td>
+  <td>CPLGR</td>
+  <td>CHAR</td>
+  <td>3</td>
+  <td>&nbsp;</td>
+  <td>CAPP planner group</td>
+</tr>
+<tr class="cell">
+  <td>88</td>
+  <td>SORTB</td>
+  <td>88</td>
+  <td>&nbsp;</td>
+  <td>SORTB</td>
+  <td>SORTB</td>
+  <td>CHAR</td>
+  <td>9</td>
+  <td>&nbsp;</td>
+  <td>Sort string</td>
+</tr>
+<tr class="cell">
+  <td>89</td>
+  <td>MTRVP</td>
+  <td>89</td>
+  <td>&nbsp;</td>
+  <td>MTRVP</td>
+  <td>MTRVP</td>
+  <td>DEC</td>
+  <td>3</td>
+  <td>&nbsp;</td>
+  <td>Additional time percentage for setup</td>
+</tr>
+<tr class="cell">
+  <td>90</td>
+  <td>MTMVP</td>
+  <td>90</td>
+  <td>&nbsp;</td>
+  <td>MTMVP</td>
+  <td>MTMVP</td>
+  <td>DEC</td>
+  <td>3</td>
+  <td>&nbsp;</td>
+  <td>Additional time percentage for machines</td>
+</tr>
+<tr class="cell">
+  <td>91</td>
+  <td>MTPVP</td>
+  <td>91</td>
+  <td>&nbsp;</td>
+  <td>MTPVP</td>
+  <td>MTPVP</td>
+  <td>DEC</td>
+  <td>3</td>
+  <td>&nbsp;</td>
+  <td>Aditional time percentage for labor</td>
+</tr>
+<tr class="cell">
+  <td>92</td>
+  <td>RSANZ</td>
+  <td>92</td>
+  <td>&nbsp;</td>
+  <td>CR_RS_ANZ</td>
+  <td>NUM03</td>
+  <td>NUMC</td>
+  <td>3</td>
+  <td>&nbsp;</td>
+  <td>Number of Confirmation Slips</td>
+</tr>
+<tr class="cell">
+  <td>93</td>
+  <td>PDEST</td>
+  <td>93</td>
+  <td>&nbsp;</td>
+  <td>CR_PDEST</td>
+  <td>RSPOPNAME</td>
+  <td>CHAR</td>
+  <td>4</td>
+  <td>X</td>
+  <td>Printer for shop papers</td>
+</tr>
+<tr class="cell">
+  <td>94</td>
+  <td>HROID</td>
+  <td>94</td>
+  <td>&nbsp;</td>
+  <td>HROBJID</td>
+  <td>HROBJID</td>
+  <td>NUMC</td>
+  <td>8</td>
+  <td>&nbsp;</td>
+  <td>Object ID</td>
+</tr>
+<tr class="cell">
+  <td>95</td>
+  <td>FORTN</td>
+  <td>95</td>
+  <td>&nbsp;</td>
+  <td>AP_FORM_TN</td>
+  <td>AP_FORMEL</td>
+  <td>CHAR</td>
+  <td>6</td>
+  <td>&nbsp;</td>
+  <td>Formula for the duration of other types of int. processing</td>
+</tr>
+<tr class="cell">
+  <td>96</td>
+  <td>ZGR01_REF</td>
+  <td>96</td>
+  <td>&nbsp;</td>
+  <td>AP_KZREF</td>
+  <td>XFELD</td>
+  <td>CHAR</td>
+  <td>1</td>
+  <td>&nbsp;</td>
+  <td>Field is referenced</td>
+</tr>
+<tr class="cell">
+  <td>97</td>
+  <td>ZGR02_REF</td>
+  <td>97</td>
+  <td>&nbsp;</td>
+  <td>AP_KZREF</td>
+  <td>XFELD</td>
+  <td>CHAR</td>
+  <td>1</td>
+  <td>&nbsp;</td>
+  <td>Field is referenced</td>
+</tr>
+<tr class="cell">
+  <td>98</td>
+  <td>ZGR03_REF</td>
+  <td>98</td>
+  <td>&nbsp;</td>
+  <td>AP_KZREF</td>
+  <td>XFELD</td>
+  <td>CHAR</td>
+  <td>1</td>
+  <td>&nbsp;</td>
+  <td>Field is referenced</td>
+</tr>
+<tr class="cell">
+  <td>99</td>
+  <td>ZGR04_REF</td>
+  <td>99</td>
+  <td>&nbsp;</td>
+  <td>AP_KZREF</td>
+  <td>XFELD</td>
+  <td>CHAR</td>
+  <td>1</td>
+  <td>&nbsp;</td>
+  <td>Field is referenced</td>
+</tr>
+<tr class="cell">
+  <td>100</td>
+  <td>ZGR05_REF</td>
+  <td>100</td>
+  <td>&nbsp;</td>
+  <td>AP_KZREF</td>
+  <td>XFELD</td>
+  <td>CHAR</td>
+  <td>1</td>
+  <td>&nbsp;</td>
+  <td>Field is referenced</td>
+</tr>
+<tr class="cell">
+  <td>101</td>
+  <td>ZGR06_REF</td>
+  <td>101</td>
+  <td>&nbsp;</td>
+  <td>AP_KZREF</td>
+  <td>XFELD</td>
+  <td>CHAR</td>
+  <td>1</td>
+  <td>&nbsp;</td>
+  <td>Field is referenced</td>
+</tr>
+<tr class="cell">
+  <td>102</td>
+  <td>STEUS_C</td>
+  <td>102</td>
+  <td>&nbsp;</td>
+  <td>STEUS</td>
+  <td>STEUS</td>
+  <td>CHAR</td>
+  <td>4</td>
+  <td>&nbsp;</td>
+  <td>Control key</td>
+</tr>
+<tr class="cell">
+  <td>103</td>
+  <td>STEUS_I</td>
+  <td>103</td>
+  <td>&nbsp;</td>
+  <td>STEUS</td>
+  <td>STEUS</td>
+  <td>CHAR</td>
+  <td>4</td>
+  <td>&nbsp;</td>
+  <td>Control key</td>
+</tr>
+<tr class="cell">
+  <td>104</td>
+  <td>STEUS_N</td>
+  <td>104</td>
+  <td>&nbsp;</td>
+  <td>STEUS</td>
+  <td>STEUS</td>
+  <td>CHAR</td>
+  <td>4</td>
+  <td>&nbsp;</td>
+  <td>Control key</td>
+</tr>
+<tr class="cell">
+  <td>105</td>
+  <td>STEUS_Q</td>
+  <td>105</td>
+  <td>&nbsp;</td>
+  <td>STEUS</td>
+  <td>STEUS</td>
+  <td>CHAR</td>
+  <td>4</td>
+  <td>&nbsp;</td>
+  <td>Control key</td>
+</tr>
+<tr class="cell">
+  <td>106</td>
+  <td>RUZUS</td>
+  <td>106</td>
+  <td>&nbsp;</td>
+  <td>RUZUS</td>
+  <td>RUZUS</td>
+  <td>CHAR</td>
+  <td>4</td>
+  <td>&nbsp;</td>
+  <td>Key: rounding and additional values</td>
+</tr>
+<tr class="cell">
+  <td>107</td>
+  <td>RSANZ_REF</td>
+  <td>107</td>
+  <td>&nbsp;</td>
+  <td>RSANZ_REF</td>
+  <td>XFELD</td>
+  <td>CHAR</td>
+  <td>1</td>
+  <td>&nbsp;</td>
+  <td>Indicator: Number of Confirmation Slips is Referenced</td>
+</tr>
+<tr class="cell">
+  <td>108</td>
+  <td>HR</td>
+  <td>108</td>
+  <td>&nbsp;</td>
+  <td>AP_KZHR</td>
+  <td>XFELD</td>
+  <td>CHAR</td>
+  <td>1</td>
+  <td>&nbsp;</td>
+  <td>Work center only resides in HR</td>
+</tr>
+<tr class="cell">
+  <td>109</td>
+  <td>PRVBE</td>
+  <td>109</td>
+  <td>&nbsp;</td>
+  <td>PRVBE</td>
+  <td>PRVBE</td>
+  <td>CHAR</td>
+  <td>10</td>
+  <td>&nbsp;</td>
+  <td>Production Supply Area</td>
+</tr>
+<tr class="cell">
+  <td>110</td>
+  <td>SUBSYS</td>
+  <td>110</td>
+  <td>&nbsp;</td>
+  <td>QEIFSUBSYS</td>
+  <td>QEIFSUBSYS</td>
+  <td>CHAR</td>
+  <td>6</td>
+  <td>&nbsp;</td>
+  <td>Subsystem Identifier for QM Subsystem Interface</td>
+</tr>
+<tr class="cell">
+  <td>111</td>
+  <td>BDEGR</td>
+  <td>111</td>
+  <td>&nbsp;</td>
+  <td>BDEGR</td>
+  <td>BDEGR</td>
+  <td>CHAR</td>
+  <td>3</td>
+  <td>&nbsp;</td>
+  <td>Grouping for Binding to Subsystem</td>
+</tr>
+<tr class="cell">
+  <td>112</td>
+  <td>RGEKZ</td>
+  <td>112</td>
+  <td>&nbsp;</td>
+  <td>RGEKZAP</td>
+  <td>XFELD</td>
+  <td>CHAR</td>
+  <td>1</td>
+  <td>&nbsp;</td>
+  <td>Indicator: Backflushing</td>
+</tr>
+<tr class="cell">
+  <td>113</td>
+  <td>HRTYP</td>
+  <td>113</td>
+  <td>&nbsp;</td>
+  <td>OTYPE</td>
+  <td>OTYPE</td>
+  <td>CHAR</td>
+  <td>2</td>
+  <td>&nbsp;</td>
+  <td>Object Type</td>
+</tr>
+<tr class="cell">
+  <td>114</td>
+  <td>SLWID</td>
+  <td>114</td>
+  <td>&nbsp;</td>
+  <td>SLWID</td>
+  <td>SLWID</td>
+  <td>CHAR</td>
+  <td>7</td>
+  <td>&nbsp;</td>
+  <td>Key word ID for user-defined fields</td>
+</tr>
+<tr class="cell">
+  <td>115</td>
+  <td>LIFNR</td>
+  <td>115</td>
+  <td>&nbsp;</td>
+  <td>LIFNR</td>
+  <td>LIFNR</td>
+  <td>CHAR</td>
+  <td>10</td>
+  <td>&nbsp;</td>
+  <td>Account Number of Vendor or Creditor</td>
+</tr>
+<tr class="cell">
+  <td>116</td>
+  <td>SLWID_REF</td>
+  <td>116</td>
+  <td>&nbsp;</td>
+  <td>AP_KZREF</td>
+  <td>XFELD</td>
+  <td>CHAR</td>
+  <td>1</td>
+  <td>&nbsp;</td>
+  <td>Field is referenced</td>
+</tr>
+<tr class="cell">
+  <td>117</td>
+  <td>LIFNR_REF</td>
+  <td>117</td>
+  <td>&nbsp;</td>
+  <td>AP_KZREF</td>
+  <td>XFELD</td>
+  <td>CHAR</td>
+  <td>1</td>
+  <td>&nbsp;</td>
+  <td>Field is referenced</td>
+</tr>
+<tr class="cell">
+  <td>118</td>
+  <td>VGARB</td>
+  <td>118</td>
+  <td>&nbsp;</td>
+  <td>VGWRTAR</td>
+  <td>MEINS</td>
+  <td>UNIT</td>
+  <td>3</td>
+  <td>X</td>
+  <td>Unit of Measure of Work</td>
+</tr>
+<tr class="cell">
+  <td>119</td>
+  <td>VGDIM</td>
+  <td>119</td>
+  <td>&nbsp;</td>
+  <td>VGDIMAR</td>
+  <td>DIMID</td>
+  <td>CHAR</td>
+  <td>6</td>
+  <td>&nbsp;</td>
+  <td>Dimension of work</td>
+</tr>
+<tr class="cell">
+  <td>120</td>
+  <td>HRPLVAR</td>
+  <td>120</td>
+  <td>&nbsp;</td>
+  <td>PLVAR</td>
+  <td>PLVAR</td>
+  <td>CHAR</td>
+  <td>2</td>
+  <td>&nbsp;</td>
+  <td>Plan Version</td>
+</tr>
+<tr class="cell">
+  <td>121</td>
+  <td>VGDAU</td>
+  <td>121</td>
+  <td>&nbsp;</td>
+  <td>DAUNORE</td>
+  <td>MEINS</td>
+  <td>UNIT</td>
+  <td>3</td>
+  <td>X</td>
+  <td>Normal duration/unit</td>
+</tr>
+<tr class="cell">
+  <td>122</td>
+  <td>STOBJ</td>
+  <td>122</td>
+  <td>&nbsp;</td>
+  <td>J_OBJNR</td>
+  <td>J_OBJNR</td>
+  <td>CHAR</td>
+  <td>22</td>
+  <td>&nbsp;</td>
+  <td>Object number</td>
+</tr>
+<tr class="cell">
+  <td>123</td>
+  <td>RESGR</td>
+  <td>123</td>
+  <td>&nbsp;</td>
+  <td>MATRIX_ID</td>
+  <td>MATRIX_ID</td>
+  <td>CHAR</td>
+  <td>8</td>
+  <td>&nbsp;</td>
+  <td>Matrix identification</td>
+</tr>
+<tr class="cell">
+  <td>124</td>
+  <td>LGORT_RES</td>
+  <td>124</td>
+  <td>&nbsp;</td>
+  <td>LGORT_RES</td>
+  <td>LGORT</td>
+  <td>CHAR</td>
+  <td>4</td>
+  <td>&nbsp;</td>
+  <td>Storage Location Storage Resource</td>
+</tr>
+<tr class="cell">
+  <td>125</td>
+  <td>MIXMAT</td>
+  <td>125</td>
+  <td>&nbsp;</td>
+  <td>MIXMAT</td>
+  <td>X</td>
+  <td>CHAR</td>
+  <td>1</td>
+  <td>&nbsp;</td>
+  <td>Indicator: mixing of material allowed</td>
+</tr>
+<tr class="cell">
+  <td>126</td>
+  <td>ISTBED_KZ</td>
+  <td>126</td>
+  <td>&nbsp;</td>
+  <td>CY_ISTBEDKZ</td>
+  <td>CY_ISTBEDKZ</td>
+  <td>CHAR</td>
+  <td>1</td>
+  <td>&nbsp;</td>
+  <td>Calculation of actual capacity requirements</td>
+</tr>
+<tr class="cell">
+  <td>127</td>
+  <td>AUFNR</td>
+  <td>127</td>
+  <td>&nbsp;</td>
+  <td>AUFNR</td>
+  <td>AUFNR</td>
+  <td>CHAR</td>
+  <td>12</td>
+  <td>&nbsp;</td>
+  <td>Order Number</td>
+</tr>
+<tr class="cell">
+  <td>128</td>
+  <td>LASTCHANGE_DATETIME</td>
+  <td>128</td>
+  <td>&nbsp;</td>
+  <td>CR_LASTCHANGE_DATETIME</td>
+  <td>TZNTSTMPL</td>
+  <td>DEC</td>
+  <td>21</td>
+  <td>&nbsp;</td>
+  <td>Date and Time of Last Change</td>
+</tr>
+<tr class="cell">
+  <td>129</td>
+  <td>.INCLUDE</td>
+  <td>129</td>
+  <td>&nbsp;</td>
+  <td>PPDS_ON_ERP_CRHD_STR</td>
+  <td>&nbsp;</td>
+  <td>&nbsp;</td>
+  <td>0</td>
+  <td>&nbsp;</td>
+  <td>CRHD Extension with New Fields: PPDS on ERP</td>
+</tr>
+<tr class="cell">
+  <td>130</td>
+  <td>PPSKZ</td>
+  <td>130</td>
+  <td>&nbsp;</td>
+  <td>PPSKZ</td>
+  <td>BOOLE</td>
+  <td>CHAR</td>
+  <td>1</td>
+  <td>&nbsp;</td>
+  <td>Indicator for Advanced Planning</td>
+</tr>
+<tr class="cell">
+  <td>131</td>
+  <td>.APPEND</td>
+  <td>131</td>
+  <td>&nbsp;</td>
+  <td>COCF_S_CRHD_ADD</td>
+  <td>&nbsp;</td>
+  <td>&nbsp;</td>
+  <td>0</td>
+  <td>&nbsp;</td>
+  <td>Additional Fields for Work Center</td>
+</tr>
+<tr class="cell">
+  <td>132</td>
+  <td>SRTYPE</td>
+  <td>132</td>
+  <td>&nbsp;</td>
+  <td>COCF_SR_SRTYPE</td>
+  <td>&nbsp;</td>
+  <td>CHAR</td>
+  <td>10</td>
+  <td>&nbsp;</td>
+  <td>Shift Report Type</td>
+</tr>
+<tr class="cell">
+  <td>133</td>
+  <td>SNTYPE</td>
+  <td>133</td>
+  <td>&nbsp;</td>
+  <td>COCF_SN_SNTYPE</td>
+  <td>QMART</td>
+  <td>CHAR</td>
+  <td>2</td>
+  <td>&nbsp;</td>
+  <td>Shift Note Type</td>
+</tr>
+<tr class="cell">
+  <td>134</td>
+  <td>.APPEND</td>
+  <td>134</td>
+  <td>&nbsp;</td>
+  <td>MPE_LABOR_TRACKING</td>
+  <td>&nbsp;</td>
+  <td>&nbsp;</td>
+  <td>0</td>
+  <td>&nbsp;</td>
+  <td>Labor Tracking</td>
+</tr>
+<tr class="cell">
+  <td>135</td>
+  <td>S_LABOR_TRACK</td>
+  <td>135</td>
+  <td>&nbsp;</td>
+  <td>MPE_LABOR_TRACK</td>
+  <td>XFELD</td>
+  <td>CHAR</td>
+  <td>1</td>
+  <td>&nbsp;</td>
+  <td>Indicates Whether Labor Tracking is Required for Execution</td>
+</tr>
+      </table>
+     </td>
+   </tr>
+<br/>
+  <table class="outerTable">
+    <tr>
+      <td><h2>Fixed Domain Values </h2>
+    </tr>
+    <tr>
+      <td><!--This is where our main table begins  -->
+<table class="innerTable">
+<tr>
+  <th>Domain Name</th>
+  <th>Value Low</th>
+  <th>Value High</th>
+  <th>Text</th>
+</tr>
+<tr class="cell">
+  <td>CR_OBJTY</td>
+  <td>A</td>
+  <td>&nbsp;</td>
+  <td>Work Center</td>
+</tr>
+<tr class="cell">
+  <td>CR_OBJTY</td>
+  <td>AA</td>
+  <td>&nbsp;</td>
+  <td>Work center alias</td>
+</tr>
+<tr class="cell">
+  <td>CR_OBJTY</td>
+  <td>FH</td>
+  <td>&nbsp;</td>
+  <td>Production resources/tools</td>
+</tr>
+<tr class="cell">
+  <td>CR_OBJTY</td>
+  <td>H</td>
+  <td>&nbsp;</td>
+  <td>Hierarchy</td>
+</tr>
+<tr class="cell">
+  <td>CR_OBJTY</td>
+  <td>G</td>
+  <td>&nbsp;</td>
+  <td>Group</td>
+</tr>
+<tr class="cell">
+  <td>FLAG</td>
+  <td>X</td>
+  <td>&nbsp;</td>
+  <td>Flag set (event raised)</td>
+</tr>
+<tr class="cell">
+  <td>FLAG</td>
+  <td>&nbsp;</td>
+  <td>&nbsp;</td>
+  <td>Flag is not set</td>
+</tr>
+<tr class="cell">
+  <td>AP_VGW_FLG</td>
+  <td>&nbsp;</td>
+  <td>&nbsp;</td>
+  <td>no checking</td>
+</tr>
+<tr class="cell">
+  <td>AP_VGW_FLG</td>
+  <td>0</td>
+  <td>&nbsp;</td>
+  <td>may not be entered</td>
+</tr>
+<tr class="cell">
+  <td>AP_VGW_FLG</td>
+  <td>1</td>
+  <td>&nbsp;</td>
+  <td>should not be entered</td>
+</tr>
+<tr class="cell">
+  <td>AP_VGW_FLG</td>
+  <td>2</td>
+  <td>&nbsp;</td>
+  <td>should be entered</td>
+</tr>
+<tr class="cell">
+  <td>AP_VGW_FLG</td>
+  <td>3</td>
+  <td>&nbsp;</td>
+  <td>must be entered</td>
+</tr>
+<tr class="cell">
+  <td>AP_VGW_FLG</td>
+  <td>&nbsp;</td>
+  <td>&nbsp;</td>
+  <td>no checking</td>
+</tr>
+<tr class="cell">
+  <td>AP_VGW_FLG</td>
+  <td>0</td>
+  <td>&nbsp;</td>
+  <td>may not be entered</td>
+</tr>
+<tr class="cell">
+  <td>AP_VGW_FLG</td>
+  <td>1</td>
+  <td>&nbsp;</td>
+  <td>should not be entered</td>
+</tr>
+<tr class="cell">
+  <td>AP_VGW_FLG</td>
+  <td>2</td>
+  <td>&nbsp;</td>
+  <td>should be entered</td>
+</tr>
+<tr class="cell">
+  <td>AP_VGW_FLG</td>
+  <td>3</td>
+  <td>&nbsp;</td>
+  <td>must be entered</td>
+</tr>
+<tr class="cell">
+  <td>AP_VGW_FLG</td>
+  <td>&nbsp;</td>
+  <td>&nbsp;</td>
+  <td>no checking</td>
+</tr>
+<tr class="cell">
+  <td>AP_VGW_FLG</td>
+  <td>0</td>
+  <td>&nbsp;</td>
+  <td>may not be entered</td>
+</tr>
+<tr class="cell">
+  <td>AP_VGW_FLG</td>
+  <td>1</td>
+  <td>&nbsp;</td>
+  <td>should not be entered</td>
+</tr>
+<tr class="cell">
+  <td>AP_VGW_FLG</td>
+  <td>2</td>
+  <td>&nbsp;</td>
+  <td>should be entered</td>
+</tr>
+<tr class="cell">
+  <td>AP_VGW_FLG</td>
+  <td>3</td>
+  <td>&nbsp;</td>
+  <td>must be entered</td>
+</tr>
+<tr class="cell">
+  <td>AP_VGW_FLG</td>
+  <td>&nbsp;</td>
+  <td>&nbsp;</td>
+  <td>no checking</td>
+</tr>
+<tr class="cell">
+  <td>AP_VGW_FLG</td>
+  <td>0</td>
+  <td>&nbsp;</td>
+  <td>may not be entered</td>
+</tr>
+<tr class="cell">
+  <td>AP_VGW_FLG</td>
+  <td>1</td>
+  <td>&nbsp;</td>
+  <td>should not be entered</td>
+</tr>
+<tr class="cell">
+  <td>AP_VGW_FLG</td>
+  <td>2</td>
+  <td>&nbsp;</td>
+  <td>should be entered</td>
+</tr>
+<tr class="cell">
+  <td>AP_VGW_FLG</td>
+  <td>3</td>
+  <td>&nbsp;</td>
+  <td>must be entered</td>
+</tr>
+<tr class="cell">
+  <td>AP_VGW_FLG</td>
+  <td>&nbsp;</td>
+  <td>&nbsp;</td>
+  <td>no checking</td>
+</tr>
+<tr class="cell">
+  <td>AP_VGW_FLG</td>
+  <td>0</td>
+  <td>&nbsp;</td>
+  <td>may not be entered</td>
+</tr>
+<tr class="cell">
+  <td>AP_VGW_FLG</td>
+  <td>1</td>
+  <td>&nbsp;</td>
+  <td>should not be entered</td>
+</tr>
+<tr class="cell">
+  <td>AP_VGW_FLG</td>
+  <td>2</td>
+  <td>&nbsp;</td>
+  <td>should be entered</td>
+</tr>
+<tr class="cell">
+  <td>AP_VGW_FLG</td>
+  <td>3</td>
+  <td>&nbsp;</td>
+  <td>must be entered</td>
+</tr>
+<tr class="cell">
+  <td>AP_VGW_FLG</td>
+  <td>&nbsp;</td>
+  <td>&nbsp;</td>
+  <td>no checking</td>
+</tr>
+<tr class="cell">
+  <td>AP_VGW_FLG</td>
+  <td>0</td>
+  <td>&nbsp;</td>
+  <td>may not be entered</td>
+</tr>
+<tr class="cell">
+  <td>AP_VGW_FLG</td>
+  <td>1</td>
+  <td>&nbsp;</td>
+  <td>should not be entered</td>
+</tr>
+<tr class="cell">
+  <td>AP_VGW_FLG</td>
+  <td>2</td>
+  <td>&nbsp;</td>
+  <td>should be entered</td>
+</tr>
+<tr class="cell">
+  <td>AP_VGW_FLG</td>
+  <td>3</td>
+  <td>&nbsp;</td>
+  <td>must be entered</td>
+</tr>
+<tr class="cell">
+  <td>XFELD</td>
+  <td>X</td>
+  <td>&nbsp;</td>
+  <td>Yes</td>
+</tr>
+<tr class="cell">
+  <td>XFELD</td>
+  <td>&nbsp;</td>
+  <td>&nbsp;</td>
+  <td>No</td>
+</tr>
+<tr class="cell">
+  <td>XFELD</td>
+  <td>X</td>
+  <td>&nbsp;</td>
+  <td>Yes</td>
+</tr>
+<tr class="cell">
+  <td>XFELD</td>
+  <td>&nbsp;</td>
+  <td>&nbsp;</td>
+  <td>No</td>
+</tr>
+<tr class="cell">
+  <td>XFELD</td>
+  <td>X</td>
+  <td>&nbsp;</td>
+  <td>Yes</td>
+</tr>
+<tr class="cell">
+  <td>XFELD</td>
+  <td>&nbsp;</td>
+  <td>&nbsp;</td>
+  <td>No</td>
+</tr>
+<tr class="cell">
+  <td>XFELD</td>
+  <td>X</td>
+  <td>&nbsp;</td>
+  <td>Yes</td>
+</tr>
+<tr class="cell">
+  <td>XFELD</td>
+  <td>&nbsp;</td>
+  <td>&nbsp;</td>
+  <td>No</td>
+</tr>
+<tr class="cell">
+  <td>XFELD</td>
+  <td>X</td>
+  <td>&nbsp;</td>
+  <td>Yes</td>
+</tr>
+<tr class="cell">
+  <td>XFELD</td>
+  <td>&nbsp;</td>
+  <td>&nbsp;</td>
+  <td>No</td>
+</tr>
+<tr class="cell">
+  <td>XFELD</td>
+  <td>X</td>
+  <td>&nbsp;</td>
+  <td>Yes</td>
+</tr>
+<tr class="cell">
+  <td>XFELD</td>
+  <td>&nbsp;</td>
+  <td>&nbsp;</td>
+  <td>No</td>
+</tr>
+<tr class="cell">
+  <td>XFELD</td>
+  <td>X</td>
+  <td>&nbsp;</td>
+  <td>Yes</td>
+</tr>
+<tr class="cell">
+  <td>XFELD</td>
+  <td>&nbsp;</td>
+  <td>&nbsp;</td>
+  <td>No</td>
+</tr>
+<tr class="cell">
+  <td>XFELD</td>
+  <td>X</td>
+  <td>&nbsp;</td>
+  <td>Yes</td>
+</tr>
+<tr class="cell">
+  <td>XFELD</td>
+  <td>&nbsp;</td>
+  <td>&nbsp;</td>
+  <td>No</td>
+</tr>
+<tr class="cell">
+  <td>XFELD</td>
+  <td>X</td>
+  <td>&nbsp;</td>
+  <td>Yes</td>
+</tr>
+<tr class="cell">
+  <td>XFELD</td>
+  <td>&nbsp;</td>
+  <td>&nbsp;</td>
+  <td>No</td>
+</tr>
+<tr class="cell">
+  <td>XFELD</td>
+  <td>X</td>
+  <td>&nbsp;</td>
+  <td>Yes</td>
+</tr>
+<tr class="cell">
+  <td>XFELD</td>
+  <td>&nbsp;</td>
+  <td>&nbsp;</td>
+  <td>No</td>
+</tr>
+<tr class="cell">
+  <td>XFELD</td>
+  <td>X</td>
+  <td>&nbsp;</td>
+  <td>Yes</td>
+</tr>
+<tr class="cell">
+  <td>XFELD</td>
+  <td>&nbsp;</td>
+  <td>&nbsp;</td>
+  <td>No</td>
+</tr>
+<tr class="cell">
+  <td>FLAG</td>
+  <td>X</td>
+  <td>&nbsp;</td>
+  <td>Flag set (event raised)</td>
+</tr>
+<tr class="cell">
+  <td>FLAG</td>
+  <td>&nbsp;</td>
+  <td>&nbsp;</td>
+  <td>Flag is not set</td>
+</tr>
+<tr class="cell">
+  <td>MTRVP</td>
+  <td>0</td>
+  <td>20</td>
+  <td>Additional time percentage</td>
+</tr>
+<tr class="cell">
+  <td>MTMVP</td>
+  <td>0</td>
+  <td>20</td>
+  <td>Additional time percentage</td>
+</tr>
+<tr class="cell">
+  <td>MTPVP</td>
+  <td>0</td>
+  <td>20</td>
+  <td>Additional time percentage</td>
+</tr>
+<tr class="cell">
+  <td>XFELD</td>
+  <td>X</td>
+  <td>&nbsp;</td>
+  <td>Yes</td>
+</tr>
+<tr class="cell">
+  <td>XFELD</td>
+  <td>&nbsp;</td>
+  <td>&nbsp;</td>
+  <td>No</td>
+</tr>
+<tr class="cell">
+  <td>XFELD</td>
+  <td>X</td>
+  <td>&nbsp;</td>
+  <td>Yes</td>
+</tr>
+<tr class="cell">
+  <td>XFELD</td>
+  <td>&nbsp;</td>
+  <td>&nbsp;</td>
+  <td>No</td>
+</tr>
+<tr class="cell">
+  <td>XFELD</td>
+  <td>X</td>
+  <td>&nbsp;</td>
+  <td>Yes</td>
+</tr>
+<tr class="cell">
+  <td>XFELD</td>
+  <td>&nbsp;</td>
+  <td>&nbsp;</td>
+  <td>No</td>
+</tr>
+<tr class="cell">
+  <td>XFELD</td>
+  <td>X</td>
+  <td>&nbsp;</td>
+  <td>Yes</td>
+</tr>
+<tr class="cell">
+  <td>XFELD</td>
+  <td>&nbsp;</td>
+  <td>&nbsp;</td>
+  <td>No</td>
+</tr>
+<tr class="cell">
+  <td>XFELD</td>
+  <td>X</td>
+  <td>&nbsp;</td>
+  <td>Yes</td>
+</tr>
+<tr class="cell">
+  <td>XFELD</td>
+  <td>&nbsp;</td>
+  <td>&nbsp;</td>
+  <td>No</td>
+</tr>
+<tr class="cell">
+  <td>XFELD</td>
+  <td>X</td>
+  <td>&nbsp;</td>
+  <td>Yes</td>
+</tr>
+<tr class="cell">
+  <td>XFELD</td>
+  <td>&nbsp;</td>
+  <td>&nbsp;</td>
+  <td>No</td>
+</tr>
+<tr class="cell">
+  <td>XFELD</td>
+  <td>X</td>
+  <td>&nbsp;</td>
+  <td>Yes</td>
+</tr>
+<tr class="cell">
+  <td>XFELD</td>
+  <td>&nbsp;</td>
+  <td>&nbsp;</td>
+  <td>No</td>
+</tr>
+<tr class="cell">
+  <td>XFELD</td>
+  <td>X</td>
+  <td>&nbsp;</td>
+  <td>Yes</td>
+</tr>
+<tr class="cell">
+  <td>XFELD</td>
+  <td>&nbsp;</td>
+  <td>&nbsp;</td>
+  <td>No</td>
+</tr>
+<tr class="cell">
+  <td>XFELD</td>
+  <td>X</td>
+  <td>&nbsp;</td>
+  <td>Yes</td>
+</tr>
+<tr class="cell">
+  <td>XFELD</td>
+  <td>&nbsp;</td>
+  <td>&nbsp;</td>
+  <td>No</td>
+</tr>
+<tr class="cell">
+  <td>XFELD</td>
+  <td>X</td>
+  <td>&nbsp;</td>
+  <td>Yes</td>
+</tr>
+<tr class="cell">
+  <td>XFELD</td>
+  <td>&nbsp;</td>
+  <td>&nbsp;</td>
+  <td>No</td>
+</tr>
+<tr class="cell">
+  <td>XFELD</td>
+  <td>X</td>
+  <td>&nbsp;</td>
+  <td>Yes</td>
+</tr>
+<tr class="cell">
+  <td>XFELD</td>
+  <td>&nbsp;</td>
+  <td>&nbsp;</td>
+  <td>No</td>
+</tr>
+<tr class="cell">
+  <td>X</td>
+  <td>X</td>
+  <td>&nbsp;</td>
+  <td>Yes</td>
+</tr>
+<tr class="cell">
+  <td>X</td>
+  <td>&nbsp;</td>
+  <td>&nbsp;</td>
+  <td>No</td>
+</tr>
+<tr class="cell">
+  <td>CY_ISTBEDKZ</td>
+  <td>&nbsp;</td>
+  <td>&nbsp;</td>
+  <td>No actual cap. reqs.</td>
+</tr>
+<tr class="cell">
+  <td>CY_ISTBEDKZ</td>
+  <td>1</td>
+  <td>&nbsp;</td>
+  <td>Act. Cap. Reqts from Work Center Formulas</td>
+</tr>
+<tr class="cell">
+  <td>CY_ISTBEDKZ</td>
+  <td>2</td>
+  <td>&nbsp;</td>
+  <td>Actual Cap. Requirements from Activities</td>
+</tr>
+<tr class="cell">
+  <td>BOOLE</td>
+  <td>X</td>
+  <td>&nbsp;</td>
+  <td>TRUE</td>
+</tr>
+<tr class="cell">
+  <td>BOOLE</td>
+  <td>&nbsp;</td>
+  <td>&nbsp;</td>
+  <td>FALSE</td>
+</tr>
+<tr class="cell">
+  <td>XFELD</td>
+  <td>X</td>
+  <td>&nbsp;</td>
+  <td>Yes</td>
+</tr>
+<tr class="cell">
+  <td>XFELD</td>
+  <td>&nbsp;</td>
+  <td>&nbsp;</td>
+  <td>No</td>
+</tr>
+      </table>
+     </td>
+   </tr>
+   <tr>
+<td class="footer">Extracted by Mass Download version 1.5.5 - E.G.Mellodew. 1998-2025. Sap Release 755</td>
+   </tr>
+</table>
+</body>
+</html>

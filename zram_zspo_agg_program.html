@@ -1,0 +1,356 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="application/xhtml+xml; charset=ISO-8859-1" />
+<title>ZRAM_ZSPO_AGG_PROGRAM</title>
+<style type="text/css">
+.code{ font-family:"Courier New", Courier, monospace; color:#000; font-size:14px; background-color:#F2F4F7 }
+  .codeComment {font-family:"Courier New", Courier, monospace; color:#0000F0; font-size:14px; background-color:#F2F4F7 }
+  .normalBold{ font-family:Arial, Helvetica, sans-serif; color:#000; font-size:12px; font-weight:800 }
+  .normalBoldLarge{ font-family:Arial, Helvetica, sans-serif; color:#000; font-size:16px; font-weight:800 }
+</style>
+<style type="text/css">
+  .normal{ font-family:Arial, Helvetica, sans-serif; color:#000; font-size:12px }
+  .footer{ font-family:Arial, Helvetica, sans-serif; color:#000; font-size:12px; text-align: center }
+  h2{ font-family:Arial, Helvetica, sans-serif; color:#000; font-size:16px; font-weight:800 }
+  h3{ font-family:Arial, Helvetica, sans-serif; color:#000; font-size:14px; font-weight:800 }
+  .outerTable{
+   background-color:#E0E7ED;
+   width:100%;
+   border-top-width: thin;
+   border-right-width: thin;
+   border-right-width: thin;
+   border-left-width: thin;
+   border-top-style: solid;
+   border-right-style: solid;
+   border-bottom-style: solid;
+   border-left-style: solid;
+  }
+  .innerTable{
+   background-color:#F2F4F7;
+   width:100%;
+   border-top-width: thin;
+   border-right-width: thin;
+   border-bottom-width: thin;
+   border-left-width: thin;
+   border-top-style: solid;
+   border-right-style: solid;
+   border-bottom-style: solid;
+   border-left-style: solid;
+  }
+</style>
+</head>
+<body>
+<table class="outerTable">
+  <tr class="normalBoldLarge">
+     <td><h2>Code listing for: ZRAM_ZSPO_AGG_PROGRAM</h2>
+<h3> Description: zspo agging hp report</h3></td>
+   </tr>
+  <tr>
+     <td>
+     <table class="innerTable">
+       <tr>
+          <td>
+   <div class="codeComment">
+*&---------------------------------------------------------------------*<br />
+*&&nbsp;Report&nbsp;ZRAM_ZSPO_AGG_PROGRAM<br />
+*&---------------------------------------------------------------------*<br />
+*&<br />
+*&---------------------------------------------------------------------*<br />
+   </div>
+   <div class="code">
+REPORT ZRAM_ZSPO_AGG_PROGRAM.<br />
+<br />
+TABLES : VBRK,VBAK.<br />
+<br />
+DATA : it_fcat TYPE slis_t_fieldcat_alv,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;wa_fcat&nbsp;TYPE&nbsp;slis_fieldcat_alv,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;lo&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;TYPE&nbsp;slis_layout_alv.<br />
+<br />
+DATA: fieldcatlog TYPE slis_t_fieldcat_alv.<br />
+<br />
+SELECTION-SCREEN BEGIN OF BLOCK a1 WITH FRAME TITLE TEXT-001.<br />
+&nbsp;&nbsp;SELECT-OPTIONS&nbsp;:&nbsp;A_INSTYP&nbsp;FOR&nbsp;VBAK-auart&nbsp;DEFAULT&nbsp;'ZSPO'&nbsp;OBLIGATORY,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;a_dt&nbsp;&nbsp;FOR&nbsp;vbrk-FKDAT.<br />
+SELECTION-SCREEN END OF BLOCK a1.<br />
+<br />
+START-OF-SELECTION.<br />
+<br />
+&nbsp;&nbsp;TRY.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;DATA(lv_where1)&nbsp;=&nbsp;cl_shdb_seltab=&gt;combine_seltabs(&nbsp;it_named_seltabs&nbsp;=&nbsp;VALUE&nbsp;#(<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(&nbsp;name&nbsp;=&nbsp;'ASOTYP'&nbsp;dref&nbsp;=&nbsp;ref&nbsp;#(&nbsp;A_INSTYP[]&nbsp;)&nbsp;)<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(&nbsp;name&nbsp;=&nbsp;'INVDT'&nbsp;dref&nbsp;=&nbsp;REF&nbsp;#(&nbsp;A_DT[]&nbsp;)&nbsp;)<br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;)<br />
+   </div>
+   <div class="codeComment">
+*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;IV_CLIENT_FIELD&nbsp;=&nbsp;'MANDT'<br />
+   </div>
+   <div class="code">
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;).<br />
+&nbsp;&nbsp;&nbsp;&nbsp;CATCH&nbsp;cx_shdb_exception.<br />
+&nbsp;&nbsp;ENDTRY.<br />
+<br />
+<br />
+&nbsp;&nbsp;CALL&nbsp;METHOD&nbsp;zram_zspo_hp=&gt;get_agg_dd<br />
+&nbsp;&nbsp;&nbsp;&nbsp;EXPORTING<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;v_date&nbsp;&nbsp;&nbsp;=&nbsp;lv_where1<br />
+&nbsp;&nbsp;&nbsp;&nbsp;IMPORTING<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;it_data1&nbsp;=&nbsp;DATA(IT_DT)<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;.<br />
+<br />
+&nbsp;&nbsp;DATA:&nbsp;wa_layout&nbsp;TYPE&nbsp;slis_layout_alv.<br />
+&nbsp;&nbsp;wa_layout-colwidth_optimize&nbsp;=&nbsp;'X'.<br />
+<br />
+&nbsp;&nbsp;wa_fcat-fieldname&nbsp;='CH'.<br />
+&nbsp;&nbsp;wa_fcat-seltext_m&nbsp;='CH'.<br />
+&nbsp;&nbsp;APPEND&nbsp;wa_fcat&nbsp;TO&nbsp;it_fcat.<br />
+&nbsp;&nbsp;CLEAR&nbsp;wa_fcat.<br />
+<br />
+&nbsp;&nbsp;wa_fcat-fieldname&nbsp;='INVMNT'.<br />
+&nbsp;&nbsp;wa_fcat-seltext_m&nbsp;='InvMnt'.<br />
+&nbsp;&nbsp;APPEND&nbsp;wa_fcat&nbsp;TO&nbsp;it_fcat.<br />
+&nbsp;&nbsp;CLEAR&nbsp;wa_fcat.<br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;wa_fcat-fieldname&nbsp;='INVYR'.<br />
+&nbsp;&nbsp;wa_fcat-seltext_m&nbsp;='InvYr'.<br />
+&nbsp;&nbsp;APPEND&nbsp;wa_fcat&nbsp;TO&nbsp;it_fcat.<br />
+&nbsp;&nbsp;CLEAR&nbsp;wa_fcat.<br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;wa_fcat-fieldname&nbsp;='INVDT'.<br />
+&nbsp;&nbsp;wa_fcat-seltext_m&nbsp;='InvDt'.<br />
+&nbsp;&nbsp;APPEND&nbsp;wa_fcat&nbsp;TO&nbsp;it_fcat.<br />
+&nbsp;&nbsp;CLEAR&nbsp;wa_fcat.<br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;wa_fcat-fieldname&nbsp;='INVCOCD'.<br />
+&nbsp;&nbsp;wa_fcat-seltext_m&nbsp;='InvCoCd'.<br />
+&nbsp;&nbsp;APPEND&nbsp;wa_fcat&nbsp;TO&nbsp;it_fcat.<br />
+&nbsp;&nbsp;CLEAR&nbsp;wa_fcat.<br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;wa_fcat-fieldname&nbsp;='INVPLANT'.<br />
+&nbsp;&nbsp;wa_fcat-seltext_m&nbsp;='InvPlant'.<br />
+&nbsp;&nbsp;APPEND&nbsp;wa_fcat&nbsp;TO&nbsp;it_fcat.<br />
+&nbsp;&nbsp;CLEAR&nbsp;wa_fcat.<br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;wa_fcat-fieldname&nbsp;='INVTYP'.<br />
+&nbsp;&nbsp;wa_fcat-seltext_m&nbsp;='InvTyp'.<br />
+&nbsp;&nbsp;APPEND&nbsp;wa_fcat&nbsp;TO&nbsp;it_fcat.<br />
+&nbsp;&nbsp;CLEAR&nbsp;wa_fcat.<br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;wa_fcat-fieldname&nbsp;='INVNO'.<br />
+&nbsp;&nbsp;wa_fcat-seltext_m&nbsp;='InvNo'.<br />
+&nbsp;&nbsp;APPEND&nbsp;wa_fcat&nbsp;TO&nbsp;it_fcat.<br />
+&nbsp;&nbsp;CLEAR&nbsp;wa_fcat.<br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;wa_fcat-fieldname&nbsp;='INVSR'.<br />
+&nbsp;&nbsp;wa_fcat-seltext_m&nbsp;='InvSr'.<br />
+&nbsp;&nbsp;APPEND&nbsp;wa_fcat&nbsp;TO&nbsp;it_fcat.<br />
+&nbsp;&nbsp;CLEAR&nbsp;wa_fcat.<br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;wa_fcat-fieldname&nbsp;='INVSKU'.<br />
+&nbsp;&nbsp;wa_fcat-seltext_m&nbsp;='InvSku'.<br />
+&nbsp;&nbsp;APPEND&nbsp;wa_fcat&nbsp;TO&nbsp;it_fcat.<br />
+&nbsp;&nbsp;CLEAR&nbsp;wa_fcat.<br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;wa_fcat-fieldname&nbsp;='INVSKUSIZE'.<br />
+&nbsp;&nbsp;wa_fcat-seltext_m&nbsp;='InvSkuSize'.<br />
+&nbsp;&nbsp;APPEND&nbsp;wa_fcat&nbsp;TO&nbsp;it_fcat.<br />
+&nbsp;&nbsp;CLEAR&nbsp;wa_fcat.<br />
+<br />
+&nbsp;&nbsp;wa_fcat-fieldname&nbsp;='INVBAGNO'.<br />
+&nbsp;&nbsp;wa_fcat-seltext_m&nbsp;='InvBagNo'.<br />
+&nbsp;&nbsp;APPEND&nbsp;wa_fcat&nbsp;TO&nbsp;it_fcat.<br />
+&nbsp;&nbsp;CLEAR&nbsp;wa_fcat.<br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;wa_fcat-fieldname&nbsp;='INVQTY'.<br />
+&nbsp;&nbsp;wa_fcat-seltext_m&nbsp;='InvQty'.<br />
+&nbsp;&nbsp;APPEND&nbsp;wa_fcat&nbsp;TO&nbsp;it_fcat.<br />
+&nbsp;&nbsp;CLEAR&nbsp;wa_fcat.<br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;wa_fcat-fieldname&nbsp;='INVVAL'.<br />
+&nbsp;&nbsp;wa_fcat-seltext_m&nbsp;='InvVal'.<br />
+&nbsp;&nbsp;APPEND&nbsp;wa_fcat&nbsp;TO&nbsp;it_fcat.<br />
+&nbsp;&nbsp;CLEAR&nbsp;wa_fcat.<br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;wa_fcat-fieldname&nbsp;='ODCRTDT'.<br />
+&nbsp;&nbsp;wa_fcat-seltext_m&nbsp;='OdCrtDt'.<br />
+&nbsp;&nbsp;APPEND&nbsp;wa_fcat&nbsp;TO&nbsp;it_fcat.<br />
+&nbsp;&nbsp;CLEAR&nbsp;wa_fcat.<br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;wa_fcat-fieldname&nbsp;='ASOTYP'.<br />
+&nbsp;&nbsp;wa_fcat-seltext_m&nbsp;='ASoTyp'.<br />
+&nbsp;&nbsp;APPEND&nbsp;wa_fcat&nbsp;TO&nbsp;it_fcat.<br />
+&nbsp;&nbsp;CLEAR&nbsp;wa_fcat.<br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;wa_fcat-fieldname&nbsp;='ODNO'.<br />
+&nbsp;&nbsp;wa_fcat-seltext_m&nbsp;='OdNo'.<br />
+&nbsp;&nbsp;APPEND&nbsp;wa_fcat&nbsp;TO&nbsp;it_fcat.<br />
+&nbsp;&nbsp;CLEAR&nbsp;wa_fcat.<br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;wa_fcat-fieldname&nbsp;='ODSR'.<br />
+&nbsp;&nbsp;wa_fcat-seltext_m&nbsp;='OdSr'.<br />
+&nbsp;&nbsp;APPEND&nbsp;wa_fcat&nbsp;TO&nbsp;it_fcat.<br />
+&nbsp;&nbsp;CLEAR&nbsp;wa_fcat.<br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;wa_fcat-fieldname&nbsp;='ORDQTY'.<br />
+&nbsp;&nbsp;wa_fcat-seltext_m&nbsp;='OrdQty'.<br />
+&nbsp;&nbsp;APPEND&nbsp;wa_fcat&nbsp;TO&nbsp;it_fcat.<br />
+&nbsp;&nbsp;CLEAR&nbsp;wa_fcat.<br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;wa_fcat-fieldname&nbsp;='ODQOPENQTY'.<br />
+&nbsp;&nbsp;wa_fcat-seltext_m&nbsp;='OdqOpenQty'.<br />
+&nbsp;&nbsp;APPEND&nbsp;wa_fcat&nbsp;TO&nbsp;it_fcat.<br />
+&nbsp;&nbsp;CLEAR&nbsp;wa_fcat.<br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;wa_fcat-fieldname&nbsp;='ODQDELDT'.<br />
+&nbsp;&nbsp;wa_fcat-seltext_m&nbsp;='OdqDelDt'.<br />
+&nbsp;&nbsp;APPEND&nbsp;wa_fcat&nbsp;TO&nbsp;it_fcat.<br />
+&nbsp;&nbsp;CLEAR&nbsp;wa_fcat.<br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;wa_fcat-fieldname&nbsp;='DIA_IN&nbsp;'.<br />
+&nbsp;&nbsp;wa_fcat-seltext_m&nbsp;='DIA_IN&nbsp;'.<br />
+&nbsp;&nbsp;APPEND&nbsp;wa_fcat&nbsp;TO&nbsp;it_fcat.<br />
+&nbsp;&nbsp;CLEAR&nbsp;wa_fcat.<br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;wa_fcat-fieldname&nbsp;='DIA_OUT'.<br />
+&nbsp;&nbsp;wa_fcat-seltext_m&nbsp;='DIA_OUT'.<br />
+&nbsp;&nbsp;APPEND&nbsp;wa_fcat&nbsp;TO&nbsp;it_fcat.<br />
+&nbsp;&nbsp;CLEAR&nbsp;wa_fcat.<br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;wa_fcat-fieldname&nbsp;='BBAGNO'.<br />
+&nbsp;&nbsp;wa_fcat-seltext_m&nbsp;='BBagNo'.<br />
+&nbsp;&nbsp;APPEND&nbsp;wa_fcat&nbsp;TO&nbsp;it_fcat.<br />
+&nbsp;&nbsp;CLEAR&nbsp;wa_fcat.<br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;wa_fcat-fieldname&nbsp;='BBAGOPNDT'.<br />
+&nbsp;&nbsp;wa_fcat-seltext_m&nbsp;='BBagOpnDt'.<br />
+&nbsp;&nbsp;APPEND&nbsp;wa_fcat&nbsp;TO&nbsp;it_fcat.<br />
+&nbsp;&nbsp;CLEAR&nbsp;wa_fcat.<br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;wa_fcat-fieldname&nbsp;='CSBAGNO'.<br />
+&nbsp;&nbsp;wa_fcat-seltext_m&nbsp;='CsBagNo'.<br />
+&nbsp;&nbsp;APPEND&nbsp;wa_fcat&nbsp;TO&nbsp;it_fcat.<br />
+&nbsp;&nbsp;CLEAR&nbsp;wa_fcat.<br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;wa_fcat-fieldname&nbsp;='CSDT'.<br />
+&nbsp;&nbsp;wa_fcat-seltext_m&nbsp;='CsDt'.<br />
+&nbsp;&nbsp;APPEND&nbsp;wa_fcat&nbsp;TO&nbsp;it_fcat.<br />
+&nbsp;&nbsp;CLEAR&nbsp;wa_fcat.<br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;wa_fcat-fieldname&nbsp;='FBAGNO'.<br />
+&nbsp;&nbsp;wa_fcat-seltext_m&nbsp;='FBagNo'.<br />
+&nbsp;&nbsp;APPEND&nbsp;wa_fcat&nbsp;TO&nbsp;it_fcat.<br />
+&nbsp;&nbsp;CLEAR&nbsp;wa_fcat.<br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;wa_fcat-fieldname&nbsp;='FGDT'.<br />
+&nbsp;&nbsp;wa_fcat-seltext_m&nbsp;='FgDt'.<br />
+&nbsp;&nbsp;APPEND&nbsp;wa_fcat&nbsp;TO&nbsp;it_fcat.<br />
+&nbsp;&nbsp;CLEAR&nbsp;wa_fcat.<br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;wa_fcat-fieldname&nbsp;='ODAGCMCD'.<br />
+&nbsp;&nbsp;wa_fcat-seltext_m&nbsp;='OdAGCmCd'.<br />
+&nbsp;&nbsp;APPEND&nbsp;wa_fcat&nbsp;TO&nbsp;it_fcat.<br />
+&nbsp;&nbsp;CLEAR&nbsp;wa_fcat.<br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;wa_fcat-fieldname&nbsp;='ODAGCMCDNM'.<br />
+&nbsp;&nbsp;wa_fcat-seltext_m&nbsp;='OdAGCmCdNm'.<br />
+&nbsp;&nbsp;APPEND&nbsp;wa_fcat&nbsp;TO&nbsp;it_fcat.<br />
+&nbsp;&nbsp;CLEAR&nbsp;wa_fcat.<br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;wa_fcat-fieldname&nbsp;='ODENCMCD'.<br />
+&nbsp;&nbsp;wa_fcat-seltext_m&nbsp;='OdENCmCd'.<br />
+&nbsp;&nbsp;APPEND&nbsp;wa_fcat&nbsp;TO&nbsp;it_fcat.<br />
+&nbsp;&nbsp;CLEAR&nbsp;wa_fcat.<br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;wa_fcat-fieldname&nbsp;='ODENCMCDNM'.<br />
+&nbsp;&nbsp;wa_fcat-seltext_m&nbsp;='OdENCmCdNm'.<br />
+&nbsp;&nbsp;APPEND&nbsp;wa_fcat&nbsp;TO&nbsp;it_fcat.<br />
+&nbsp;&nbsp;CLEAR&nbsp;wa_fcat.<br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;wa_fcat-fieldname&nbsp;='ORDCRT_TO_INV'.<br />
+&nbsp;&nbsp;wa_fcat-seltext_m&nbsp;='OrdCrt_to_inv'.<br />
+&nbsp;&nbsp;APPEND&nbsp;wa_fcat&nbsp;TO&nbsp;it_fcat.<br />
+&nbsp;&nbsp;CLEAR&nbsp;wa_fcat.<br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;wa_fcat-fieldname&nbsp;='BOPN_TO_INV'.<br />
+&nbsp;&nbsp;wa_fcat-seltext_m&nbsp;='Bopn_to_Inv'.<br />
+&nbsp;&nbsp;APPEND&nbsp;wa_fcat&nbsp;TO&nbsp;it_fcat.<br />
+&nbsp;&nbsp;CLEAR&nbsp;wa_fcat.<br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;wa_fcat-fieldname&nbsp;='CAST_TO_INV'.<br />
+&nbsp;&nbsp;wa_fcat-seltext_m&nbsp;='Cast_to_Inv'.<br />
+&nbsp;&nbsp;APPEND&nbsp;wa_fcat&nbsp;TO&nbsp;it_fcat.<br />
+&nbsp;&nbsp;CLEAR&nbsp;wa_fcat.<br />
+<br />
+&nbsp;&nbsp;wa_fcat-fieldname&nbsp;='DIAM_DAYS'.<br />
+&nbsp;&nbsp;wa_fcat-seltext_m&nbsp;='DIAM_DAYS'.<br />
+&nbsp;&nbsp;APPEND&nbsp;wa_fcat&nbsp;TO&nbsp;it_fcat.<br />
+&nbsp;&nbsp;CLEAR&nbsp;wa_fcat.<br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;wa_fcat-fieldname&nbsp;='CERT_TYPE'.<br />
+&nbsp;&nbsp;wa_fcat-seltext_m&nbsp;='CERT_TYPE'.<br />
+&nbsp;&nbsp;APPEND&nbsp;wa_fcat&nbsp;TO&nbsp;it_fcat.<br />
+&nbsp;&nbsp;CLEAR&nbsp;wa_fcat.<br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;wa_fcat-fieldname&nbsp;='CERTLAB_NAME'.<br />
+&nbsp;&nbsp;wa_fcat-seltext_m&nbsp;='LAB_TYPE'.<br />
+&nbsp;&nbsp;APPEND&nbsp;wa_fcat&nbsp;TO&nbsp;it_fcat.<br />
+&nbsp;&nbsp;CLEAR&nbsp;wa_fcat.<br />
+<br />
+&nbsp;&nbsp;&nbsp;wa_fcat-fieldname&nbsp;='ZZBLUE_BAGREQ'.<br />
+&nbsp;&nbsp;wa_fcat-seltext_m&nbsp;='BLUE_BAG'.<br />
+&nbsp;&nbsp;APPEND&nbsp;wa_fcat&nbsp;TO&nbsp;it_fcat.<br />
+&nbsp;&nbsp;CLEAR&nbsp;wa_fcat.<br />
+<br />
+&nbsp;&nbsp;&nbsp;wa_fcat-fieldname&nbsp;='ZZ3PARTY_QC'.<br />
+&nbsp;&nbsp;wa_fcat-seltext_m&nbsp;='3PARTY_QC'.<br />
+&nbsp;&nbsp;APPEND&nbsp;wa_fcat&nbsp;TO&nbsp;it_fcat.<br />
+&nbsp;&nbsp;CLEAR&nbsp;wa_fcat.<br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;lo-colwidth_optimize&nbsp;=&nbsp;'X'.<br />
+<br />
+<br />
+&nbsp;&nbsp;CALL&nbsp;FUNCTION&nbsp;'REUSE_ALV_GRID_DISPLAY'<br />
+&nbsp;&nbsp;&nbsp;EXPORTING<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;I_CALLBACK_PROGRAM&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;'sy_repid'<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;IS_LAYOUT&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;wa_layout<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;IT_FIELDCAT&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;it_fcat<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;I_DEFAULT&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;'X'<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;I_SAVE&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;'A'<br />
+&nbsp;&nbsp;&nbsp;&nbsp;TABLES<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;t_outtab&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;IT_DT<br />
+&nbsp;&nbsp;&nbsp;EXCEPTIONS<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;PROGRAM_ERROR&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;1<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OTHERS&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;2<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;.<br />
+&nbsp;&nbsp;IF&nbsp;sy-subrc&nbsp;&lt;&gt;&nbsp;0.<br />
+   </div>
+   <div class="codeComment">
+*&nbsp;Implement&nbsp;suitable&nbsp;error&nbsp;handling&nbsp;here<br />
+   </div>
+   <div class="code">
+&nbsp;&nbsp;ENDIF.<br />
+<br />
+   </div>
+   <div class="codeComment">
+*Text&nbsp;elements<br />
+*----------------------------------------------------------<br />
+*&nbsp;001&nbsp;SELECT&nbsp;DATE<br />
+<br />
+<br />
+*Selection&nbsp;texts<br />
+*----------------------------------------------------------<br />
+*&nbsp;A_DT&nbsp;D&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;.<br />
+*&nbsp;A_INSTYP&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;SO_TYP<br />
+            </div>
+          </td>
+        </tr>
+      </table>
+      </td>
+      </tr>
+   <tr>
+<td class="footer">Extracted by Mass Download version 1.5.5 - E.G.Mellodew. 1998-2025. Sap Release 755</td>
+   </tr>
+</table>
+</body>
+</html>
