@@ -1,0 +1,317 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="application/xhtml+xml; charset=ISO-8859-1" />
+<title>ZRAM_CR02_WC_UPDATE</title>
+<style type="text/css">
+.code{ font-family:"Courier New", Courier, monospace; color:#000; font-size:14px; background-color:#F2F4F7 }
+  .codeComment {font-family:"Courier New", Courier, monospace; color:#0000F0; font-size:14px; background-color:#F2F4F7 }
+  .normalBold{ font-family:Arial, Helvetica, sans-serif; color:#000; font-size:12px; font-weight:800 }
+  .normalBoldLarge{ font-family:Arial, Helvetica, sans-serif; color:#000; font-size:16px; font-weight:800 }
+</style>
+<style type="text/css">
+  .normal{ font-family:Arial, Helvetica, sans-serif; color:#000; font-size:12px }
+  .footer{ font-family:Arial, Helvetica, sans-serif; color:#000; font-size:12px; text-align: center }
+  h2{ font-family:Arial, Helvetica, sans-serif; color:#000; font-size:16px; font-weight:800 }
+  h3{ font-family:Arial, Helvetica, sans-serif; color:#000; font-size:14px; font-weight:800 }
+  .outerTable{
+   background-color:#E0E7ED;
+   width:100%;
+   border-top-width: thin;
+   border-right-width: thin;
+   border-right-width: thin;
+   border-left-width: thin;
+   border-top-style: solid;
+   border-right-style: solid;
+   border-bottom-style: solid;
+   border-left-style: solid;
+  }
+  .innerTable{
+   background-color:#F2F4F7;
+   width:100%;
+   border-top-width: thin;
+   border-right-width: thin;
+   border-bottom-width: thin;
+   border-left-width: thin;
+   border-top-style: solid;
+   border-right-style: solid;
+   border-bottom-style: solid;
+   border-left-style: solid;
+  }
+</style>
+</head>
+<body>
+<table class="outerTable">
+  <tr class="normalBoldLarge">
+     <td><h2>Code listing for: ZRAM_CR02_WC_UPDATE</h2>
+<h3> Description: WC UPDATE LOCK</h3></td>
+   </tr>
+  <tr>
+     <td>
+     <table class="innerTable">
+       <tr>
+          <td>
+   <div class="codeComment">
+*&---------------------------------------------------------------------*<br />
+*&&nbsp;Report&nbsp;ZRAM_CR02_WC_UPDATE<br />
+*&---------------------------------------------------------------------*<br />
+*&<br />
+*&---------------------------------------------------------------------*<br />
+   </div>
+   <div class="code">
+REPORT ZRAM_CR02_WC_UPDATE.<br />
+<br />
+TYPES : BEGIN OF TY_EXC,<br />
+&nbsp;&nbsp;WERKS&nbsp;TYPE&nbsp;WERKS_D,<br />
+&nbsp;&nbsp;ARBPL&nbsp;TYPE&nbsp;ARBPL,<br />
+&nbsp;&nbsp;END&nbsp;OF&nbsp;TY_EXC.<br />
+<br />
+&nbsp;&nbsp;DATA&nbsp;:&nbsp;IT_EXC&nbsp;TYPE&nbsp;TABLE&nbsp;OF&nbsp;TY_EXC,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;WA_EXC&nbsp;TYPE&nbsp;&nbsp;TY_EXC.<br />
+<br />
+&nbsp;&nbsp;TYPES&nbsp;:&nbsp;&nbsp;BEGIN&nbsp;OF&nbsp;TY_ERROR,<br />
+&nbsp;&nbsp;DISC&nbsp;&nbsp;TYPE&nbsp;CHAR60,<br />
+&nbsp;&nbsp;WERKS&nbsp;TYPE&nbsp;WERKS_D,<br />
+&nbsp;&nbsp;ARBPL&nbsp;TYPE&nbsp;ARBPL,<br />
+&nbsp;&nbsp;END&nbsp;&nbsp;OF&nbsp;TY_ERROR.<br />
+<br />
+DATA : IT_ERROR TYPE TABLE OF TY_ERROR,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;WA_ERROR&nbsp;TYPE&nbsp;TY_ERROR.<br />
+<br />
+DATA : lv_string TYPE STRiNG.<br />
+DATA : it_raw(4096) TYPE c OCCURS 0,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;lv_ext&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;TYPE&nbsp;char5.<br />
+DATA:   messtab1 LIKE bdcmsgcoll OCCURS 0 WITH HEADER LINE.<br />
+<br />
+&nbsp;&nbsp;SELECTION-SCREEN&nbsp;:&nbsp;BEGIN&nbsp;OF&nbsp;BLOCK&nbsp;b2&nbsp;WITH&nbsp;FRAME&nbsp;TITLE&nbsp;TEXT-002.<br />
+&nbsp;&nbsp;PARAMETERS&nbsp;:&nbsp;p_file&nbsp;TYPE&nbsp;rlgrap-filename&nbsp;.<br />
+SELECTION-SCREEN : END OF BLOCK b2.<br />
+<br />
+AT SELECTION-SCREEN.<br />
+<br />
+AT SELECTION-SCREEN ON VALUE-REQUEST FOR p_file.<br />
+&nbsp;&nbsp;DATA&nbsp;:&nbsp;lv_file&nbsp;TYPE&nbsp;ibipparms-path.<br />
+&nbsp;&nbsp;CALL&nbsp;FUNCTION&nbsp;'F4_FILENAME'<br />
+&nbsp;&nbsp;&nbsp;&nbsp;EXPORTING<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;program_name&nbsp;&nbsp;=&nbsp;syst-cprog<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;dynpro_number&nbsp;=&nbsp;syst-dynnr<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;field_name&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;'P_FILE'<br />
+&nbsp;&nbsp;&nbsp;&nbsp;IMPORTING<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;file_name&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;lv_file.<br />
+<br />
+&nbsp;&nbsp;p_file&nbsp;=&nbsp;lv_file.<br />
+<br />
+&nbsp;&nbsp;INITIALIZATION.<br />
+<br />
+START-OF-SELECTION.<br />
+<br />
+&nbsp;PERFORM&nbsp;upload_file1.<br />
+&nbsp;PERFORM&nbsp;process_data1.<br />
+&nbsp;&nbsp;CLEAR&nbsp;p_file.<br />
+   </div>
+   <div class="codeComment">
+*--------------------------------------------------ERROR&nbsp;ALV<br />
+   </div>
+   <div class="code">
+&nbsp;&nbsp;CALL&nbsp;METHOD&nbsp;cl_salv_table=&gt;factory<br />
+   </div>
+   <div class="codeComment">
+*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;EXPORTING<br />
+*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;list_display&nbsp;&nbsp;&nbsp;=&nbsp;IF_SALV_C_BOOL_SAP=&gt;FALSE<br />
+*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;r_container&nbsp;&nbsp;&nbsp;&nbsp;=<br />
+*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;container_name&nbsp;=<br />
+   </div>
+   <div class="code">
+&nbsp;&nbsp;&nbsp;&nbsp;IMPORTING<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;r_salv_table&nbsp;=&nbsp;DATA(it_msg1)<br />
+&nbsp;&nbsp;&nbsp;&nbsp;CHANGING<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;t_table&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;IT_ERROR.<br />
+<br />
+&nbsp;&nbsp;CALL&nbsp;METHOD&nbsp;it_msg1-&gt;display.<br />
+<br />
+&nbsp;&nbsp;CLEAR&nbsp;:&nbsp;IT_ERROR.<br />
+<br />
+   </div>
+   <div class="codeComment">
+*-------------ERROR&nbsp;ALV<br />
+<br />
+   </div>
+   <div class="code">
+FORM upload_file1 .<br />
+DATA : it_raw TYPE truxs_t_text_data.<br />
+&nbsp;&nbsp;DATA&nbsp;:&nbsp;lv_string&nbsp;TYPE&nbsp;STRiNG.<br />
+<br />
+&nbsp;&nbsp;lv_String&nbsp;=&nbsp;P_file.<br />
+<br />
+<br />
+&nbsp;&nbsp;CALL&nbsp;FUNCTION&nbsp;'TRINT_FILE_GET_EXTENSION'<br />
+&nbsp;&nbsp;&nbsp;&nbsp;EXPORTING<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;filename&nbsp;&nbsp;=&nbsp;P_file<br />
+&nbsp;&nbsp;&nbsp;&nbsp;IMPORTING<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;extension&nbsp;=&nbsp;lv_ext.<br />
+&nbsp;&nbsp;IF&nbsp;lv_ext&nbsp;=&nbsp;'XLS'&nbsp;OR&nbsp;lv_ext&nbsp;=&nbsp;'XLSX'.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;IF&nbsp;P_file&nbsp;IS&nbsp;NOT&nbsp;INITIAL.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CALL&nbsp;FUNCTION&nbsp;'TEXT_CONVERT_XLS_TO_SAP'<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;EXPORTING<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;i_line_header&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;'X'<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;i_tab_raw_data&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;it_raw<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;i_filename&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;P_file<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;TABLES<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;i_tab_converted_data&nbsp;=&nbsp;IT_EXC<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;EXCEPTIONS<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;conversion_failed&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;1<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OTHERS&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;2.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;IF&nbsp;sy-subrc&nbsp;&lt;&gt;&nbsp;0.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;MESSAGE&nbsp;'Upload&nbsp;failed'&nbsp;TYPE&nbsp;'E'.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ENDIF.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;ELSE.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;MESSAGE&nbsp;'Please&nbsp;select&nbsp;an&nbsp;upload&nbsp;file'&nbsp;TYPE&nbsp;'E'&nbsp;DISPLAY&nbsp;LIKE&nbsp;'I'.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;ENDIF.<br />
+   </div>
+   <div class="codeComment">
+*&nbsp;&nbsp;&nbsp;&nbsp;DELETE&nbsp;IT_FILE&nbsp;FROM&nbsp;1&nbsp;TO&nbsp;4.<br />
+<br />
+   </div>
+   <div class="code">
+&nbsp;&nbsp;ELSE.<br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;IF&nbsp;P_file&nbsp;IS&nbsp;NOT&nbsp;INITIAL.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CALL&nbsp;FUNCTION&nbsp;'GUI_UPLOAD'<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;EXPORTING<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;filename&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;lv_String<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;filetype&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;'ASC'<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;has_field_separator&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;'X'<br />
+   </div>
+   <div class="codeComment">
+*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;HEADER_LENGTH&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;0<br />
+*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;READ_BY_LINE&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;'X'<br />
+*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;DAT_MODE&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;'&nbsp;'<br />
+*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CODEPAGE&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;'&nbsp;'<br />
+*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;IGNORE_CERR&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;ABAP_TRUE<br />
+*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;REPLACEMENT&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;'#'<br />
+*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CHECK_BOM&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;'&nbsp;'<br />
+*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;VIRUS_SCAN_PROFILE&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=<br />
+*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;NO_AUTH_CHECK&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;'&nbsp;'<br />
+*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;IMPORTING<br />
+*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FILELENGTH&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=<br />
+*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;HEADER&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=<br />
+   </div>
+   <div class="code">
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;TABLES<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;data_tab&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;IT_EXC<br />
+   </div>
+   <div class="codeComment">
+*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CHANGING<br />
+*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ISSCANPERFORMED&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;'&nbsp;'<br />
+   </div>
+   <div class="code">
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;EXCEPTIONS<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;file_open_error&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;1<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;file_read_error&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;2<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;no_batch&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;3<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;gui_refuse_filetransfer&nbsp;=&nbsp;4<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;invalid_type&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;5<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;no_authority&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;6<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;unknown_error&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;7<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;bad_data_format&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;8<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;header_not_allowed&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;9<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;separator_not_allowed&nbsp;&nbsp;&nbsp;=&nbsp;10<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;header_too_long&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;11<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;unknown_dp_error&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;12<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;access_denied&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;13<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;dp_out_of_memory&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;14<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;disk_full&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;15<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;dp_timeout&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;16<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OTHERS&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;17.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;IF&nbsp;sy-subrc&nbsp;&lt;&gt;&nbsp;0.<br />
+   </div>
+   <div class="codeComment">
+*&nbsp;Implement&nbsp;suitable&nbsp;error&nbsp;handling&nbsp;here<br />
+   </div>
+   <div class="code">
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ENDIF.<br />
+   </div>
+   <div class="codeComment">
+*&nbsp;&nbsp;&nbsp;&nbsp;DELETE&nbsp;IT_FILE&nbsp;FROM&nbsp;1&nbsp;TO&nbsp;4.<br />
+   </div>
+   <div class="code">
+&nbsp;&nbsp;&nbsp;&nbsp;ENDIF.<br />
+&nbsp;&nbsp;ENDIF.<br />
+ENDFORM.<br />
+<br />
+FORM process_data1 .<br />
+&nbsp;LOOP&nbsp;AT&nbsp;IT_EXC&nbsp;INTO&nbsp;WA_EXC.<br />
+<br />
+&nbsp;&nbsp;&nbsp;SELECT&nbsp;SINGLE&nbsp;WERKS,ARBPL&nbsp;FROM&nbsp;CRHD&nbsp;INTO&nbsp;@DATA(WA_WC)&nbsp;WHERE&nbsp;WERKS&nbsp;=&nbsp;@WA_EXC-werks&nbsp;&nbsp;AND&nbsp;&nbsp;ARBPL&nbsp;=&nbsp;@WA_EXC-arbpl.<br />
+<br />
+&nbsp;&nbsp;IF&nbsp;WA_WC&nbsp;IS&nbsp;NOT&nbsp;INITIAL.<br />
+&nbsp;&nbsp;&nbsp;DATA:&nbsp;lv_werks&nbsp;TYPE&nbsp;BDCDATA-FVAL,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;lv_ARBPL&nbsp;TYPE&nbsp;BDCDATA-FVAL.<br />
+<br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;lv_werks&nbsp;=&nbsp;&nbsp;WA_WC-WERKS.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;lv_ARBPL&nbsp;=&nbsp;&nbsp;WA_WC-ARBPL.<br />
+<br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;call&nbsp;function&nbsp;<a&nbsp;href&nbsp;="zram_cr02_wc/zram_cr02_wc.html">'ZRAM_CR02_WC'</a><br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;EXPORTING<br />
+   </div>
+   <div class="codeComment">
+*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CTU&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;'X'<br />
+*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;MODE&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;'E'<br />
+*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;UPDATE&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;'S'<br />
+*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;GROUP&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=<br />
+*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;USER&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=<br />
+*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;KEEP&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=<br />
+*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;HOLDDATE&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=<br />
+*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;NODATA&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;'/'<br />
+   </div>
+   <div class="code">
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;werks_001&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;lv_werks<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;arbpl_002&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;lv_ARBPL<br />
+   </div>
+   <div class="codeComment">
+*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;IMPORTING<br />
+*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;SUBRC&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=<br />
+   </div>
+   <div class="code">
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;TABLES<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;MESSTAB&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;messtab1&nbsp;.<br />
+<br />
+<br />
+&nbsp;&nbsp;IF&nbsp;sy-subrc&nbsp;&lt;&gt;&nbsp;0.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;READ&nbsp;TABLE&nbsp;&nbsp;messtab1&nbsp;&nbsp;WITH&nbsp;KEY&nbsp;msgnr&nbsp;=&nbsp;'100'.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;DATA(lv_msg1)&nbsp;=&nbsp;messtab1-msgv1.<br />
+&nbsp;&nbsp;ELSE.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;MESSAGE&nbsp;'DONE&nbsp;DANA&nbsp;DONE&nbsp;DONE'&nbsp;TYPE&nbsp;'S'.<br />
+&nbsp;&nbsp;ENDIF.<br />
+ELSE.<br />
+<br />
+&nbsp;&nbsp;&nbsp;WA_ERROR-DISC&nbsp;&nbsp;&nbsp;=&nbsp;&nbsp;&nbsp;'PLANT&nbsp;&&nbsp;WC&nbsp;NOT&nbsp;EXISTS'.<br />
+&nbsp;&nbsp;&nbsp;WA_ERROR-WERKS&nbsp;&nbsp;=&nbsp;WA_EXC-werks.<br />
+&nbsp;&nbsp;&nbsp;WA_ERROR-ARBPL&nbsp;&nbsp;=&nbsp;&nbsp;WA_EXC-arbpl.<br />
+&nbsp;&nbsp;&nbsp;APPEND&nbsp;WA_ERROR&nbsp;&nbsp;TO&nbsp;IT_ERROR.<br />
+&nbsp;ENDIF.<br />
+ENDLOOP.<br />
+ENDFORM.<br />
+<br />
+<br />
+   </div>
+   <div class="codeComment">
+*Messages<br />
+*----------------------------------------------------------<br />
+*<br />
+*&nbsp;Message&nbsp;class:&nbsp;Hard&nbsp;coded<br />
+*&nbsp;&nbsp;&nbsp;Upload&nbsp;failed<br />
+            </div>
+          </td>
+        </tr>
+      </table>
+      </td>
+      </tr>
+   <tr>
+<td class="footer">Extracted by Mass Download version 1.5.5 - E.G.Mellodew. 1998-2025. Sap Release 755</td>
+   </tr>
+</table>
+</body>
+</html>

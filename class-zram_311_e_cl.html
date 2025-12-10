@@ -1,0 +1,140 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="application/xhtml+xml; charset=ISO-8859-1" />
+<title>ZRAM_311_E_CL</title>
+<style type="text/css">
+.code{ font-family:"Courier New", Courier, monospace; color:#000; font-size:14px; background-color:#F2F4F7 }
+  .codeComment {font-family:"Courier New", Courier, monospace; color:#0000F0; font-size:14px; background-color:#F2F4F7 }
+  .normalBold{ font-family:Arial, Helvetica, sans-serif; color:#000; font-size:12px; font-weight:800 }
+  .normalBoldLarge{ font-family:Arial, Helvetica, sans-serif; color:#000; font-size:16px; font-weight:800 }
+</style>
+<style type="text/css">
+  .normal{ font-family:Arial, Helvetica, sans-serif; color:#000; font-size:12px }
+  .footer{ font-family:Arial, Helvetica, sans-serif; color:#000; font-size:12px; text-align: center }
+  h2{ font-family:Arial, Helvetica, sans-serif; color:#000; font-size:16px; font-weight:800 }
+  h3{ font-family:Arial, Helvetica, sans-serif; color:#000; font-size:14px; font-weight:800 }
+  .outerTable{
+   background-color:#E0E7ED;
+   width:100%;
+   border-top-width: thin;
+   border-right-width: thin;
+   border-right-width: thin;
+   border-left-width: thin;
+   border-top-style: solid;
+   border-right-style: solid;
+   border-bottom-style: solid;
+   border-left-style: solid;
+  }
+  .innerTable{
+   background-color:#F2F4F7;
+   width:100%;
+   border-top-width: thin;
+   border-right-width: thin;
+   border-bottom-width: thin;
+   border-left-width: thin;
+   border-top-style: solid;
+   border-right-style: solid;
+   border-bottom-style: solid;
+   border-left-style: solid;
+  }
+</style>
+</head>
+<body>
+<table class="outerTable">
+  <tr class="normalBoldLarge">
+     <td><h2>Code listing for class: ZRAM_311_E_CL</h2>
+<h3> Description: 311 excel uplord</h3></td>
+   </tr>
+  <tr>
+     <td>
+     <table class="innerTable">
+       <tr>
+          <td>
+   <div class="codeComment">
+**************************************************************************<br />
+*   Class attributes.                                                    *<br />
+**************************************************************************<br />
+   </div>
+   <div class="code">
+Instantiation: Public<br />
+Message class: <br />
+State: Implemented<br />
+Final Indicator: X<br />
+R/3 Release: 755<br />
+<br />
+   </div>
+   <div class="codeComment">
+**************************************************************************<br />
+*   Public section of class.                                             *<br />
+**************************************************************************<br />
+   </div>
+   <div class="code">
+CLASS zram_311_e_cl DEFINITION<br />
+&nbsp;&nbsp;PUBLIC<br />
+&nbsp;&nbsp;FINAL<br />
+&nbsp;&nbsp;CREATE&nbsp;PUBLIC&nbsp;.<br />
+<br />
+&nbsp;&nbsp;PUBLIC&nbsp;SECTION.<br />
+&nbsp;&nbsp;INTERFACES&nbsp;if_amdp_marker_hdb.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;TYPES&nbsp;:&nbsp;BEGIN&nbsp;OF&nbsp;is_ITAB,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;plant&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;TYPE&nbsp;WERKS_D,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;STGE_LOC&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;TYPE&nbsp;LGORT_D,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;BATCH&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;TYPE&nbsp;&nbsp;CHARG_D,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;move_type&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;TYPE&nbsp;BWART,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;spec_stock&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;TYPE&nbsp;SOBKZ,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;entry_qnt&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;TYPE&nbsp;ERFMG,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;move_stloc&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;TYPE&nbsp;LGORT_D,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;move_batch&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;TYPE&nbsp;CHARG_D,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;val_sales_ord&nbsp;&nbsp;TYPE&nbsp;VBELN,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;val_s_ord_item&nbsp;TYPE&nbsp;POSNR,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;material_long&nbsp;&nbsp;TYPE&nbsp;MATNR40,<br />
+END OF is_ITAB.<br />
+<br />
+TYPES : it_itab1 TYPE STANDARD TABLE OF  is_ITAB WITH DEFAULT KEY.<br />
+<br />
+&nbsp;&nbsp;METHODS&nbsp;<a&nbsp;href="public_methods/get_e_stock.html">GET_E_STOCK</a><br />
+&nbsp;IMPORTING<br />
+&nbsp;&nbsp;VALUE(CO07H)&nbsp;TYPE&nbsp;STRING<br />
+&nbsp;&nbsp;EXPORTING<br />
+&nbsp;&nbsp;VALUE(IT_DATA)&nbsp;TYPE&nbsp;it_itab1.<br />
+<br />
+<br />
+   </div>
+   <div class="codeComment">
+**************************************************************************<br />
+*   Private section of class.                                            *<br />
+**************************************************************************<br />
+   </div>
+   <div class="code">
+&nbsp;&nbsp;PRIVATE&nbsp;SECTION.<br />
+<br />
+   </div>
+   <div class="codeComment">
+**************************************************************************<br />
+*   Protected section of class.                                          *<br />
+**************************************************************************<br />
+   </div>
+   <div class="code">
+&nbsp;&nbsp;PROTECTED&nbsp;SECTION.<br />
+<br />
+   </div>
+   <div class="codeComment">
+**************************************************************************<br />
+*   Types section of class.                                              *<br />
+**************************************************************************<br />
+*"* dummy include to reduce generation dependencies between<br />
+*"* class ZRAM_311_E_CL and it's users.<br />
+*"* touched if any type reference has been changed<br />
+            </div>
+          </td>
+        </tr>
+      </table>
+      </td>
+      </tr>
+   <tr>
+<td class="footer">Extracted by Mass Download version 1.5.5 - E.G.Mellodew. 1998-2025. Sap Release 755</td>
+   </tr>
+</table>
+</body>
+</html>
