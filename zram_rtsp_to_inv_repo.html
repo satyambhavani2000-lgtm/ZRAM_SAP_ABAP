@@ -1,0 +1,337 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="application/xhtml+xml; charset=ISO-8859-1" />
+<title>ZRAM_RTSP_TO_INV_REPO</title>
+<style type="text/css">
+.code{ font-family:"Courier New", Courier, monospace; color:#000; font-size:14px; background-color:#F2F4F7 }
+  .codeComment {font-family:"Courier New", Courier, monospace; color:#0000F0; font-size:14px; background-color:#F2F4F7 }
+  .normalBold{ font-family:Arial, Helvetica, sans-serif; color:#000; font-size:12px; font-weight:800 }
+  .normalBoldLarge{ font-family:Arial, Helvetica, sans-serif; color:#000; font-size:16px; font-weight:800 }
+</style>
+<style type="text/css">
+  .normal{ font-family:Arial, Helvetica, sans-serif; color:#000; font-size:12px }
+  .footer{ font-family:Arial, Helvetica, sans-serif; color:#000; font-size:12px; text-align: center }
+  h2{ font-family:Arial, Helvetica, sans-serif; color:#000; font-size:16px; font-weight:800 }
+  h3{ font-family:Arial, Helvetica, sans-serif; color:#000; font-size:14px; font-weight:800 }
+  .outerTable{
+   background-color:#E0E7ED;
+   width:100%;
+   border-top-width: thin;
+   border-right-width: thin;
+   border-right-width: thin;
+   border-left-width: thin;
+   border-top-style: solid;
+   border-right-style: solid;
+   border-bottom-style: solid;
+   border-left-style: solid;
+  }
+  .innerTable{
+   background-color:#F2F4F7;
+   width:100%;
+   border-top-width: thin;
+   border-right-width: thin;
+   border-bottom-width: thin;
+   border-left-width: thin;
+   border-top-style: solid;
+   border-right-style: solid;
+   border-bottom-style: solid;
+   border-left-style: solid;
+  }
+</style>
+</head>
+<body>
+<table class="outerTable">
+  <tr class="normalBoldLarge">
+     <td><h2>Code listing for: ZRAM_RTSP_TO_INV_REPO</h2>
+<h3> Description: Rtsp to inv Detaile Report.</h3></td>
+   </tr>
+  <tr>
+     <td>
+     <table class="innerTable">
+       <tr>
+          <td>
+   <div class="codeComment">
+*&---------------------------------------------------------------------*<br />
+*&&nbsp;Report&nbsp;ZRAM_RTSP_TO_INV_REPO<br />
+*&---------------------------------------------------------------------*<br />
+*&<br />
+*&---------------------------------------------------------------------*<br />
+   </div>
+   <div class="code">
+REPORT zram_rtsp_to_inv_repo.<br />
+<br />
+TABLES : vbap,afpo,lips.<br />
+<br />
+TYPES : BEGIN OF ty_rt_inv1,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;SO_ORD&nbsp;TYPE&nbsp;VBAP-VBELN,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;SO_LI&nbsp;TYPE&nbsp;VBAP-POSNR,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;SO_QTY&nbsp;TYPE&nbsp;VBAP-KWMENG,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;SO_PLANT&nbsp;TYPE&nbsp;VBAP-WERKS,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;SO_CRT_DT&nbsp;TYPE&nbsp;ZTREE-ersda,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ORD_TYP&nbsp;&nbsp;&nbsp;TYPE&nbsp;VBAP-auart_ana,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;MATERIAL&nbsp;&nbsp;TYPE&nbsp;VBAP-MATNR,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;PRD_ORD&nbsp;&nbsp;&nbsp;TYPE&nbsp;AFPO-AUFNR,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;BQty&nbsp;&nbsp;TYPE&nbsp;&nbsp;&nbsp;AFPO-psmng,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;PRD_REL_DAT&nbsp;TYPE&nbsp;ZTREE-ersda,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;PRD_ORD_PLNT&nbsp;TYPE&nbsp;AUFK-WERKS,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;RTSP_DATE&nbsp;&nbsp;TYPE&nbsp;ZTREE-ersda,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;RTSP_QTY&nbsp;&nbsp;TYPE&nbsp;AFPO-WEMNG,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;RTSP_CANC_DAT&nbsp;TYPE&nbsp;ZTREE-ersda,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;RTSP_CANC_QTY&nbsp;TYPE&nbsp;AUFM-ERFMG,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;DEL_NUM&nbsp;TYPE&nbsp;LIPS-VGBEL,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;DEL_SR&nbsp;&nbsp;&nbsp;TYPE&nbsp;LIPS-VGPOS,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;DEL_QTY&nbsp;&nbsp;&nbsp;TYPE&nbsp;LIPS-LGMNG,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;PGI_QTY&nbsp;TYPE&nbsp;MSEG-ERFMG,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;DEL_CANC_DAT&nbsp;TYPE&nbsp;ZTREE-ersda,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;PGI_dat&nbsp;TYPE&nbsp;ZTREE-ersda,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;PGI_CAN_DAT&nbsp;TYPE&nbsp;ZTREE-ersda,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;PGI_CAN_QTY&nbsp;TYPE&nbsp;mseg-MENGE,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;InvOdNo&nbsp;TYPE&nbsp;VBRP-VBELV,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;InvOdSr&nbsp;TYPE&nbsp;VBRP-POSNV,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;InvQty&nbsp;TYPE&nbsp;VBRP-FKIMG,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;INV_CAN_DAT&nbsp;TYPE&nbsp;ZTREE-ersda,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;INV_CAN_QTY&nbsp;&nbsp;TYPE&nbsp;VBRP-FKIMG,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;END&nbsp;OF&nbsp;ty_rt_inv1.<br />
+<br />
+DATA : it_itab TYPE TABLE OF  ty_rt_inv1,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;wa_itab&nbsp;TYPE&nbsp;ty_rt_inv1.<br />
+<br />
+SELECTION-SCREEN:BEGIN OF BLOCK b1 WITH FRAME TITLE TEXT-001 .<br />
+&nbsp;&nbsp;SELECT-OPTIONS&nbsp;:&nbsp;p_plant&nbsp;FOR&nbsp;vbap-werks,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;p_so&nbsp;&nbsp;&nbsp;&nbsp;FOR&nbsp;vbap-vbeln,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;p_sr&nbsp;&nbsp;&nbsp;&nbsp;FOR&nbsp;vbap-posnr,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;p_prd&nbsp;&nbsp;&nbsp;FOR&nbsp;afpo-aufnr,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;p_del&nbsp;&nbsp;&nbsp;FOR&nbsp;lips-vgbel.<br />
+SELECTION-SCREEN END OF BLOCK b1.<br />
+<br />
+TRY.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;DATA(lv_where)&nbsp;=&nbsp;cl_shdb_seltab=&gt;combine_seltabs(<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;it_named_seltabs&nbsp;=&nbsp;VALUE&nbsp;#(<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(&nbsp;name&nbsp;=&nbsp;'WERKS'&nbsp;dref&nbsp;=&nbsp;REF&nbsp;#(&nbsp;p_plant[]&nbsp;)&nbsp;)<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(&nbsp;name&nbsp;=&nbsp;'VBELN'&nbsp;dref&nbsp;=&nbsp;REF&nbsp;#(&nbsp;p_so[]&nbsp;)&nbsp;)<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(&nbsp;name&nbsp;=&nbsp;'POSNR'&nbsp;dref&nbsp;=&nbsp;REF&nbsp;#(&nbsp;p_sr[]&nbsp;)&nbsp;)<br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;)<br />
+   </div>
+   <div class="codeComment">
+*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;iv_client_field&nbsp;&nbsp;=&nbsp;'MANDT'<br />
+   </div>
+   <div class="code">
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;).<br />
+&nbsp;&nbsp;CATCH&nbsp;cx_shdb_exception.&nbsp;"&nbsp;exceptions&nbsp;of&nbsp;HANA&nbsp;DB&nbsp;objects<br />
+ENDTRY.<br />
+<br />
+TRY.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;DATA(lv_where1)&nbsp;=&nbsp;cl_shdb_seltab=&gt;combine_seltabs(<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;it_named_seltabs&nbsp;=&nbsp;VALUE&nbsp;#(<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(&nbsp;name&nbsp;=&nbsp;'AUFNR'&nbsp;dref&nbsp;=&nbsp;REF&nbsp;#(&nbsp;p_prd[]&nbsp;)&nbsp;)<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;)<br />
+<br />
+   </div>
+   <div class="codeComment">
+*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;iv_client_field&nbsp;&nbsp;=&nbsp;'MANDT'<br />
+   </div>
+   <div class="code">
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;).<br />
+&nbsp;&nbsp;CATCH&nbsp;cx_shdb_exception.&nbsp;"&nbsp;exceptions&nbsp;of&nbsp;HANA&nbsp;DB&nbsp;objects<br />
+ENDTRY.<br />
+<br />
+TRY.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;DATA(lv_where2)&nbsp;=&nbsp;cl_shdb_seltab=&gt;combine_seltabs(<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;it_named_seltabs&nbsp;=&nbsp;VALUE&nbsp;#(<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(&nbsp;name&nbsp;=&nbsp;'VGBEL'&nbsp;dref&nbsp;=&nbsp;REF&nbsp;#(&nbsp;p_del[]&nbsp;)&nbsp;)<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;)<br />
+<br />
+   </div>
+   <div class="codeComment">
+*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;iv_client_field&nbsp;&nbsp;=&nbsp;'MANDT'<br />
+   </div>
+   <div class="code">
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;).<br />
+&nbsp;&nbsp;CATCH&nbsp;cx_shdb_exception.&nbsp;"&nbsp;exceptions&nbsp;of&nbsp;HANA&nbsp;DB&nbsp;objects<br />
+ENDTRY.<br />
+<br />
+START-OF-SELECTION.<br />
+CALL METHOD zram_rtsp_to_inv_status_cl=&gt;cl_rtsp_to_inv<br />
+&nbsp;&nbsp;EXPORTING<br />
+&nbsp;&nbsp;&nbsp;&nbsp;vbap1&nbsp;&nbsp;&nbsp;=&nbsp;lv_where<br />
+&nbsp;&nbsp;&nbsp;&nbsp;afpo1&nbsp;&nbsp;&nbsp;=&nbsp;lv_where1<br />
+&nbsp;&nbsp;&nbsp;&nbsp;lips1&nbsp;&nbsp;&nbsp;=&nbsp;lv_where2<br />
+&nbsp;&nbsp;IMPORTING<br />
+&nbsp;&nbsp;&nbsp;&nbsp;it_data&nbsp;=&nbsp;it_itab.<br />
+<br />
+<br />
+<br />
+&nbsp;&nbsp;DATA:&nbsp;it_fcat&nbsp;TYPE&nbsp;slis_t_fieldcat_alv,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;wa_fcat&nbsp;TYPE&nbsp;slis_fieldcat_alv,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;lo&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;TYPE&nbsp;slis_layout_alv.<br />
+<br />
+&nbsp;DATA&nbsp;:&nbsp;wa_layout&nbsp;&nbsp;TYPE&nbsp;slis_layout_alv,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;wa_keyinfo&nbsp;TYPE&nbsp;slis_keyinfo_alv.<br />
+<br />
+&nbsp;&nbsp;DATA:&nbsp;fieldcatalog&nbsp;&nbsp;TYPE&nbsp;slis_t_fieldcat_alv&nbsp;WITH&nbsp;HEADER&nbsp;LINE.<br />
+<br />
+&nbsp;&nbsp;wa_layout-colwidth_optimize&nbsp;=&nbsp;'X'.<br />
+<br />
+<br />
+wa_fcat-col_pos = 1. wa_fcat-seltext_m = 'SO_ORD'. wa_fcat-fieldname = 'SO_ORD'. wa_fcat-ref_tabname = 'VBAP'. wa_fcat-tabname = 'IT_ITAB'.<br />
+APPEND wa_fcat TO it_fcat.<br />
+CLEAR wa_fcat.<br />
+<br />
+wa_fcat-col_pos = 2. wa_fcat-seltext_m = 'SO_LI'. wa_fcat-fieldname = 'SO_LI'. wa_fcat-ref_tabname = 'VBAP'. wa_fcat-tabname = 'IT_ITAB'.<br />
+APPEND wa_fcat TO it_fcat.<br />
+CLEAR wa_fcat.<br />
+<br />
+wa_fcat-col_pos = 3. wa_fcat-seltext_m = 'SO_QTY'. wa_fcat-fieldname = 'SO_QTY'. wa_fcat-ref_tabname = 'VBAP'. wa_fcat-tabname = 'IT_ITAB'.<br />
+APPEND wa_fcat TO it_fcat.<br />
+CLEAR wa_fcat.<br />
+<br />
+wa_fcat-col_pos = 4. wa_fcat-seltext_m = 'SO_PLANT'. wa_fcat-fieldname = 'SO_PLANT'. wa_fcat-ref_tabname = 'VBAP'. wa_fcat-tabname = 'IT_ITAB'.<br />
+APPEND wa_fcat TO it_fcat.<br />
+CLEAR wa_fcat.<br />
+<br />
+wa_fcat-col_pos = 5. wa_fcat-seltext_m = 'SO_CRT_DT'. wa_fcat-fieldname = 'SO_CRT_DT'.  wa_fcat-tabname = 'IT_ITAB'.<br />
+APPEND wa_fcat TO it_fcat.<br />
+CLEAR wa_fcat.<br />
+<br />
+wa_fcat-col_pos = 6. wa_fcat-seltext_m = 'ORD_TYP'. wa_fcat-fieldname = 'ORD_TYP'. wa_fcat-ref_tabname = 'VBAP'. wa_fcat-tabname = 'IT_ITAB'.<br />
+APPEND wa_fcat TO it_fcat.<br />
+CLEAR wa_fcat.<br />
+<br />
+wa_fcat-col_pos = 7. wa_fcat-seltext_m = 'MATERIAL'. wa_fcat-fieldname = 'MATERIAL'. wa_fcat-ref_tabname = 'VBAP'. wa_fcat-tabname = 'IT_ITAB'.<br />
+APPEND wa_fcat TO it_fcat.<br />
+CLEAR wa_fcat.<br />
+<br />
+wa_fcat-col_pos = 8. wa_fcat-seltext_m = 'PRD_ORD'. wa_fcat-fieldname = 'PRD_ORD'. wa_fcat-ref_tabname = 'AFPO'. wa_fcat-tabname = 'IT_ITAB'.<br />
+APPEND wa_fcat TO it_fcat.<br />
+CLEAR wa_fcat.<br />
+<br />
+wa_fcat-col_pos = 9. wa_fcat-seltext_m = 'BQty'. wa_fcat-fieldname = 'BQty'. wa_fcat-ref_tabname = 'AFPO'. wa_fcat-tabname = 'IT_ITAB'.<br />
+APPEND wa_fcat TO it_fcat.<br />
+CLEAR wa_fcat.<br />
+<br />
+wa_fcat-col_pos = 10. wa_fcat-seltext_m = 'PRD_REL_DAT'. wa_fcat-fieldname = 'PRD_REL_DAT'.  wa_fcat-tabname = 'IT_ITAB'.<br />
+APPEND wa_fcat TO it_fcat.<br />
+CLEAR wa_fcat.<br />
+<br />
+wa_fcat-col_pos = 11. wa_fcat-seltext_m = 'PRD_ORD_PLNT'. wa_fcat-fieldname = 'PRD_ORD_PLNT'. wa_fcat-ref_tabname = 'AUFK'. wa_fcat-tabname = 'IT_ITAB'.<br />
+APPEND wa_fcat TO it_fcat.<br />
+CLEAR wa_fcat.<br />
+<br />
+wa_fcat-col_pos = 12. wa_fcat-seltext_m = 'RTSP_DATE'. wa_fcat-fieldname = 'RTSP_DATE'.  wa_fcat-tabname = 'IT_ITAB'.<br />
+APPEND wa_fcat TO it_fcat.<br />
+CLEAR wa_fcat.<br />
+<br />
+wa_fcat-col_pos = 13. wa_fcat-seltext_m = 'RTSP_QTY'. wa_fcat-fieldname = 'RTSP_QTY'. wa_fcat-ref_tabname = 'AFPO'. wa_fcat-tabname = 'IT_ITAB'.<br />
+APPEND wa_fcat TO it_fcat.<br />
+CLEAR wa_fcat.<br />
+<br />
+wa_fcat-col_pos = 14. wa_fcat-seltext_m = 'RTSP_CANC_DAT'. wa_fcat-fieldname = 'RTSP_CANC_DAT'.  wa_fcat-tabname = 'IT_ITAB'.<br />
+APPEND wa_fcat TO it_fcat.<br />
+CLEAR wa_fcat.<br />
+<br />
+wa_fcat-col_pos = 15. wa_fcat-seltext_m = 'RTSP_CANC_QTY '. wa_fcat-fieldname = 'RTSP_CANC_QTY '. wa_fcat-ref_tabname = 'AUFM'. wa_fcat-tabname = 'IT_ITAB'.<br />
+APPEND wa_fcat TO it_fcat.<br />
+CLEAR wa_fcat.<br />
+<br />
+wa_fcat-col_pos = 16. wa_fcat-seltext_m = 'DEL_NUM'. wa_fcat-fieldname = 'DEL_NUM'. wa_fcat-ref_tabname = 'LIPS'. wa_fcat-tabname = 'IT_ITAB'.<br />
+APPEND wa_fcat TO it_fcat.<br />
+CLEAR wa_fcat.<br />
+<br />
+wa_fcat-col_pos = 17. wa_fcat-seltext_m = 'DEL_SR'. wa_fcat-fieldname = 'DEL_SR'. wa_fcat-ref_tabname = 'LIPS'. wa_fcat-tabname = 'IT_ITAB'.<br />
+APPEND wa_fcat TO it_fcat.<br />
+CLEAR wa_fcat.<br />
+<br />
+wa_fcat-col_pos = 18. wa_fcat-seltext_m = 'DEL_QTY'. wa_fcat-fieldname = 'DEL_QTY'. wa_fcat-ref_tabname = 'LIPS'. wa_fcat-tabname = 'IT_ITAB'.<br />
+APPEND wa_fcat TO it_fcat.<br />
+CLEAR wa_fcat.<br />
+<br />
+wa_fcat-col_pos = 19. wa_fcat-seltext_m = 'PGI_QTY'. wa_fcat-fieldname = 'PGI_QTY'. wa_fcat-ref_tabname = 'MSEG'. wa_fcat-tabname = 'IT_ITAB'.<br />
+APPEND wa_fcat TO it_fcat.<br />
+CLEAR wa_fcat.<br />
+<br />
+wa_fcat-col_pos = 20. wa_fcat-seltext_m = 'DEL_CANC_DAT'. wa_fcat-fieldname = 'DEL_CANC_DAT'.  wa_fcat-tabname = 'IT_ITAB'.<br />
+APPEND wa_fcat TO it_fcat.<br />
+CLEAR wa_fcat.<br />
+<br />
+wa_fcat-col_pos = 21. wa_fcat-seltext_m = 'PGI_dat'. wa_fcat-fieldname = 'PGI_dat'.  wa_fcat-tabname = 'IT_ITAB'.<br />
+APPEND wa_fcat TO it_fcat.<br />
+CLEAR wa_fcat.<br />
+<br />
+wa_fcat-col_pos = 22. wa_fcat-seltext_m = 'PGI_CAN_DAT'. wa_fcat-fieldname = 'PGI_CAN_DAT'.  wa_fcat-tabname = 'IT_ITAB'.<br />
+APPEND wa_fcat TO it_fcat.<br />
+CLEAR wa_fcat.<br />
+<br />
+wa_fcat-col_pos = 23. wa_fcat-seltext_m = 'PGI_CAN_QTY'. wa_fcat-fieldname = 'PGI_CAN_QTY'. wa_fcat-ref_tabname = 'MSEG'. wa_fcat-tabname = 'IT_ITAB'.<br />
+APPEND wa_fcat TO it_fcat.<br />
+CLEAR wa_fcat.<br />
+<br />
+wa_fcat-col_pos = 24. wa_fcat-seltext_m = 'InvOdNo'. wa_fcat-fieldname = 'InvOdNo'. wa_fcat-ref_tabname = 'VBRP'. wa_fcat-tabname = 'IT_ITAB'.<br />
+APPEND wa_fcat TO it_fcat.<br />
+CLEAR wa_fcat.<br />
+<br />
+wa_fcat-col_pos = 25. wa_fcat-seltext_m = 'InvOdSr'. wa_fcat-fieldname = 'InvOdSr'. wa_fcat-ref_tabname = 'VBRP'. wa_fcat-tabname = 'IT_ITAB'.<br />
+APPEND wa_fcat TO it_fcat.<br />
+CLEAR wa_fcat.<br />
+<br />
+wa_fcat-col_pos = 26. wa_fcat-seltext_m = 'InvQty'. wa_fcat-fieldname = 'InvQty'. wa_fcat-ref_tabname = 'VBRP'. wa_fcat-tabname = 'IT_ITAB'.<br />
+APPEND wa_fcat TO it_fcat.<br />
+CLEAR wa_fcat.<br />
+<br />
+wa_fcat-col_pos = 27. wa_fcat-seltext_m = 'INV_CAN_DAT'. wa_fcat-fieldname = 'INV_CAN_DAT'.  wa_fcat-tabname = 'IT_ITAB'.<br />
+APPEND wa_fcat TO it_fcat.<br />
+CLEAR wa_fcat.<br />
+<br />
+wa_fcat-col_pos = 28. wa_fcat-seltext_m = 'INV_CAN_QTY'. wa_fcat-fieldname = 'INV_CAN_QTY'. wa_fcat-ref_tabname = 'VBRP'. wa_fcat-tabname = 'IT_ITAB'.<br />
+APPEND wa_fcat TO it_fcat.<br />
+CLEAR wa_fcat.<br />
+<br />
+<br />
+CALL FUNCTION 'REUSE_ALV_GRID_DISPLAY'<br />
+&nbsp;EXPORTING<br />
+&nbsp;&nbsp;&nbsp;I_CALLBACK_PROGRAM&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;'sy_repid'<br />
+&nbsp;&nbsp;&nbsp;&nbsp;IS_LAYOUT&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;&nbsp;wa_layout<br />
+&nbsp;&nbsp;&nbsp;&nbsp;it_fieldcat&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;IT_FCAT<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;I_DEFAULT&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;'X'<br />
+&nbsp;&nbsp;&nbsp;&nbsp;I_SAVE&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;'A'<br />
+&nbsp;&nbsp;TABLES<br />
+&nbsp;&nbsp;t_outtab&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;it_itab<br />
+&nbsp;EXCEPTIONS<br />
+&nbsp;&nbsp;&nbsp;PROGRAM_ERROR&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;1<br />
+&nbsp;&nbsp;&nbsp;OTHERS&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;2<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;.<br />
+IF sy-subrc &lt;&gt; 0.<br />
+   </div>
+   <div class="codeComment">
+*&nbsp;Implement&nbsp;suitable&nbsp;error&nbsp;handling&nbsp;here<br />
+   </div>
+   <div class="code">
+ENDIF.<br />
+<br />
+   </div>
+   <div class="codeComment">
+*Text&nbsp;elements<br />
+*----------------------------------------------------------<br />
+*&nbsp;001&nbsp;<br />
+<br />
+<br />
+*Selection&nbsp;texts<br />
+*----------------------------------------------------------<br />
+*&nbsp;P_DEL&nbsp;D&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;.<br />
+*&nbsp;P_PLANT&nbsp;D&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;.<br />
+*&nbsp;P_PRD&nbsp;D&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;.<br />
+*&nbsp;P_SO&nbsp;D&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;.<br />
+*&nbsp;P_SR&nbsp;D&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;.<br />
+            </div>
+          </td>
+        </tr>
+      </table>
+      </td>
+      </tr>
+   <tr>
+<td class="footer">Extracted by Mass Download version 1.5.5 - E.G.Mellodew. 1998-2025. Sap Release 755</td>
+   </tr>
+</table>
+</body>
+</html>
