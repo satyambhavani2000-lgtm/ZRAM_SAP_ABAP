@@ -1,0 +1,1184 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="application/xhtml+xml; charset=ISO-8859-1" />
+<title>IF_EX_MB_MIGO_BADI~CHECK_ITEM</title>
+<style type="text/css">
+.code{ font-family:"Courier New", Courier, monospace; color:#000; font-size:14px; background-color:#F2F4F7 }
+  .codeComment {font-family:"Courier New", Courier, monospace; color:#0000F0; font-size:14px; background-color:#F2F4F7 }
+  .normalBold{ font-family:Arial, Helvetica, sans-serif; color:#000; font-size:12px; font-weight:800 }
+  .normalBoldLarge{ font-family:Arial, Helvetica, sans-serif; color:#000; font-size:16px; font-weight:800 }
+</style>
+<style type="text/css">
+  .normal{ font-family:Arial, Helvetica, sans-serif; color:#000; font-size:12px }
+  .footer{ font-family:Arial, Helvetica, sans-serif; color:#000; font-size:12px; text-align: center }
+  h2{ font-family:Arial, Helvetica, sans-serif; color:#000; font-size:16px; font-weight:800 }
+  h3{ font-family:Arial, Helvetica, sans-serif; color:#000; font-size:14px; font-weight:800 }
+  .outerTable{
+   background-color:#E0E7ED;
+   width:100%;
+   border-top-width: thin;
+   border-right-width: thin;
+   border-right-width: thin;
+   border-left-width: thin;
+   border-top-style: solid;
+   border-right-style: solid;
+   border-bottom-style: solid;
+   border-left-style: solid;
+  }
+  .innerTable{
+   background-color:#F2F4F7;
+   width:100%;
+   border-top-width: thin;
+   border-right-width: thin;
+   border-bottom-width: thin;
+   border-left-width: thin;
+   border-top-style: solid;
+   border-right-style: solid;
+   border-bottom-style: solid;
+   border-left-style: solid;
+  }
+</style>
+</head>
+<body>
+<table class="outerTable">
+  <tr class="normalBoldLarge">
+     <td><h2>Code listing for: IF_EX_MB_MIGO_BADI~CHECK_ITEM</h2>
+<h3> Description: Check Item Data of Goods Movement</h3></td>
+   </tr>
+  <tr>
+     <td>
+     <table class="innerTable">
+       <tr>
+          <td>
+   <div class="codeComment">
+**************************************************************************<br />
+*&nbsp;&nbsp;&nbsp;Method&nbsp;attributes.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*<br />
+**************************************************************************<br />
+   </div>
+   <div class="code">
+Instantiation: Public<br />
+   </div>
+   <div class="codeComment">
+**************************************************************************<br />
+<br />
+   </div>
+   <div class="code">
+&nbsp;&nbsp;METHOD&nbsp;if_ex_mb_migo_badi~check_item.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;DATA&nbsp;gv_aufnr&nbsp;TYPE&nbsp;afpo-aufnr.<br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;IMPORT&nbsp;gv_aufnr&nbsp;=&nbsp;gv_aufnr&nbsp;FROM&nbsp;MEMORY&nbsp;ID&nbsp;'GOAUFNR'.<br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;SELECT&nbsp;SINGLE&nbsp;*&nbsp;FROM&nbsp;afpo<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;INTO&nbsp;@DATA(ls_afpo)<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;WHERE&nbsp;aufnr&nbsp;=&nbsp;@gv_aufnr.<br />
+<br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;"""&nbsp;ORDER&nbsp;TYPE&nbsp;VALIDATION&nbsp;ADDED&nbsp;TO&nbsp;EXCLUDE&nbsp;ORDER&nbsp;TYPE&nbsp;'ZF'&nbsp;BY&nbsp;PANKAJ&nbsp;07.10.2024<br />
+   </div>
+   <div class="codeComment">
+*&nbsp;&nbsp;&nbsp;&nbsp;IF&nbsp;&nbsp;ls_afpo-wemng&nbsp;GT&nbsp;0.<br />
+   </div>
+   <div class="code">
+&nbsp;&nbsp;&nbsp;&nbsp;IF&nbsp;&nbsp;ls_afpo-wemng&nbsp;GT&nbsp;0&nbsp;AND&nbsp;&nbsp;ls_afpo-dauat+0(2)&nbsp;NE&nbsp;'ZF'.<br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;MESSAGE&nbsp;|RTSP&nbsp;already&nbsp;posted&nbsp;for&nbsp;Order&nbsp;No&nbsp;|&nbsp;&&&nbsp;gv_aufnr&nbsp;&nbsp;TYPE&nbsp;'E'.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;ENDIF..<br />
+<br />
+<br />
+<br />
+   </div>
+   <div class="codeComment">
+*&nbsp;&nbsp;&nbsp;&nbsp;"""""""""&nbsp;+++&nbsp;Insertion&nbsp;of&nbsp;code&nbsp;by&nbsp;pankaj/rahul&nbsp;MIGO&nbsp;309&nbsp;validation&nbsp;ason&nbsp;22.07.2024<br />
+<br />
+   </div>
+   <div class="code">
+&nbsp;&nbsp;&nbsp;&nbsp;DATA:&nbsp;ls_goitem&nbsp;TYPE&nbsp;goitem.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;DATA:&nbsp;Cs_goitem&nbsp;TYPE&nbsp;goitem.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;DATA:&nbsp;ls_bapiret&nbsp;LIKE&nbsp;LINE&nbsp;OF&nbsp;et_bapiret2.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;DATA:&nbsp;wa_zhmlsubtyp&nbsp;TYPE&nbsp;zhkmstlst-zhmlsubtyp.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;DATA:&nbsp;wa_zhmlsubsubtyp&nbsp;TYPE&nbsp;zhkmstlst-zhmlsubsubtyp.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;DATA:&nbsp;lv_msg&nbsp;&nbsp;TYPE&nbsp;string,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;lv_msg1&nbsp;TYPE&nbsp;string,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;lv_msg2&nbsp;TYPE&nbsp;string.<br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;IMPORT&nbsp;ls_goitem&nbsp;&nbsp;=&nbsp;ls_goitem&nbsp;FROM&nbsp;MEMORY&nbsp;ID&nbsp;'CHECK_ITEM'.&nbsp;&nbsp;"""&nbsp;IMPORT&nbsp;FROM&nbsp;PUBLISH_MATERIAL_ITEM<br />
+&nbsp;&nbsp;&nbsp;&nbsp;IF&nbsp;sy-subrc&nbsp;NE&nbsp;0.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;IMPORT&nbsp;ls_goitem&nbsp;&nbsp;=&nbsp;cs_goitem&nbsp;FROM&nbsp;MEMORY&nbsp;ID&nbsp;'CHECK_ITEM'.&nbsp;&nbsp;"""&nbsp;IMPORT&nbsp;FROM&nbsp;LINE_MODIFY<br />
+&nbsp;&nbsp;&nbsp;&nbsp;ENDIF.<br />
+<br />
+   </div>
+   <div class="codeComment">
+*-----------------&nbsp;MIGO&nbsp;309&nbsp;LOCK&nbsp;BY&nbsp;SATYAM-----------------------------<br />
+   </div>
+   <div class="code">
+&nbsp;&nbsp;&nbsp;&nbsp;IF&nbsp;ls_goitem-bwart&nbsp;=&nbsp;'309'.<br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;SELECT&nbsp;SINGLE&nbsp;mtart&nbsp;AS&nbsp;mat_typ,zzbacode&nbsp;AS&nbsp;bas_cd,matkl&nbsp;AS&nbsp;mat_gp,&nbsp;extwg&nbsp;AS&nbsp;ex_mat_gp&nbsp;,kosch&nbsp;AS&nbsp;exim_cd,&nbsp;normt&nbsp;AS&nbsp;purty<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FROM&nbsp;mara&nbsp;INTO&nbsp;@DATA(wa_fmtart)&nbsp;WHERE&nbsp;matnr&nbsp;=&nbsp;@ls_goitem-matnr.<br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;SELECT&nbsp;SINGLE&nbsp;mtart&nbsp;AS&nbsp;mat_typ,zzbacode&nbsp;AS&nbsp;bas_cd,matkl&nbsp;AS&nbsp;mat_gp,&nbsp;extwg&nbsp;AS&nbsp;ex_mat_gp&nbsp;,kosch&nbsp;AS&nbsp;exim_cd,&nbsp;normt&nbsp;AS&nbsp;purty<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FROM&nbsp;mara&nbsp;INTO&nbsp;@DATA(wa_tmtart)&nbsp;WHERE&nbsp;matnr&nbsp;=&nbsp;@ls_goitem-ummat.<br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;SELECT&nbsp;SINGLE&nbsp;zhmlchr,zhmltype&nbsp;AS&nbsp;mov_typ,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;zhmlsubtyp&nbsp;AS&nbsp;plant,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;zhmlsubsubtyp&nbsp;AS&nbsp;mat_type,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;zhmlisvalid&nbsp;AS&nbsp;isvalid&nbsp;FROM&nbsp;zhkmstlst&nbsp;INTO&nbsp;@DATA(wa_zhkmstlst)<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;WHERE&nbsp;zhmlchr&nbsp;=&nbsp;'MMTRN'&nbsp;AND&nbsp;zhmltype&nbsp;=&nbsp;'309'&nbsp;AND&nbsp;zhmlsubtyp&nbsp;=&nbsp;@ls_goitem-werks&nbsp;AND&nbsp;zhmlsubsubtyp&nbsp;=&nbsp;@wa_fmtart-mat_typ.<br />
+   </div>
+   <div class="codeComment">
+*----1<br />
+   </div>
+   <div class="code">
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;IF&nbsp;wa_zhkmstlst&nbsp;IS&nbsp;NOT&nbsp;INITIAL.<br />
+   </div>
+   <div class="codeComment">
+*&nbsp;&nbsp;------1.2<br />
+   </div>
+   <div class="code">
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;IF&nbsp;wa_zhkmstlst-isvalid&nbsp;=&nbsp;'N'.<br />
+   </div>
+   <div class="codeComment">
+*&nbsp;&nbsp;&nbsp;&nbsp;---------1.3<br />
+   </div>
+   <div class="code">
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;IF&nbsp;wa_fmtart-mat_typ&nbsp;=&nbsp;wa_tmtart-mat_typ&nbsp;AND&nbsp;wa_fmtart-bas_cd&nbsp;=&nbsp;wa_tmtart-bas_cd&nbsp;AND&nbsp;ls_goitem-werks&nbsp;=&nbsp;ls_goitem-umwrk.<br />
+   </div>
+   <div class="codeComment">
+*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;---------1.4<br />
+   </div>
+   <div class="code">
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;IF&nbsp;wa_fmtart-mat_typ&nbsp;=&nbsp;'FNDG'.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;DATA&nbsp;:&nbsp;mategp1&nbsp;TYPE&nbsp;string,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;mategp2&nbsp;TYPE&nbsp;string.<br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;mategp1&nbsp;=&nbsp;substring(&nbsp;val&nbsp;=&nbsp;wa_fmtart-ex_mat_gp&nbsp;off&nbsp;=&nbsp;0&nbsp;len&nbsp;=&nbsp;3&nbsp;).<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;mategp2&nbsp;=&nbsp;substring(&nbsp;val&nbsp;=&nbsp;wa_tmtart-ex_mat_gp&nbsp;off&nbsp;=&nbsp;0&nbsp;len&nbsp;=&nbsp;3&nbsp;).<br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;IF&nbsp;wa_fmtart-mat_gp&nbsp;=&nbsp;wa_tmtart-mat_gp&nbsp;AND&nbsp;mategp1&nbsp;=&nbsp;mategp2.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ELSE.<br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CONCATENATE&nbsp;'MISMATCH'&nbsp;'(N:)'&nbsp;'=:'&nbsp;'(FNDG)'&nbsp;'('&nbsp;'MAT_GP'&nbsp;'=&gt;'&nbsp;'('&nbsp;'"'&nbsp;wa_fmtart-mat_gp&nbsp;'"'&nbsp;'='&nbsp;'"'&nbsp;wa_tmtart-mat_gp&nbsp;'"'&nbsp;')'&nbsp;&nbsp;INTO&nbsp;lv_msg1&nbsp;.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CONCATENATE&nbsp;'AND'&nbsp;'MAT_EXT_GP'&nbsp;'=&gt;'&nbsp;'('&nbsp;'"'&nbsp;mategp1&nbsp;'"'&nbsp;'='&nbsp;'"'&nbsp;mategp2&nbsp;'"'&nbsp;')'&nbsp;')'&nbsp;INTO&nbsp;lv_msg.<br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ls_bapiret-type&nbsp;=&nbsp;'E'.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ls_bapiret-id&nbsp;=&nbsp;'ZMM_309'.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ls_bapiret-number&nbsp;=&nbsp;'006'.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ls_bapiret-message_v1&nbsp;=&nbsp;lv_msg1.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ls_bapiret-message_v2&nbsp;=&nbsp;lv_msg.<br />
+   </div>
+   <div class="codeComment">
+*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ls_bapiret-message_v1&nbsp;=&nbsp;'Storage&nbsp;Locations&nbsp;Not&nbsp;Same&nbsp;!!!'.<br />
+   </div>
+   <div class="code">
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;APPEND&nbsp;ls_bapiret&nbsp;TO&nbsp;et_bapiret2.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CLEAR:&nbsp;ls_bapiret.<br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ENDIF.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ELSEIF&nbsp;wa_fmtart-mat_typ&nbsp;=&nbsp;'METL'.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;IF&nbsp;wa_fmtart-mat_gp&nbsp;=&nbsp;wa_tmtart-mat_gp&nbsp;AND&nbsp;wa_fmtart-ex_mat_gp&nbsp;=&nbsp;wa_tmtart-ex_mat_gp.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ELSE.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CONCATENATE&nbsp;'MISMATCH'&nbsp;'(N:)'&nbsp;'=:'&nbsp;'(FNDG)'&nbsp;'('&nbsp;'MAT_GP'&nbsp;'=&gt;'&nbsp;'('&nbsp;'"'&nbsp;wa_fmtart-mat_gp&nbsp;'"'&nbsp;'='&nbsp;'"'&nbsp;wa_tmtart-mat_gp&nbsp;'"'&nbsp;')'&nbsp;INTO&nbsp;lv_msg1.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CONCATENATE&nbsp;&nbsp;'AND'&nbsp;'MAT_EXT_GP'&nbsp;'=&gt;'&nbsp;'('&nbsp;'"'&nbsp;wa_fmtart-ex_mat_gp&nbsp;'"'&nbsp;'='&nbsp;'"'&nbsp;wa_tmtart-ex_mat_gp&nbsp;'"'&nbsp;')'&nbsp;')'&nbsp;&nbsp;INTO&nbsp;lv_msg.<br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ls_bapiret-type&nbsp;=&nbsp;'E'.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ls_bapiret-id&nbsp;=&nbsp;'ZMM_309'.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ls_bapiret-number&nbsp;=&nbsp;'006'.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ls_bapiret-message_v1&nbsp;=&nbsp;lv_msg1.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ls_bapiret-message_v2&nbsp;=&nbsp;lv_msg.<br />
+   </div>
+   <div class="codeComment">
+*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ls_bapiret-message_v1&nbsp;=&nbsp;'Storage&nbsp;Locations&nbsp;Not&nbsp;Same&nbsp;!!!'.<br />
+   </div>
+   <div class="code">
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;APPEND&nbsp;ls_bapiret&nbsp;TO&nbsp;et_bapiret2.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CLEAR:&nbsp;ls_bapiret.<br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ENDIF.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ENDIF.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ELSE.<br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CONCATENATE&nbsp;'(N:)'&nbsp;'MISMATCH'&nbsp;'=:'&nbsp;'('&nbsp;'MAT_GRP'&nbsp;'=&gt;'&nbsp;'('&nbsp;'"'&nbsp;wa_fmtart-mat_typ&nbsp;'"'&nbsp;'='&nbsp;'"'&nbsp;wa_tmtart-mat_typ&nbsp;'"'&nbsp;')'&nbsp;&nbsp;&nbsp;INTO&nbsp;lv_msg1.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CONCATENATE&nbsp;'OR'&nbsp;'BASE_CD''=&gt;'&nbsp;'('&nbsp;'"'&nbsp;wa_fmtart-bas_cd&nbsp;&nbsp;'"'&nbsp;&nbsp;'='&nbsp;'"'&nbsp;wa_tmtart-bas_cd&nbsp;'"'&nbsp;')'&nbsp;INTO&nbsp;lv_msg2.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CONCATENATE&nbsp;'(N:)'&nbsp;'OR'&nbsp;'PLANT''=&gt;'&nbsp;'('&nbsp;'"'&nbsp;ls_goitem-werks&nbsp;'"'&nbsp;'='&nbsp;'"'&nbsp;ls_goitem-umwrk&nbsp;'"'&nbsp;')'')'&nbsp;INTO&nbsp;lv_msg.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ls_bapiret-type&nbsp;=&nbsp;'E'.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ls_bapiret-id&nbsp;=&nbsp;'ZMM_309'.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ls_bapiret-number&nbsp;=&nbsp;'006'.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ls_bapiret-message_v1&nbsp;=&nbsp;lv_msg1.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ls_bapiret-message_v2&nbsp;=&nbsp;lv_msg2.<br />
+   </div>
+   <div class="codeComment">
+*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ls_bapiret-message_v1&nbsp;=&nbsp;'Storage&nbsp;Locations&nbsp;Not&nbsp;Same&nbsp;!!!'.<br />
+   </div>
+   <div class="code">
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;APPEND&nbsp;ls_bapiret&nbsp;TO&nbsp;et_bapiret2.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CLEAR:&nbsp;ls_bapiret.<br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ls_bapiret-type&nbsp;=&nbsp;'E'.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ls_bapiret-id&nbsp;=&nbsp;'ZMM_309'.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ls_bapiret-number&nbsp;=&nbsp;'007'.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ls_bapiret-message_v1&nbsp;=&nbsp;lv_msg.<br />
+   </div>
+   <div class="codeComment">
+*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ls_bapiret-message_v1&nbsp;=&nbsp;'Storage&nbsp;Locations&nbsp;Not&nbsp;Same&nbsp;!!!'.<br />
+   </div>
+   <div class="code">
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;APPEND&nbsp;ls_bapiret&nbsp;TO&nbsp;et_bapiret2.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CLEAR:&nbsp;ls_bapiret.<br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ENDIF.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ENDIF.<br />
+<br />
+   </div>
+   <div class="codeComment">
+*---------2.1<br />
+   </div>
+   <div class="code">
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;IF&nbsp;wa_zhkmstlst-isvalid&nbsp;=&nbsp;'Y'.<br />
+   </div>
+   <div class="codeComment">
+*&nbsp;&nbsp;&nbsp;&nbsp;---------2.2<br />
+   </div>
+   <div class="code">
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;IF&nbsp;wa_fmtart-mat_typ&nbsp;=&nbsp;wa_tmtart-mat_typ&nbsp;AND&nbsp;wa_fmtart-bas_cd&nbsp;=&nbsp;wa_tmtart-bas_cd&nbsp;AND&nbsp;ls_goitem-werks&nbsp;=&nbsp;ls_goitem-umwrk&nbsp;AND&nbsp;wa_fmtart-exim_cd&nbsp;=&nbsp;wa_tmtart-exim_cd<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;AND&nbsp;wa_fmtart-purty&nbsp;=&nbsp;wa_tmtart-purty.<br />
+   </div>
+   <div class="codeComment">
+*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;---------2.3<br />
+   </div>
+   <div class="code">
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;IF&nbsp;wa_fmtart-mat_typ&nbsp;=&nbsp;'FNDG'&nbsp;.<br />
+   </div>
+   <div class="codeComment">
+*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;--------2.4<br />
+   </div>
+   <div class="code">
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;IF&nbsp;wa_fmtart-mat_gp&nbsp;=&nbsp;wa_tmtart-mat_gp&nbsp;AND&nbsp;wa_fmtart-ex_mat_gp&nbsp;=&nbsp;wa_tmtart-ex_mat_gp.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ELSE.<br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CONCATENATE&nbsp;'(Y):'&nbsp;'MISMATCH'&nbsp;&nbsp;'=:'&nbsp;'FNDG'&nbsp;'('&nbsp;'MAT_GRP'&nbsp;'=&gt;'&nbsp;'('&nbsp;'"'&nbsp;wa_fmtart-mat_gp&nbsp;'"'&nbsp;&nbsp;'&nbsp;=&nbsp;'&nbsp;'"'&nbsp;wa_tmtart-mat_gp&nbsp;'"'&nbsp;')'&nbsp;'&nbsp;AND&nbsp;'&nbsp;&nbsp;INTO&nbsp;lv_msg1&nbsp;.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CONCATENATE&nbsp;'(Y):'&nbsp;'MAT_EXT_GRP'&nbsp;'=&gt;'&nbsp;'('&nbsp;'"'&nbsp;wa_fmtart-ex_mat_gp&nbsp;'"'&nbsp;'&nbsp;=&nbsp;'&nbsp;'"'&nbsp;wa_tmtart-ex_mat_gp&nbsp;'"'&nbsp;')'&nbsp;')'&nbsp;&nbsp;INTO&nbsp;lv_msg.<br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ls_bapiret-type&nbsp;=&nbsp;'E'.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ls_bapiret-id&nbsp;=&nbsp;'ZMM_309'.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ls_bapiret-number&nbsp;=&nbsp;'006'.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ls_bapiret-message_v1&nbsp;=&nbsp;&nbsp;lv_msg1.<br />
+   </div>
+   <div class="codeComment">
+*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ls_bapiret-message_v1&nbsp;=&nbsp;'Storage&nbsp;Locations&nbsp;Not&nbsp;Same&nbsp;!!!'.<br />
+   </div>
+   <div class="code">
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;APPEND&nbsp;ls_bapiret&nbsp;TO&nbsp;et_bapiret2.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CLEAR:&nbsp;ls_bapiret.<br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ls_bapiret-type&nbsp;=&nbsp;'E'.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ls_bapiret-id&nbsp;=&nbsp;'ZMM_309'.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ls_bapiret-number&nbsp;=&nbsp;'007'.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ls_bapiret-message_v1&nbsp;=&nbsp;lv_msg.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;APPEND&nbsp;ls_bapiret&nbsp;TO&nbsp;et_bapiret2.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CLEAR:&nbsp;ls_bapiret.<br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ENDIF.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ELSEIF&nbsp;wa_fmtart-mat_typ&nbsp;=&nbsp;'METL'&nbsp;.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;IF&nbsp;wa_fmtart-mat_gp&nbsp;=&nbsp;wa_tmtart-mat_gp&nbsp;AND&nbsp;wa_fmtart-ex_mat_gp&nbsp;=&nbsp;wa_tmtart-ex_mat_gp.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ELSE.<br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CONCATENATE&nbsp;'(Y):'&nbsp;'MISMATCH'&nbsp;&nbsp;'=:'&nbsp;'METL'&nbsp;'('&nbsp;'MAT_GRP'&nbsp;'=&gt;'&nbsp;'('&nbsp;'"'&nbsp;wa_fmtart-mat_gp&nbsp;'"'&nbsp;&nbsp;'&nbsp;=&nbsp;'&nbsp;'"'&nbsp;wa_tmtart-mat_gp&nbsp;'"'&nbsp;')'&nbsp;&nbsp;&nbsp;INTO&nbsp;lv_msg1&nbsp;.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CONCATENATE&nbsp;'(Y):'&nbsp;'MAT_EXT_GRP'&nbsp;'=&gt;'&nbsp;'('&nbsp;'"'&nbsp;wa_fmtart-ex_mat_gp&nbsp;'"'&nbsp;'&nbsp;=&nbsp;'&nbsp;'"'&nbsp;wa_tmtart-ex_mat_gp&nbsp;'"'&nbsp;')'&nbsp;')'&nbsp;&nbsp;INTO&nbsp;lv_msg.<br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ls_bapiret-type&nbsp;=&nbsp;'E'.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ls_bapiret-id&nbsp;=&nbsp;'ZMM_309'.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ls_bapiret-number&nbsp;=&nbsp;'006'.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ls_bapiret-message_v1&nbsp;=&nbsp;&nbsp;lv_msg1.<br />
+   </div>
+   <div class="codeComment">
+*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ls_bapiret-message_v1&nbsp;=&nbsp;'Storage&nbsp;Locations&nbsp;Not&nbsp;Same&nbsp;!!!'.<br />
+   </div>
+   <div class="code">
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;APPEND&nbsp;ls_bapiret&nbsp;TO&nbsp;et_bapiret2.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CLEAR:&nbsp;ls_bapiret.<br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ls_bapiret-type&nbsp;=&nbsp;'E'.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ls_bapiret-id&nbsp;=&nbsp;'ZMM_309'.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ls_bapiret-number&nbsp;=&nbsp;'007'.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ls_bapiret-message_v1&nbsp;=&nbsp;lv_msg.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;APPEND&nbsp;ls_bapiret&nbsp;TO&nbsp;et_bapiret2.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CLEAR:&nbsp;ls_bapiret.<br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ENDIF.<br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ELSEIF&nbsp;wa_fmtart-mat_typ&nbsp;=&nbsp;'ALYS'&nbsp;OR&nbsp;wa_fmtart-mat_typ&nbsp;=&nbsp;'ALYL'.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;IF&nbsp;ls_goitem-matnr&nbsp;=&nbsp;ls_goitem-ummat.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ELSE.<br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CONCATENATE&nbsp;'(Y)'&nbsp;'&nbsp;MISMATCH&nbsp;'&nbsp;'=:'&nbsp;'ALLOY&nbsp;MATIREAL'&nbsp;&nbsp;'('&nbsp;'MATIREAL'&nbsp;'=&gt;'&nbsp;&nbsp;INTO&nbsp;lv_msg1&nbsp;.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CONCATENATE&nbsp;'('&nbsp;'"'&nbsp;ls_goitem-matnr&nbsp;'"'&nbsp;'&nbsp;=&nbsp;'&nbsp;'"'&nbsp;ls_goitem-ummat&nbsp;'"'&nbsp;')'&nbsp;&nbsp;'&nbsp;)&nbsp;'&nbsp;INTO&nbsp;lv_msg.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ls_bapiret-type&nbsp;=&nbsp;'E'.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ls_bapiret-id&nbsp;=&nbsp;'ZMM_309'.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ls_bapiret-number&nbsp;=&nbsp;'006'.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ls_bapiret-message_v1&nbsp;=&nbsp;lv_msg1.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ls_bapiret-message_v2&nbsp;=&nbsp;lv_msg.<br />
+   </div>
+   <div class="codeComment">
+*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ls_bapiret-message_v1&nbsp;=&nbsp;'Storage&nbsp;Locations&nbsp;Not&nbsp;Same&nbsp;!!!'.<br />
+   </div>
+   <div class="code">
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;APPEND&nbsp;ls_bapiret&nbsp;TO&nbsp;et_bapiret2.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CLEAR:&nbsp;ls_bapiret.<br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ENDIF.<br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ENDIF.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ELSE.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CONCATENATE&nbsp;'(Y)'&nbsp;'MISMATCH'&nbsp;&nbsp;'=:'&nbsp;'('&nbsp;'mat_typ'&nbsp;'=&gt;'&nbsp;'('&nbsp;'"'&nbsp;wa_fmtart-mat_typ&nbsp;'"'&nbsp;'='&nbsp;'"'&nbsp;wa_tmtart-mat_typ&nbsp;'"'&nbsp;')'&nbsp;'AND'&nbsp;','&nbsp;&nbsp;&nbsp;INTO&nbsp;lv_msg1.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CONCATENATE&nbsp;'BASE_CD'&nbsp;'=&gt;'&nbsp;'('&nbsp;'"'&nbsp;wa_fmtart-bas_cd&nbsp;'"'&nbsp;'='&nbsp;'"'&nbsp;wa_tmtart-bas_cd&nbsp;'"'&nbsp;')'&nbsp;INTO&nbsp;lv_msg.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CONCATENATE&nbsp;'(Y)'&nbsp;'AND'&nbsp;','&nbsp;'PLANT'&nbsp;'=&gt;'&nbsp;'('&nbsp;'"'&nbsp;ls_goitem-werks&nbsp;'"'&nbsp;'='&nbsp;'"'&nbsp;ls_goitem-umwrk&nbsp;'"'&nbsp;')'&nbsp;'AND'&nbsp;','&nbsp;&nbsp;INTO&nbsp;lv_msg2.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CONCATENATE&nbsp;'EXIM_CD'&nbsp;'=&gt;'&nbsp;'('&nbsp;'"'&nbsp;wa_fmtart-exim_cd&nbsp;'"'&nbsp;'='&nbsp;'"'&nbsp;wa_tmtart-exim_cd&nbsp;'"'&nbsp;')'&nbsp;INTO&nbsp;DATA(lv_msg4).<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CONCATENATE&nbsp;'(Y)'&nbsp;'AND'&nbsp;','&nbsp;'purty'&nbsp;'=&gt;'&nbsp;'('&nbsp;'"'&nbsp;wa_fmtart-purty&nbsp;'"'&nbsp;'='&nbsp;'"'&nbsp;wa_tmtart-purty&nbsp;'"'&nbsp;')'&nbsp;')'&nbsp;&nbsp;INTO&nbsp;DATA(lv_msg3).<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ls_bapiret-type&nbsp;=&nbsp;'E'.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ls_bapiret-id&nbsp;=&nbsp;'ZMM_309'.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ls_bapiret-number&nbsp;=&nbsp;'006'.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ls_bapiret-message_V1&nbsp;=&nbsp;lv_msg1.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ls_bapiret-message_V2&nbsp;=&nbsp;lv_msg.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;APPEND&nbsp;ls_bapiret&nbsp;TO&nbsp;et_bapiret2.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CLEAR:&nbsp;ls_bapiret.<br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ls_bapiret-type&nbsp;=&nbsp;'E'.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ls_bapiret-id&nbsp;=&nbsp;'ZMM_309'.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ls_bapiret-number&nbsp;=&nbsp;'007'.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ls_bapiret-message_v1&nbsp;=&nbsp;lv_msg2.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ls_bapiret-message_v2&nbsp;=&nbsp;lv_msg4.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;APPEND&nbsp;ls_bapiret&nbsp;TO&nbsp;et_bapiret2.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CLEAR:&nbsp;ls_bapiret.<br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ls_bapiret-type&nbsp;=&nbsp;'E'.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ls_bapiret-id&nbsp;=&nbsp;'ZMM_309'.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ls_bapiret-number&nbsp;=&nbsp;'008'.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ls_bapiret-message_v1&nbsp;=&nbsp;lv_msg3.<br />
+   </div>
+   <div class="codeComment">
+*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ls_bapiret-message_v1&nbsp;=&nbsp;'Storage&nbsp;Locations&nbsp;Not&nbsp;Same&nbsp;!!!'.<br />
+   </div>
+   <div class="code">
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;APPEND&nbsp;ls_bapiret&nbsp;TO&nbsp;et_bapiret2.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CLEAR:&nbsp;ls_bapiret.<br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ENDIF.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ENDIF.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ELSE.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ls_bapiret-type&nbsp;=&nbsp;'E'.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ls_bapiret-id&nbsp;=&nbsp;'ZMM_309'.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ls_bapiret-number&nbsp;=&nbsp;'005'.<br />
+   </div>
+   <div class="codeComment">
+*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ls_bapiret-message_v1&nbsp;=&nbsp;'Storage&nbsp;Locations&nbsp;Not&nbsp;Same&nbsp;!!!'.<br />
+   </div>
+   <div class="code">
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;APPEND&nbsp;ls_bapiret&nbsp;TO&nbsp;et_bapiret2.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CLEAR:&nbsp;ls_bapiret.<br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ENDIF.<br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;ENDIF.<br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;"""""""""&nbsp;+++&nbsp;Insertion&nbsp;of&nbsp;code&nbsp;by&nbsp;pankaj/rahul&nbsp;MIGO&nbsp;301&nbsp;validation&nbsp;ason&nbsp;25.07.2024<br />
+&nbsp;&nbsp;&nbsp;&nbsp;IF&nbsp;ls_goitem-bwart&nbsp;=&nbsp;'301'.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;IF&nbsp;ls_goitem-lgort&nbsp;IS&nbsp;NOT&nbsp;INITIAL&nbsp;AND&nbsp;ls_goitem-umlgo&nbsp;IS&nbsp;NOT&nbsp;INITIAL.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;IF&nbsp;ls_goitem-lgort&nbsp;NE&nbsp;ls_goitem-umlgo.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ls_bapiret-type&nbsp;=&nbsp;'E'.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ls_bapiret-id&nbsp;=&nbsp;'ZMM_309'.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ls_bapiret-number&nbsp;=&nbsp;'001'.<br />
+   </div>
+   <div class="codeComment">
+*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ls_bapiret-message_v1&nbsp;=&nbsp;'Storage&nbsp;Locations&nbsp;Not&nbsp;Same&nbsp;!!!'.<br />
+   </div>
+   <div class="code">
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;APPEND&nbsp;ls_bapiret&nbsp;TO&nbsp;et_bapiret2.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CLEAR:&nbsp;ls_bapiret.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ENDIF.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ENDIF.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;ENDIF.&nbsp;"""&nbsp;Added&nbsp;By&nbsp;Pankaj<br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;"""""&nbsp;&nbsp;END&nbsp;OF&nbsp;CODE<br />
+<br />
+<br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;"""""""""&nbsp;+++&nbsp;Insertion&nbsp;of&nbsp;code&nbsp;by&nbsp;Pankaj&nbsp;MIGO&nbsp;413/414&nbsp;validation&nbsp;ason&nbsp;16.09.2024<br />
+&nbsp;&nbsp;&nbsp;&nbsp;""""""""""""""&nbsp;IMPORTING&nbsp;ALL&nbsp;LINE&nbsp;ITEMS&nbsp;&nbsp;&nbsp;FROM&nbsp;ZCL_MIGO_CUSTOM_TAB_ITM-&gt;LINE_MODIFY<br />
+&nbsp;&nbsp;&nbsp;&nbsp;DATA:&nbsp;gt_goitem&nbsp;TYPE&nbsp;zty_goitem.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;IMPORT&nbsp;gt_goitem&nbsp;TO&nbsp;gt_goitem&nbsp;FROM&nbsp;MEMORY&nbsp;ID&nbsp;'LINE_ITEM'.<br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;LOOP&nbsp;AT&nbsp;gt_goitem&nbsp;INTO&nbsp;DATA(wa_item)&nbsp;&nbsp;WHERE&nbsp;line_id&nbsp;=&nbsp;i_line_id&nbsp;AND&nbsp;(&nbsp;&nbsp;bwart&nbsp;=&nbsp;'413'&nbsp;OR&nbsp;bwart&nbsp;=&nbsp;'414'&nbsp;).<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;SELECT&nbsp;SINGLE&nbsp;matnr&nbsp;,&nbsp;mtart&nbsp;FROM&nbsp;mara&nbsp;INTO&nbsp;@DATA(lt_mara)&nbsp;WHERE&nbsp;matnr&nbsp;=&nbsp;@wa_item-ummat&nbsp;AND&nbsp;mtart&nbsp;=&nbsp;'FNDG'.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;IF&nbsp;sy-subrc&nbsp;=&nbsp;0&nbsp;.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;IF&nbsp;wa_item-no_of_stone&nbsp;IS&nbsp;INITIAL.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ls_bapiret-type&nbsp;=&nbsp;'E'.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ls_bapiret-id&nbsp;=&nbsp;'ZMM_309'.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ls_bapiret-number&nbsp;=&nbsp;'003'.<br />
+   </div>
+   <div class="codeComment">
+*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ls_bapiret-message_v1&nbsp;=&nbsp;'Please&nbsp;Input&nbsp;No&nbsp;Of&nbsp;Pieces'.<br />
+   </div>
+   <div class="code">
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;APPEND&nbsp;ls_bapiret&nbsp;TO&nbsp;et_bapiret2.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CLEAR:&nbsp;ls_bapiret.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ENDIF.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ENDIF.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CLEAR:&nbsp;wa_item,&nbsp;lt_mara.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;ENDLOOP.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;"""""&nbsp;&nbsp;END&nbsp;OF&nbsp;CODE<br />
+&nbsp;&nbsp;&nbsp;&nbsp;"""""""Code&nbsp;added&nbsp;by&nbsp;SHubham&nbsp;K&nbsp;on&nbsp;15.11.2024&nbsp;as&nbsp;discussed&nbsp;with&nbsp;Vipul&nbsp;Singh""""""<br />
+&nbsp;&nbsp;&nbsp;&nbsp;LOOP&nbsp;AT&nbsp;gt_goitem&nbsp;INTO&nbsp;DATA(wa_item1).<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;SELECT&nbsp;SINGLE&nbsp;matnr&nbsp;,&nbsp;mtart&nbsp;FROM&nbsp;mara&nbsp;INTO&nbsp;@DATA(lt_mara1)&nbsp;WHERE&nbsp;matnr&nbsp;=&nbsp;@wa_item1-matnr&nbsp;AND&nbsp;mtart&nbsp;=&nbsp;'FNDG'.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;IF&nbsp;wa_item1-bwart&nbsp;=&nbsp;'101'.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;IF&nbsp;sy-subrc&nbsp;=&nbsp;0.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;IF&nbsp;wa_item1-no_of_stone&nbsp;&lt;&nbsp;1.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;MESSAGE&nbsp;'No&nbsp;of&nbsp;Pcs&nbsp;should&nbsp;be&nbsp;&gt;=1'&nbsp;TYPE&nbsp;'E'.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ENDIF.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ENDIF.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"""""""""""""+++&nbsp;INSERTION&nbsp;OF&nbsp;CODE&nbsp;BY&nbsp;RAHUL&nbsp;ASON&nbsp;22.04.2025<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;""""""""""""""&nbsp;validation&nbsp;for&nbsp;309,&nbsp;Material&nbsp;type&nbsp;should&nbsp;be&nbsp;same<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ELSEIF&nbsp;wa_item1-bwart&nbsp;=&nbsp;'309'.<br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;SELECT&nbsp;SINGLE&nbsp;matnr,&nbsp;mtart&nbsp;FROM&nbsp;mara&nbsp;INTO&nbsp;@DATA(lt_mara2)&nbsp;WHERE&nbsp;matnr&nbsp;=&nbsp;@wa_item1-matnr.&nbsp;&nbsp;""&nbsp;SOURCE&nbsp;MATERIAL<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;IF&nbsp;sy-subrc&nbsp;=&nbsp;0.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;SELECT&nbsp;SINGLE&nbsp;matnr,&nbsp;mtart&nbsp;FROM&nbsp;mara&nbsp;INTO&nbsp;@DATA(lt_mara3)&nbsp;WHERE&nbsp;matnr&nbsp;=&nbsp;@wa_item1-ummat.&nbsp;&nbsp;""&nbsp;DESTINATION&nbsp;MATERIAL<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;IF&nbsp;sy-subrc&nbsp;=&nbsp;0.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;IF&nbsp;lt_mara2-mtart&nbsp;NE&nbsp;lt_mara3-mtart.<br />
+   </div>
+   <div class="codeComment">
+*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;MESSAGE&nbsp;'Material&nbsp;type&nbsp;should&nbsp;be&nbsp;same'&nbsp;TYPE&nbsp;'E'.<br />
+   </div>
+   <div class="code">
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ls_bapiret-type&nbsp;=&nbsp;'E'.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ls_bapiret-id&nbsp;=&nbsp;'ZMM_309'.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ls_bapiret-number&nbsp;=&nbsp;'004'.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;APPEND&nbsp;ls_bapiret&nbsp;TO&nbsp;et_bapiret2.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CLEAR:&nbsp;ls_bapiret.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ENDIF.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ENDIF.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;""""""""""""""&nbsp;END&nbsp;OF&nbsp;CODE<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ENDIF.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ENDIF.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CLEAR:&nbsp;wa_item1,lt_mara1,&nbsp;lt_mara2,&nbsp;lt_mara3.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;ENDLOOP.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;"""""""End&nbsp;of&nbsp;code&nbsp;"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""<br />
+<br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;"""""""""""""+++&nbsp;INSERTION&nbsp;OF&nbsp;CODE&nbsp;BY&nbsp;RAHUL&nbsp;ASON&nbsp;22.04.2025<br />
+&nbsp;&nbsp;&nbsp;&nbsp;""""""""""""""&nbsp;validation&nbsp;for&nbsp;309,&nbsp;Material&nbsp;type&nbsp;should&nbsp;be&nbsp;same<br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;SELECT&nbsp;SINGLE&nbsp;matnr&nbsp;&nbsp;mtart&nbsp;FROM&nbsp;mara&nbsp;INTO&nbsp;lt_mara2&nbsp;WHERE&nbsp;matnr&nbsp;=&nbsp;ls_goitem-matnr.&nbsp;&nbsp;""&nbsp;SOURCE&nbsp;MATERIAL<br />
+&nbsp;&nbsp;&nbsp;&nbsp;IF&nbsp;sy-subrc&nbsp;=&nbsp;0.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;SELECT&nbsp;SINGLE&nbsp;matnr&nbsp;mtart&nbsp;FROM&nbsp;mara&nbsp;INTO&nbsp;lt_mara3&nbsp;WHERE&nbsp;matnr&nbsp;=&nbsp;ls_goitem-ummat.&nbsp;&nbsp;""&nbsp;DESTINATION&nbsp;MATERIAL<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;IF&nbsp;sy-subrc&nbsp;=&nbsp;0.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;IF&nbsp;lt_mara2-mtart&nbsp;NE&nbsp;lt_mara3-mtart.<br />
+   </div>
+   <div class="codeComment">
+*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;MESSAGE&nbsp;'Material&nbsp;type&nbsp;should&nbsp;be&nbsp;same'&nbsp;TYPE&nbsp;'E'.<br />
+   </div>
+   <div class="code">
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ls_bapiret-type&nbsp;=&nbsp;'E'.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ls_bapiret-id&nbsp;=&nbsp;'ZMM_309'.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ls_bapiret-number&nbsp;=&nbsp;'004'..<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;APPEND&nbsp;ls_bapiret&nbsp;TO&nbsp;et_bapiret2.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CLEAR:&nbsp;ls_bapiret.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ENDIF.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ENDIF.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;""""""""""""""&nbsp;END&nbsp;OF&nbsp;CODE<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;DELETE&nbsp;ADJACENT&nbsp;DUPLICATES&nbsp;FROM&nbsp;et_bapiret2.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;ENDIF.<br />
+<br />
+   </div>
+   <div class="codeComment">
+*&nbsp;&nbsp;-----------------------&nbsp;SATYAM&nbsp;BHAVANI&nbsp;LOCK&nbsp;ON&nbsp;EXTRA&nbsp;WT-----------------------------<br />
+<br />
+*&nbsp;&nbsp;&nbsp;&nbsp;DATA:&nbsp;gv_last_lineid&nbsp;TYPE&nbsp;i.<br />
+*<br />
+*&nbsp;&nbsp;&nbsp;&nbsp;"&nbsp;Check&nbsp;if&nbsp;we&nbsp;already&nbsp;processed&nbsp;this&nbsp;Check&nbsp;click<br />
+*&nbsp;&nbsp;&nbsp;&nbsp;IF&nbsp;gv_last_lineid&nbsp;&lt;=&nbsp;1&nbsp;AND&nbsp;&nbsp;i_line_id&nbsp;&lt;&gt;&nbsp;1.<br />
+*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;RETURN.<br />
+*&nbsp;&nbsp;&nbsp;&nbsp;ENDIF.<br />
+*<br />
+*&nbsp;&nbsp;&nbsp;&nbsp;gv_last_lineid&nbsp;=&nbsp;i_line_id.<br />
+<br />
+   </div>
+   <div class="code">
+&nbsp;&nbsp;&nbsp;&nbsp;TYPES&nbsp;:&nbsp;BEGIN&nbsp;OF&nbsp;ty_group,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;mtart&nbsp;TYPE&nbsp;mtart,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;normt&nbsp;TYPE&nbsp;normt,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;aufnr&nbsp;TYPE&nbsp;aufnr,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;matkl&nbsp;TYPE&nbsp;matkl,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;erfmg&nbsp;TYPE&nbsp;erfmg,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;bwart&nbsp;TYPE&nbsp;bwart,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;werks&nbsp;TYPE&nbsp;werks_d,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;charg&nbsp;TYPE&nbsp;charg_d,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;END&nbsp;OF&nbsp;ty_group.<br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;DATA&nbsp;:&nbsp;it_grp&nbsp;TYPE&nbsp;TABLE&nbsp;OF&nbsp;ty_group,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;wa_grp&nbsp;TYPE&nbsp;ty_group.<br />
+<br />
+<br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;DATA:&nbsp;lv_total&nbsp;&nbsp;TYPE&nbsp;p&nbsp;DECIMALS&nbsp;3&nbsp;VALUE&nbsp;0,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;lv_purity&nbsp;TYPE&nbsp;p&nbsp;DECIMALS&nbsp;3.<br />
+<br />
+   </div>
+   <div class="codeComment">
+*-------------------<br />
+   </div>
+   <div class="code">
+IF gt_goitem IS INITIAL.<br />
+IMPORT gt_goitem TO gt_goitem FROM MEMORY ID 'LINE_ITEM_LOCK'.<br />
+ENDIF.<br />
+   </div>
+   <div class="codeComment">
+*-------------------<br />
+<br />
+   </div>
+   <div class="code">
+&nbsp;&nbsp;&nbsp;&nbsp;SELECT&nbsp;b~mtart,a~aufnr,a~matkl,a~bwart,a~werks,a~charg,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ROUND(&nbsp;SUM(&nbsp;&nbsp;a~erfmg&nbsp;*&nbsp;&nbsp;CAST(&nbsp;CAST(&nbsp;(&nbsp;CASE&nbsp;WHEN&nbsp;b~normt&nbsp;=&nbsp;'&nbsp;'&nbsp;THEN&nbsp;'1.0000'&nbsp;ELSE&nbsp;b~normt&nbsp;END&nbsp;)&nbsp;AS&nbsp;NUMC(&nbsp;18&nbsp;)&nbsp;)&nbsp;AS&nbsp;QUAN(&nbsp;13&nbsp;,&nbsp;4&nbsp;)&nbsp;)&nbsp;),&nbsp;3&nbsp;)&nbsp;AS&nbsp;purr<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FROM&nbsp;@gt_goitem&nbsp;AS&nbsp;a&nbsp;LEFT&nbsp;JOIN&nbsp;mara&nbsp;AS&nbsp;b&nbsp;ON&nbsp;a~matnr&nbsp;=&nbsp;b~matnr&nbsp;WHERE&nbsp;mtart&nbsp;=&nbsp;'METL'&nbsp;and&nbsp;TAKE_IT&nbsp;=&nbsp;'X'<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;GROUP&nbsp;BY&nbsp;b~mtart,a~aufnr,a~matkl,a~bwart,a~werks,a~charg&nbsp;INTO&nbsp;TABLE&nbsp;@DATA(it_group)&nbsp;.<br />
+<br />
+<br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;SELECT&nbsp;b~mtart,a~aufnr,a~matnr,a~matkl,a~bwart,a~werks,a~charg,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ROUND(&nbsp;SUM(&nbsp;a~erfmg&nbsp;),3&nbsp;)&nbsp;AS&nbsp;purr<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FROM&nbsp;@gt_goitem&nbsp;AS&nbsp;a&nbsp;LEFT&nbsp;JOIN&nbsp;mara&nbsp;AS&nbsp;b&nbsp;ON&nbsp;a~matnr&nbsp;=&nbsp;b~matnr&nbsp;WHERE&nbsp;mtart&nbsp;&lt;&gt;&nbsp;'METL'&nbsp;and&nbsp;TAKE_IT&nbsp;=&nbsp;'X'<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;GROUP&nbsp;BY&nbsp;mtart,a~aufnr,a~matnr,a~matkl,a~bwart,a~werks,a~charg<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;INTO&nbsp;TABLE&nbsp;@DATA(it_group2).<br />
+<br />
+<br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;DATA&nbsp;:&nbsp;lv_purr&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;TYPE&nbsp;menge_d,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;LV_ord_purr&nbsp;TYPE&nbsp;menge_d.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;DATA:&nbsp;lv_processed&nbsp;&nbsp;TYPE&nbsp;abap_bool&nbsp;VALUE&nbsp;abap_false,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;lv_processed1&nbsp;TYPE&nbsp;abap_bool&nbsp;VALUE&nbsp;abap_false.<br />
+<br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;LOOP&nbsp;AT&nbsp;&nbsp;it_group&nbsp;INTO&nbsp;DATA(wa_lock)&nbsp;.<br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;SELECT&nbsp;SINGLE&nbsp;auart&nbsp;FROM&nbsp;aufk&nbsp;WHERE&nbsp;aufnr&nbsp;=&nbsp;@wa_lock-aufnr&nbsp;INTO&nbsp;@DATA(wa_auart).<br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;SELECT&nbsp;SINGLE&nbsp;zhmlisvalid&nbsp;FROM&nbsp;zhkmstlst&nbsp;WHERE&nbsp;zhmlchr&nbsp;=&nbsp;'PPTRNPRDTYP'&nbsp;AND&nbsp;zhmltype&nbsp;=&nbsp;@wa_auart&nbsp;INTO&nbsp;@DATA(wa_auart_v).<br />
+<br />
+   </div>
+   <div class="codeComment">
+*1.1----------ORD&nbsp;CHAK<br />
+   </div>
+   <div class="code">
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;IF&nbsp;wa_lock-aufnr&nbsp;IS&nbsp;NOT&nbsp;INITIAL.<br />
+   </div>
+   <div class="codeComment">
+*1.2----------ZHKMST&nbsp;&nbsp;MAINTAIN&nbsp;CHAK&nbsp;ORD_TYP<br />
+   </div>
+   <div class="code">
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;IF&nbsp;wa_auart_v&nbsp;IS&nbsp;NOT&nbsp;INITIAL.<br />
+   </div>
+   <div class="codeComment">
+*1.3&nbsp;-------ORD&nbsp;TYPE&nbsp;=&nbsp;'Y'<br />
+   </div>
+   <div class="code">
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;IF&nbsp;wa_auart_v&nbsp;&nbsp;=&nbsp;'Y'.<br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;SELECT&nbsp;SINGLE&nbsp;zhmlisvalid&nbsp;FROM&nbsp;zhkmstlst&nbsp;WHERE&nbsp;zhmlchr&nbsp;=&nbsp;'PPTRN'&nbsp;AND&nbsp;zhmltype&nbsp;=&nbsp;@wa_lock-bwart&nbsp;AND&nbsp;zhmlsubtyp&nbsp;=&nbsp;@wa_lock-werks&nbsp;AND&nbsp;zhmlsubsubtyp&nbsp;=&nbsp;@wa_lock-mtart<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;INTO&nbsp;@DATA(wa_velid).<br />
+<br />
+   </div>
+   <div class="codeComment">
+*1.5-------&nbsp;MOVE_TYP&nbsp;,PLANT,&nbsp;MAT_TYPE,&nbsp;=&nbsp;'Y'<br />
+   </div>
+   <div class="code">
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;IF&nbsp;wa_velid&nbsp;=&nbsp;'Y'.<br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;lv_purr&nbsp;=&nbsp;&nbsp;wa_lock-purr.<br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;IF&nbsp;wa_lock-mtart&nbsp;=&nbsp;'METL'.<br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;TYPES:&nbsp;BEGIN&nbsp;OF&nbsp;ty_aufm_data,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;PURR&nbsp;TYPE&nbsp;menge_d,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;END&nbsp;OF&nbsp;ty_aufm_data.<br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;DATA:&nbsp;lt_aufm_data&nbsp;TYPE&nbsp;STANDARD&nbsp;TABLE&nbsp;OF&nbsp;ty_aufm_data,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ls_aufm_data&nbsp;TYPE&nbsp;ty_aufm_data.<br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CLEAR&nbsp;:&nbsp;lt_aufm_data.<br />
+<br />
+<br />
+&nbsp;&nbsp;SELECT&nbsp;ROUND(&nbsp;SUM(&nbsp;ROUND(&nbsp;CASE&nbsp;WHEN&nbsp;a~shkzg&nbsp;=&nbsp;'H'&nbsp;THEN&nbsp;a~menge&nbsp;*&nbsp;1&nbsp;WHEN&nbsp;a~shkzg&nbsp;=&nbsp;'S'&nbsp;THEN&nbsp;a~menge&nbsp;*&nbsp;-1&nbsp;ELSE&nbsp;0&nbsp;END<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;CAST(&nbsp;CAST(&nbsp;(&nbsp;CASE&nbsp;WHEN&nbsp;b~normt&nbsp;=&nbsp;'&nbsp;'&nbsp;THEN&nbsp;'1.0000'&nbsp;ELSE&nbsp;b~normt&nbsp;END&nbsp;)&nbsp;AS&nbsp;NUMC(&nbsp;18&nbsp;)&nbsp;)&nbsp;AS&nbsp;QUAN(&nbsp;13&nbsp;,&nbsp;4&nbsp;)&nbsp;)&nbsp;,3&nbsp;)&nbsp;)&nbsp;,3&nbsp;)&nbsp;AS&nbsp;purr<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FROM&nbsp;aufm&nbsp;AS&nbsp;a<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;INNER&nbsp;JOIN&nbsp;mara&nbsp;AS&nbsp;b&nbsp;ON&nbsp;a~matnr&nbsp;=&nbsp;b~matnr<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;WHERE&nbsp;a~aufnr&nbsp;=&nbsp;@wa_lock-aufnr<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;AND&nbsp;a~werks&nbsp;=&nbsp;@wa_lock-werks<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;AND&nbsp;b~matkl&nbsp;=&nbsp;@wa_lock-matkl<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;AND&nbsp;a~charg&nbsp;=&nbsp;@wa_lock-charg&nbsp;INTO&nbsp;TABLE&nbsp;@lt_aufm_data.<br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;DATA:&nbsp;lv_ord_qty&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;TYPE&nbsp;menge_d&nbsp;VALUE&nbsp;0,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;lv_pur_ord_qty&nbsp;TYPE&nbsp;p&nbsp;DECIMALS&nbsp;3&nbsp;VALUE&nbsp;0,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;lv_normt&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;TYPE&nbsp;p&nbsp;DECIMALS&nbsp;4.<br />
+<br />
+   </div>
+   <div class="codeComment">
+*----matireal&nbsp;not&nbsp;availbl<br />
+   </div>
+   <div class="code">
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;IF&nbsp;lt_aufm_data&nbsp;IS&nbsp;NOT&nbsp;INITIAL.<br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;LOOP&nbsp;AT&nbsp;lt_aufm_data&nbsp;INTO&nbsp;ls_aufm_data.<br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"&nbsp;Calculate&nbsp;quantity<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CLEAR&nbsp;:&nbsp;lv_pur_ord_qty.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;lv_pur_ord_qty&nbsp;=&nbsp;ls_aufm_data-purr.<br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ENDLOOP.<br />
+<br />
+   </div>
+   <div class="codeComment">
+*-------PURIY&nbsp;CONVER<br />
+*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;DATA:&nbsp;lv_purity&nbsp;&nbsp;&nbsp;TYPE&nbsp;p&nbsp;DECIMALS&nbsp;3,<br />
+   </div>
+   <div class="code">
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;DATA&nbsp;:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;lv_aufm_pur&nbsp;TYPE&nbsp;p&nbsp;DECIMALS&nbsp;3.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;DATA&nbsp;:&nbsp;lv_max&nbsp;TYPE&nbsp;CHAR10,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;lv_min&nbsp;TYPE&nbsp;CHAR10.<br />
+<br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;IF&nbsp;lv_pur_ord_qty&nbsp;&gt;=&nbsp;lv_purr.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ELSE.<br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;lv_max&nbsp;=&nbsp;lv_pur_ord_qty.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;lv_min&nbsp;=&nbsp;&nbsp;lv_purr&nbsp;.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Data(LV_ORD)&nbsp;&nbsp;=&nbsp;wa_lock-aufnr.<br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;SHIFT&nbsp;lv_max&nbsp;LEFT&nbsp;DELETING&nbsp;LEADING&nbsp;'&nbsp;'.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;SHIFT&nbsp;lv_min&nbsp;LEFT&nbsp;DELETING&nbsp;LEADING&nbsp;'&nbsp;'.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;SHIFT&nbsp;LV_ORD&nbsp;LEFT&nbsp;DELETING&nbsp;LEADING&nbsp;'0'.<br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CONCATENATE&nbsp;'Y:'&nbsp;LV_ORD&nbsp;':'&nbsp;wa_lock-matkl&nbsp;'-&gt;'&nbsp;&nbsp;INTO&nbsp;lv_msg1&nbsp;.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CONCATENATE&nbsp;&nbsp;lv_max&nbsp;&nbsp;'&gt;='&nbsp;lv_min&nbsp;&nbsp;INTO&nbsp;lv_msg.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CONCATENATE&nbsp;&nbsp;'BATCH:'&nbsp;wa_lock-charg&nbsp;&nbsp;INTO&nbsp;lv_msg2.<br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ls_bapiret-type&nbsp;=&nbsp;'E'.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ls_bapiret-id&nbsp;=&nbsp;'ZMM_309'.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ls_bapiret-number&nbsp;=&nbsp;'006'.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ls_bapiret-message_v1&nbsp;=&nbsp;lv_msg1.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ls_bapiret-message_v2&nbsp;=&nbsp;lv_msg.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ls_bapiret-message_v3&nbsp;&nbsp;=&nbsp;lv_msg2.<br />
+   </div>
+   <div class="codeComment">
+*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ls_bapiret-message_v1&nbsp;=&nbsp;'Storage&nbsp;Locations&nbsp;Not&nbsp;Same&nbsp;!!!'.<br />
+   </div>
+   <div class="code">
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;APPEND&nbsp;ls_bapiret&nbsp;TO&nbsp;et_bapiret2.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CLEAR:&nbsp;ls_bapiret.<br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;SORT&nbsp;BY&nbsp;et_bapiret2&nbsp;.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;DELETE&nbsp;ADJACENT&nbsp;DUPLICATES&nbsp;FROM&nbsp;et_bapiret2.<br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ENDIF.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ELSE.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CONCATENATE&nbsp;'=&gt;('&nbsp;&nbsp;wa_lock-matkl&nbsp;')'&nbsp;INTO&nbsp;lv_msg.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CONCATENATE&nbsp;'('&nbsp;&nbsp;wa_lock-aufnr&nbsp;')'&nbsp;INTO&nbsp;lv_msg1.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ls_bapiret-type&nbsp;=&nbsp;'E'.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ls_bapiret-id&nbsp;=&nbsp;'ZMM_309'.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ls_bapiret-number&nbsp;=&nbsp;'009'.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ls_bapiret-message_v1&nbsp;=&nbsp;lv_msg.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ls_bapiret-message_v2&nbsp;=&nbsp;lv_msg1.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;APPEND&nbsp;ls_bapiret&nbsp;TO&nbsp;et_bapiret2.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CLEAR:&nbsp;ls_bapiret.<br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;SORT&nbsp;BY&nbsp;et_bapiret2&nbsp;.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;DELETE&nbsp;ADJACENT&nbsp;DUPLICATES&nbsp;FROM&nbsp;et_bapiret2.<br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ENDIF.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ENDIF.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ELSEIF&nbsp;&nbsp;wa_velid&nbsp;=&nbsp;'N'.<br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ENDIF.<br />
+   </div>
+   <div class="codeComment">
+*1.5-------&nbsp;MOVE_TYP&nbsp;,PLANT,&nbsp;MAT_TYPE,&nbsp;=&nbsp;'Y'<br />
+   </div>
+   <div class="code">
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ELSEIF&nbsp;wa_auart_v&nbsp;&nbsp;=&nbsp;'N'.<br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ENDIF.<br />
+   </div>
+   <div class="codeComment">
+*1.3&nbsp;-------ORD&nbsp;TYPE&nbsp;=&nbsp;'Y'<br />
+   </div>
+   <div class="code">
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ELSE.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ls_bapiret-type&nbsp;=&nbsp;'E'.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ls_bapiret-id&nbsp;=&nbsp;'ZMM_309'.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ls_bapiret-number&nbsp;=&nbsp;'005'.<br />
+   </div>
+   <div class="codeComment">
+*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ls_bapiret-message_v1&nbsp;=&nbsp;'Storage&nbsp;Locations&nbsp;Not&nbsp;Same&nbsp;!!!'.<br />
+   </div>
+   <div class="code">
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;APPEND&nbsp;ls_bapiret&nbsp;TO&nbsp;et_bapiret2.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CLEAR:&nbsp;ls_bapiret.<br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;SORT&nbsp;BY&nbsp;et_bapiret2&nbsp;.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;DELETE&nbsp;ADJACENT&nbsp;DUPLICATES&nbsp;FROM&nbsp;et_bapiret2.<br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ENDIF.<br />
+   </div>
+   <div class="codeComment">
+*1.2----------ZHKMST&nbsp;&nbsp;MAINTAIN&nbsp;CHAK&nbsp;ORD_TYP<br />
+   </div>
+   <div class="code">
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ENDIF.<br />
+   </div>
+   <div class="codeComment">
+*1.1----------ORD&nbsp;CHAK<br />
+   </div>
+   <div class="code">
+&nbsp;&nbsp;&nbsp;&nbsp;ENDLOOP.<br />
+<br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;LOOP&nbsp;AT&nbsp;&nbsp;it_group2&nbsp;INTO&nbsp;DATA(wa_lock2)&nbsp;.<br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;SELECT&nbsp;SINGLE&nbsp;auart&nbsp;FROM&nbsp;aufk&nbsp;WHERE&nbsp;aufnr&nbsp;=&nbsp;@wa_lock2-aufnr&nbsp;INTO&nbsp;@DATA(wa_auart2).<br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;SELECT&nbsp;SINGLE&nbsp;zhmlisvalid&nbsp;FROM&nbsp;zhkmstlst&nbsp;WHERE&nbsp;zhmlchr&nbsp;=&nbsp;'PPTRNPRDTYP'&nbsp;AND&nbsp;zhmltype&nbsp;=&nbsp;@wa_auart2&nbsp;INTO&nbsp;@DATA(wa_auart_v2).<br />
+   </div>
+   <div class="codeComment">
+*1.1----------ORD&nbsp;CHAK<br />
+   </div>
+   <div class="code">
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;IF&nbsp;wa_lock2-aufnr&nbsp;IS&nbsp;NOT&nbsp;INITIAL.<br />
+   </div>
+   <div class="codeComment">
+*1.2----------ZHKMST&nbsp;&nbsp;MAINTAIN&nbsp;CHAK&nbsp;ORD_TYP<br />
+   </div>
+   <div class="code">
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;IF&nbsp;wa_auart_v2&nbsp;IS&nbsp;NOT&nbsp;INITIAL.<br />
+   </div>
+   <div class="codeComment">
+*1.3&nbsp;-------ORD&nbsp;TYPE&nbsp;=&nbsp;'Y'<br />
+   </div>
+   <div class="code">
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;IF&nbsp;wa_auart_v2&nbsp;&nbsp;=&nbsp;'Y'.<br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;SELECT&nbsp;SINGLE&nbsp;zhmlisvalid&nbsp;FROM&nbsp;zhkmstlst&nbsp;WHERE&nbsp;zhmlchr&nbsp;=&nbsp;'PPTRN'&nbsp;AND&nbsp;zhmltype&nbsp;=&nbsp;@wa_lock2-bwart&nbsp;AND&nbsp;zhmlsubtyp&nbsp;=&nbsp;@wa_lock2-werks&nbsp;AND&nbsp;zhmlsubsubtyp&nbsp;=&nbsp;@wa_lock2-mtart<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;INTO&nbsp;@DATA(wa_velid2).<br />
+<br />
+   </div>
+   <div class="codeComment">
+*1.5-------&nbsp;MOVE_TYP&nbsp;,PLANT,&nbsp;MAT_TYPE,&nbsp;=&nbsp;'Y'<br />
+   </div>
+   <div class="code">
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;IF&nbsp;wa_velid2&nbsp;=&nbsp;'Y'.<br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;lv_purr&nbsp;=&nbsp;&nbsp;wa_lock2-purr.<br />
+<br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;IF&nbsp;wa_lock2-mtart&nbsp;=&nbsp;'FNDG'&nbsp;OR&nbsp;wa_lock2-mtart&nbsp;=&nbsp;'ALYS'&nbsp;.<br />
+   </div>
+   <div class="codeComment">
+*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-------------AUFM&nbsp;--------------<br />
+   </div>
+   <div class="code">
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CLEAR&nbsp;:&nbsp;lt_aufm_data.<br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;SELECT&nbsp;ROUND(&nbsp;SUM(&nbsp;CASE&nbsp;WHEN&nbsp;a~shkzg&nbsp;=&nbsp;'H'&nbsp;THEN&nbsp;a~menge&nbsp;*&nbsp;1&nbsp;WHEN&nbsp;a~shkzg&nbsp;=&nbsp;'S'&nbsp;THEN&nbsp;a~menge&nbsp;*&nbsp;-1&nbsp;ELSE&nbsp;0&nbsp;END&nbsp;),3&nbsp;)&nbsp;AS&nbsp;purr<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FROM&nbsp;aufm&nbsp;AS&nbsp;a<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;INNER&nbsp;JOIN&nbsp;mara&nbsp;AS&nbsp;b&nbsp;ON&nbsp;a~matnr&nbsp;=&nbsp;b~matnr<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;WHERE&nbsp;a~aufnr&nbsp;=&nbsp;@wa_lock2-aufnr<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;AND&nbsp;a~werks&nbsp;=&nbsp;@wa_lock2-werks<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;AND&nbsp;b~matnr&nbsp;=&nbsp;@wa_lock2-matnr<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;AND&nbsp;a~charg&nbsp;=&nbsp;@wa_lock2-charg&nbsp;&nbsp;INTO&nbsp;TABLE&nbsp;@lt_aufm_data.<br />
+<br />
+   </div>
+   <div class="codeComment">
+*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;---matireal&nbsp;not&nbsp;in&nbsp;order<br />
+   </div>
+   <div class="code">
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;IF&nbsp;lt_aufm_data&nbsp;IS&nbsp;NOT&nbsp;INITIAL.<br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;LOOP&nbsp;AT&nbsp;lt_aufm_data&nbsp;INTO&nbsp;ls_aufm_data.<br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"&nbsp;Calculate&nbsp;quantity<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CLEAR&nbsp;:&nbsp;lv_pur_ord_qty.<br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;lv_pur_ord_qty&nbsp;=&nbsp;ls_aufm_data-purr.<br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ENDLOOP.<br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;IF&nbsp;lv_pur_ord_qty&nbsp;&gt;=&nbsp;lv_purr.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ELSE.<br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;lv_max&nbsp;=&nbsp;lv_pur_ord_qty&nbsp;.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;lv_min&nbsp;=&nbsp;lv_purr&nbsp;&nbsp;.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;LV_ORD&nbsp;&nbsp;=&nbsp;wa_lock2-aufnr.<br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;SHIFT&nbsp;lv_max&nbsp;LEFT&nbsp;DELETING&nbsp;LEADING&nbsp;'&nbsp;'.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;SHIFT&nbsp;lv_min&nbsp;LEFT&nbsp;DELETING&nbsp;LEADING&nbsp;'&nbsp;'.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;SHIFT&nbsp;LV_ORD&nbsp;LEFT&nbsp;DELETING&nbsp;LEADING&nbsp;'0'.<br />
+<br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CONCATENATE&nbsp;'Y:'&nbsp;LV_ORD&nbsp;':'&nbsp;wa_lock2-matnr&nbsp;'-&gt;'&nbsp;&nbsp;INTO&nbsp;lv_msg1&nbsp;.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CONCATENATE&nbsp;&nbsp;lv_max&nbsp;&nbsp;'&gt;='&nbsp;lv_min&nbsp;&nbsp;INTO&nbsp;lv_msg.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CONCATENATE&nbsp;&nbsp;'BATCH:'&nbsp;wa_lock2-charg&nbsp;&nbsp;INTO&nbsp;lv_msg2.<br />
+<br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ls_bapiret-type&nbsp;=&nbsp;'E'.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ls_bapiret-id&nbsp;=&nbsp;'ZMM_309'.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ls_bapiret-number&nbsp;=&nbsp;'006'.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ls_bapiret-message_v1&nbsp;=&nbsp;lv_msg1.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ls_bapiret-message_v2&nbsp;=&nbsp;lv_msg.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ls_bapiret-message_v3&nbsp;&nbsp;=&nbsp;lv_msg2.<br />
+   </div>
+   <div class="codeComment">
+*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ls_bapiret-message_v1&nbsp;=&nbsp;'Storage&nbsp;Locations&nbsp;Not&nbsp;Same&nbsp;!!!'.<br />
+   </div>
+   <div class="code">
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;APPEND&nbsp;ls_bapiret&nbsp;TO&nbsp;et_bapiret2.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CLEAR:&nbsp;ls_bapiret.<br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;SORT&nbsp;BY&nbsp;et_bapiret2&nbsp;.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;DELETE&nbsp;ADJACENT&nbsp;DUPLICATES&nbsp;FROM&nbsp;et_bapiret2.<br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ENDIF.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ELSE.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CONCATENATE&nbsp;'=&gt;('&nbsp;&nbsp;wa_lock2-matnr&nbsp;')'&nbsp;INTO&nbsp;lv_msg.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CONCATENATE&nbsp;'('&nbsp;&nbsp;wa_lock2-AUFNR&nbsp;')'&nbsp;INTO&nbsp;lv_msg1.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ls_bapiret-type&nbsp;=&nbsp;'E'.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ls_bapiret-id&nbsp;=&nbsp;'ZMM_309'.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ls_bapiret-number&nbsp;=&nbsp;'009'.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ls_bapiret-message_v1&nbsp;=&nbsp;lv_msg.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ls_bapiret-message_v2&nbsp;=&nbsp;lv_msg1.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;APPEND&nbsp;ls_bapiret&nbsp;TO&nbsp;et_bapiret2.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CLEAR:&nbsp;ls_bapiret.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;endif.<br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;SORT&nbsp;BY&nbsp;et_bapiret2&nbsp;.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;DELETE&nbsp;ADJACENT&nbsp;DUPLICATES&nbsp;FROM&nbsp;et_bapiret2.<br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ELSEIF&nbsp;&nbsp;wa_lock2-mtart&nbsp;=&nbsp;'DIAM'&nbsp;OR&nbsp;wa_lock2-mtart&nbsp;=&nbsp;'LBGR'&nbsp;OR&nbsp;wa_lock2-mtart&nbsp;=&nbsp;'CLST'&nbsp;OR&nbsp;wa_lock2-mtart&nbsp;=&nbsp;'CUBZ'&nbsp;OR&nbsp;wa_lock2-mtart&nbsp;=&nbsp;'ALYS'&nbsp;.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CLEAR&nbsp;:&nbsp;lt_aufm_data.<br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;SELECT&nbsp;SUM(&nbsp;CASE&nbsp;WHEN&nbsp;a~shkzg&nbsp;=&nbsp;'H'&nbsp;THEN&nbsp;a~menge&nbsp;*&nbsp;1&nbsp;WHEN&nbsp;a~shkzg&nbsp;=&nbsp;'S'&nbsp;THEN&nbsp;a~menge&nbsp;*&nbsp;-1&nbsp;ELSE&nbsp;0&nbsp;END&nbsp;)&nbsp;AS&nbsp;purr<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FROM&nbsp;aufm&nbsp;AS&nbsp;a<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;INNER&nbsp;JOIN&nbsp;mara&nbsp;AS&nbsp;b&nbsp;ON&nbsp;a~matnr&nbsp;=&nbsp;b~matnr<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;WHERE&nbsp;a~aufnr&nbsp;=&nbsp;@wa_lock2-aufnr<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;AND&nbsp;a~werks&nbsp;=&nbsp;@wa_lock2-werks<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;AND&nbsp;b~matnr&nbsp;=&nbsp;@wa_lock2-matnr<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;AND&nbsp;a~charg&nbsp;=&nbsp;@wa_lock2-charg&nbsp;&nbsp;INTO&nbsp;TABLE&nbsp;@lt_aufm_data.<br />
+<br />
+<br />
+   </div>
+   <div class="codeComment">
+*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;---matireal&nbsp;not&nbsp;in&nbsp;order<br />
+   </div>
+   <div class="code">
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;IF&nbsp;lt_aufm_data&nbsp;IS&nbsp;not&nbsp;INITIAL.<br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;LOOP&nbsp;AT&nbsp;lt_aufm_data&nbsp;INTO&nbsp;ls_aufm_data.<br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"&nbsp;Calculate&nbsp;quantity<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CLEAR&nbsp;:&nbsp;lv_pur_ord_qty.<br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;lv_pur_ord_qty&nbsp;=&nbsp;ls_aufm_data-purr.<br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ENDLOOP.<br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;IF&nbsp;lv_pur_ord_qty&nbsp;&gt;=&nbsp;lv_purr.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ELSE.<br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;lv_max&nbsp;=&nbsp;lv_pur_ord_qty.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;lv_min&nbsp;=&nbsp;lv_purr&nbsp;.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;LV_ORD&nbsp;&nbsp;=&nbsp;wa_lock2-aufnr.<br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;SHIFT&nbsp;lv_max&nbsp;LEFT&nbsp;DELETING&nbsp;LEADING&nbsp;'&nbsp;'.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;SHIFT&nbsp;lv_min&nbsp;LEFT&nbsp;DELETING&nbsp;LEADING&nbsp;'&nbsp;'.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;SHIFT&nbsp;LV_ORD&nbsp;LEFT&nbsp;DELETING&nbsp;LEADING&nbsp;'0'.<br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CONCATENATE&nbsp;'Y:'&nbsp;LV_ORD&nbsp;':'&nbsp;wa_lock2-matnr&nbsp;'-&gt;'&nbsp;&nbsp;INTO&nbsp;lv_msg1&nbsp;.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CONCATENATE&nbsp;&nbsp;lv_max&nbsp;&nbsp;'&gt;='&nbsp;lv_min&nbsp;&nbsp;INTO&nbsp;lv_msg.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CONCATENATE&nbsp;&nbsp;'BATCH:'&nbsp;wa_lock2-charg&nbsp;&nbsp;INTO&nbsp;lv_msg2.<br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ls_bapiret-type&nbsp;=&nbsp;'E'.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ls_bapiret-id&nbsp;=&nbsp;'ZMM_309'.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ls_bapiret-number&nbsp;=&nbsp;'006'.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ls_bapiret-message_v1&nbsp;=&nbsp;lv_msg1.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ls_bapiret-message_v2&nbsp;=&nbsp;lv_msg.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ls_bapiret-message_v3&nbsp;&nbsp;=&nbsp;lv_msg2.<br />
+   </div>
+   <div class="codeComment">
+*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ls_bapiret-message_v1&nbsp;=&nbsp;'Storage&nbsp;Locations&nbsp;Not&nbsp;Same&nbsp;!!!'.<br />
+   </div>
+   <div class="code">
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;APPEND&nbsp;ls_bapiret&nbsp;TO&nbsp;et_bapiret2.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CLEAR:&nbsp;ls_bapiret.<br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;SORT&nbsp;BY&nbsp;et_bapiret2&nbsp;.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;DELETE&nbsp;ADJACENT&nbsp;DUPLICATES&nbsp;FROM&nbsp;et_bapiret2.<br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ENDIF.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ELSE.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CONCATENATE&nbsp;'=&gt;('&nbsp;&nbsp;wa_lock2-matnr&nbsp;')'&nbsp;INTO&nbsp;lv_msg.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CONCATENATE&nbsp;'('&nbsp;wa_lock2-aufnr&nbsp;')'&nbsp;INTO&nbsp;lv_msg1.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ls_bapiret-type&nbsp;=&nbsp;'E'.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ls_bapiret-id&nbsp;=&nbsp;'ZMM_309'.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ls_bapiret-number&nbsp;=&nbsp;'009'.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ls_bapiret-message_v1&nbsp;=&nbsp;lv_msg.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ls_bapiret-message_v2&nbsp;=&nbsp;lv_msg1.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;APPEND&nbsp;ls_bapiret&nbsp;TO&nbsp;et_bapiret2.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CLEAR:&nbsp;ls_bapiret.<br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;SORT&nbsp;BY&nbsp;et_bapiret2&nbsp;.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;DELETE&nbsp;ADJACENT&nbsp;DUPLICATES&nbsp;FROM&nbsp;et_bapiret2.<br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ENDIF.<br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ENDIF.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ELSEIF&nbsp;&nbsp;wa_velid&nbsp;=&nbsp;'N'.<br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ENDIF.<br />
+   </div>
+   <div class="codeComment">
+*1.5-------&nbsp;MOVE_TYP&nbsp;,PLANT,&nbsp;MAT_TYPE,&nbsp;=&nbsp;'Y'<br />
+   </div>
+   <div class="code">
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ELSEIF&nbsp;wa_auart_v&nbsp;&nbsp;=&nbsp;'N'.<br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ENDIF.<br />
+   </div>
+   <div class="codeComment">
+*1.3&nbsp;-------ORD&nbsp;TYPE&nbsp;=&nbsp;'Y'<br />
+   </div>
+   <div class="code">
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ELSE.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ls_bapiret-type&nbsp;=&nbsp;'E'.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ls_bapiret-id&nbsp;=&nbsp;'ZMM_309'.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ls_bapiret-number&nbsp;=&nbsp;'005'.<br />
+   </div>
+   <div class="codeComment">
+*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ls_bapiret-message_v1&nbsp;=&nbsp;'Storage&nbsp;Locations&nbsp;Not&nbsp;Same&nbsp;!!!'.<br />
+   </div>
+   <div class="code">
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;APPEND&nbsp;ls_bapiret&nbsp;TO&nbsp;et_bapiret2.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CLEAR:&nbsp;ls_bapiret.<br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;SORT&nbsp;BY&nbsp;et_bapiret2&nbsp;.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;DELETE&nbsp;ADJACENT&nbsp;DUPLICATES&nbsp;FROM&nbsp;et_bapiret2.<br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ENDIF.<br />
+   </div>
+   <div class="codeComment">
+*1.2----------ZHKMST&nbsp;&nbsp;MAINTAIN&nbsp;CHAK&nbsp;ORD_TYP<br />
+   </div>
+   <div class="code">
+&nbsp;&nbsp;&nbsp;&nbsp;ENDIF.<br />
+   </div>
+   <div class="codeComment">
+*1.1----------ORD&nbsp;CHAK<br />
+   </div>
+   <div class="code">
+&nbsp;&nbsp;ENDLOOP.<br />
+   </div>
+   <div class="codeComment">
+*-----------------------------------------------------------------NO&nbsp;OF&nbsp;PCS&nbsp;AUTOMATION&nbsp;LOCK&nbsp;BY&nbsp;SATYAM&nbsp;10-9-25<br />
+   </div>
+   <div class="code">
+&nbsp;DATA&nbsp;:&nbsp;i_refdoc1&nbsp;TYPE&nbsp;refdoc,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;i_action1&nbsp;TYPE&nbsp;goaction.<br />
+&nbsp;&nbsp;DATA&nbsp;lv_prc&nbsp;TYPE&nbsp;p&nbsp;DECIMALS&nbsp;3.<br />
+&nbsp;&nbsp;DATA&nbsp;lv_qlty&nbsp;TYPE&nbsp;p&nbsp;DECIMALS&nbsp;3.<br />
+&nbsp;&nbsp;DATA&nbsp;lv_no_pcs&nbsp;TYPE&nbsp;p&nbsp;DECIMALS&nbsp;3.<br />
+&nbsp;&nbsp;DATA&nbsp;lv_pcs&nbsp;TYPE&nbsp;p&nbsp;DECIMALS&nbsp;3.<br />
+&nbsp;&nbsp;DATA&nbsp;:&nbsp;maxpr&nbsp;TYPE&nbsp;menge_d,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;minpr&nbsp;TYPE&nbsp;menge_d.<br />
+DATA lno_of_pcs  TYPE string.<br />
+DATA : lv_tocde  TYPE char10.<br />
+DATA : error      TYPE string,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;lv_message&nbsp;TYPE&nbsp;string.<br />
+TYPES : BEGIN OF TY_PCS,<br />
+&nbsp;&nbsp;NUM&nbsp;TYPE&nbsp;umrez,<br />
+&nbsp;&nbsp;DENO&nbsp;TYPE&nbsp;umren,<br />
+&nbsp;&nbsp;END&nbsp;OF&nbsp;TY_PCS.<br />
+<br />
+DATA wa_pcs TYPE TY_PCS.<br />
+DATA wa_pcs1 TYPE TY_PCS.<br />
+<br />
+&nbsp;&nbsp;IMPORT&nbsp;i_action1&nbsp;TO&nbsp;i_action1&nbsp;FROM&nbsp;MEMORY&nbsp;ID&nbsp;'I_ACTION'.<br />
+&nbsp;&nbsp;IMPORT&nbsp;i_refdoc1&nbsp;TO&nbsp;&nbsp;i_refdoc1&nbsp;FROM&nbsp;MEMORY&nbsp;ID&nbsp;'I_REFDOC'.<br />
+<br />
+SELECT b~mtart,a~aufnr,a~UMMAT,a~matkl,a~bwart,a~werks,a~charg,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ROUND(&nbsp;SUM(&nbsp;a~erfmg&nbsp;),3&nbsp;)&nbsp;AS&nbsp;purr<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;,A~NO_OF_STONE<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FROM&nbsp;@gt_goitem&nbsp;AS&nbsp;a&nbsp;LEFT&nbsp;JOIN&nbsp;mara&nbsp;AS&nbsp;b&nbsp;ON&nbsp;a~matnr&nbsp;=&nbsp;b~matnr&nbsp;WHERE&nbsp;mtart&nbsp;=&nbsp;'FNDG'&nbsp;and&nbsp;TAKE_IT&nbsp;=&nbsp;'X'<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;GROUP&nbsp;BY&nbsp;mtart,a~aufnr,a~UMMAT,a~matkl,a~bwart,a~werks,a~charg,A~NO_OF_STONE<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;INTO&nbsp;TABLE&nbsp;@DATA(it_group3).<br />
+<br />
+&nbsp;&nbsp;&nbsp;lv_tocde&nbsp;=&nbsp;sy-tcode.<br />
+<br />
+&nbsp;&nbsp;SELECT&nbsp;SINGLE&nbsp;zbit&nbsp;FROM&nbsp;zram_lock_tcod&nbsp;&nbsp;WHERE&nbsp;tcode&nbsp;=&nbsp;&nbsp;@lv_tocde&nbsp;INTO&nbsp;@DATA(wa_tcode).<br />
+<br />
+LOOP AT it_group3 INTO DATA(WA_NOPCS).<br />
+<br />
+&nbsp;&nbsp;SELECT&nbsp;SINGLE&nbsp;zhmltype,zhmlsubtyp,zhmlsubsubtyp,zhmlisvalid&nbsp;FROM&nbsp;zhkmstlst&nbsp;INTO&nbsp;@DATA(wa_bit)&nbsp;WHERE&nbsp;zhmlchr&nbsp;=&nbsp;'MMNOVL'&nbsp;AND&nbsp;zhmlsubsubtyp&nbsp;=&nbsp;@WA_NOPCS-mtart<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;AND&nbsp;zhmlsubtyp&nbsp;=&nbsp;@WA_NOPCS-werks&nbsp;AND&nbsp;zhmltype&nbsp;=&nbsp;@WA_NOPCS-bwart.<br />
+<br />
+&nbsp;IF&nbsp;wa_tcode&nbsp;=&nbsp;'Y'&nbsp;AND&nbsp;i_action1&nbsp;=&nbsp;'A08'&nbsp;AND&nbsp;i_refdoc1&nbsp;=&nbsp;'R10'.<br />
+   </div>
+   <div class="codeComment">
+*&nbsp;1.1------------BIT&nbsp;IS&nbsp;INITIAL<br />
+   </div>
+   <div class="code">
+&nbsp;&nbsp;&nbsp;&nbsp;IF&nbsp;&nbsp;wa_bit&nbsp;IS&nbsp;NOT&nbsp;INITIAL&nbsp;AND&nbsp;wa_bit-zhmlsubsubtyp&nbsp;=&nbsp;'FNDG'&nbsp;.<br />
+   </div>
+   <div class="codeComment">
+*1.2-------------BIT&nbsp;'Y'&nbsp;OR&nbsp;QTY&nbsp;OR&nbsp;NO_PCS&nbsp;&lt;&gt;&nbsp;''<br />
+   </div>
+   <div class="code">
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;IF&nbsp;WA_NOPCS-purr&nbsp;IS&nbsp;NOT&nbsp;INITIAL&nbsp;AND&nbsp;wa_bit-zhmlisvalid&nbsp;=&nbsp;'Y'.&nbsp;&nbsp;"WA_NOPCS-no_of_stone&nbsp;IS&nbsp;NOT&nbsp;INITIAL<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;IF&nbsp;wa_bit-zhmltype&nbsp;=&nbsp;WA_NOPCS-bwart.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CLEAR&nbsp;:wa_pcs.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;SELECT&nbsp;SINGLE&nbsp;umrez&nbsp;AS&nbsp;num&nbsp;,umren&nbsp;AS&nbsp;deno&nbsp;FROM&nbsp;marm&nbsp;INTO&nbsp;@wa_pcs&nbsp;WHERE&nbsp;matnr&nbsp;=&nbsp;@WA_NOPCS-ummat&nbsp;AND&nbsp;meinh&nbsp;=&nbsp;'EA'.<br />
+<br />
+   </div>
+   <div class="codeComment">
+*-----------PR&nbsp;PCS&nbsp;WT<br />
+   </div>
+   <div class="code">
+&nbsp;&nbsp;IF&nbsp;wa_pcs&nbsp;IS&nbsp;NOT&nbsp;INITIAL.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;lv_prc&nbsp;&nbsp;=&nbsp;&nbsp;&nbsp;&nbsp;wa_pcs-deno&nbsp;/&nbsp;wa_pcs-num.<br />
+&nbsp;ELSE.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CONCATENATE&nbsp;WA_NOPCS-ummat&nbsp;':Maintain&nbsp;Conversion'&nbsp;INTO&nbsp;lv_message.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CONCATENATE&nbsp;':'&nbsp;'master&nbsp;data&nbsp;for&nbsp;No_of_pcs'&nbsp;INTO&nbsp;DATA(lv_message1).<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ls_bapiret-type&nbsp;=&nbsp;'E'.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ls_bapiret-id&nbsp;=&nbsp;'ZMM_309'.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ls_bapiret-number&nbsp;=&nbsp;'007'.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ls_bapiret-message_v1&nbsp;=&nbsp;lv_message.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;APPEND&nbsp;ls_bapiret&nbsp;TO&nbsp;et_bapiret2.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CLEAR:&nbsp;ls_bapiret.<br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;SORT&nbsp;BY&nbsp;et_bapiret2&nbsp;.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;DELETE&nbsp;ADJACENT&nbsp;DUPLICATES&nbsp;FROM&nbsp;et_bapiret2.<br />
+&nbsp;ENDIF.<br />
+&nbsp;CLEAR&nbsp;:&nbsp;wa_pcs.<br />
+   </div>
+   <div class="codeComment">
+*-------------&nbsp;PCS&nbsp;QTY-----------<br />
+<br />
+   </div>
+   <div class="code">
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;lv_qlty&nbsp;=&nbsp;WA_NOPCS-PURR.<br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;lv_no_pcs&nbsp;&nbsp;&nbsp;=&nbsp;&nbsp;lv_prc&nbsp;*&nbsp;lv_qlty.<br />
+<br />
+CLEAR : lv_prc.<br />
+   </div>
+   <div class="codeComment">
+*---------TOLANCE&nbsp;IN&nbsp;NO_OF_PCS&nbsp;BY&nbsp;SATYAM&nbsp;---------------<br />
+   </div>
+   <div class="code">
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;SELECT&nbsp;SINGLE&nbsp;mintol&nbsp;FROM&nbsp;zram_fnd_tol&nbsp;INTO&nbsp;@DATA(wa_tol)&nbsp;WHERE&nbsp;zbit&nbsp;=&nbsp;'Q'&nbsp;AND&nbsp;mtart&nbsp;=&nbsp;@wa_bit-zhmlsubsubtyp&nbsp;AND&nbsp;frwt&nbsp;&lt;=&nbsp;@lv_no_pcs&nbsp;&nbsp;AND&nbsp;towt&nbsp;&gt;=&nbsp;@lv_no_pcs&nbsp;.<br />
+<br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CLEAR&nbsp;:&nbsp;lv_pcs,maxpr,minpr.<br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;IF&nbsp;&nbsp;WA_NOPCS-no_of_stone&nbsp;IS&nbsp;INITIAL.<br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;WA_NOPCS-no_of_stone&nbsp;=&nbsp;&nbsp;&nbsp;lv_no_pcs.<br />
+   </div>
+   <div class="codeComment">
+*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;MODIFY&nbsp;gt_goitem[]&nbsp;FROM&nbsp;.<br />
+*&nbsp;&nbsp;&nbsp;wa_ekpo-no_of_pc&nbsp;=&nbsp;&nbsp;&nbsp;LV_NO_PCS.<br />
+<br />
+   </div>
+   <div class="code">
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;maxpr&nbsp;=&nbsp;wa_tol&nbsp;*&nbsp;lv_no_pcs&nbsp;&nbsp;/&nbsp;100.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;maxpr&nbsp;&nbsp;=&nbsp;maxpr&nbsp;+&nbsp;lv_no_pcs&nbsp;.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;minpr&nbsp;=&nbsp;wa_tol&nbsp;*&nbsp;lv_no_pcs&nbsp;&nbsp;/&nbsp;100.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;minpr&nbsp;=&nbsp;&nbsp;lv_no_pcs&nbsp;&nbsp;-&nbsp;minpr.<br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;lv_pcs&nbsp;=&nbsp;lv_no_pcs.<br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ELSEIF&nbsp;WA_NOPCS-no_of_stone&nbsp;&lt;&gt;&nbsp;&nbsp;lv_no_pcs.<br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;maxpr&nbsp;=&nbsp;wa_tol&nbsp;*&nbsp;lv_no_pcs&nbsp;&nbsp;/&nbsp;100.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;maxpr&nbsp;&nbsp;=&nbsp;maxpr&nbsp;+&nbsp;lv_no_pcs&nbsp;.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;minpr&nbsp;=&nbsp;wa_tol&nbsp;*&nbsp;lv_no_pcs&nbsp;&nbsp;/&nbsp;100.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;minpr&nbsp;=&nbsp;&nbsp;lv_no_pcs&nbsp;&nbsp;-&nbsp;minpr.<br />
+<br />
+   </div>
+   <div class="codeComment">
+*&nbsp;&nbsp;&nbsp;ekpo-no_of_pc&nbsp;=&nbsp;&nbsp;&nbsp;LV_NO_PCS.<br />
+   </div>
+   <div class="code">
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;lv_pcs&nbsp;=&nbsp;WA_NOPCS-no_of_stone.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ELSEIF&nbsp;WA_NOPCS-no_of_stone&nbsp;=&nbsp;lv_no_pcs.<br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;maxpr&nbsp;=&nbsp;wa_tol&nbsp;*&nbsp;lv_no_pcs&nbsp;&nbsp;/&nbsp;100.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;maxpr&nbsp;&nbsp;=&nbsp;maxpr&nbsp;+&nbsp;lv_no_pcs&nbsp;.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;minpr&nbsp;=&nbsp;wa_tol&nbsp;*&nbsp;lv_no_pcs&nbsp;&nbsp;/&nbsp;100.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;minpr&nbsp;=&nbsp;&nbsp;lv_no_pcs&nbsp;&nbsp;-&nbsp;minpr.<br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;lv_pcs&nbsp;=&nbsp;WA_NOPCS-no_of_stone.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ENDIF.<br />
+<br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CLEAR&nbsp;lv_message.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;IF&nbsp;(&nbsp;lv_pcs&nbsp;&lt;=&nbsp;maxpr&nbsp;AND&nbsp;lv_pcs&nbsp;&gt;=&nbsp;minpr&nbsp;).&nbsp;"IF&nbsp;LV_NO_PCS&nbsp;=&nbsp;ci_ebandb-no_of_pc.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CLEAR&nbsp;:&nbsp;lv_message.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ELSE.<br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;DATA&nbsp;:&nbsp;pcs&nbsp;TYPE&nbsp;string,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;min&nbsp;TYPE&nbsp;string,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;max&nbsp;TYPE&nbsp;string.<br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;pcs&nbsp;=&nbsp;lv_no_pcs.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;min&nbsp;=&nbsp;minpr.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;max&nbsp;=&nbsp;maxpr.<br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CONCATENATE&nbsp;WA_NOPCS-ummat&nbsp;':PCS('&nbsp;pcs&nbsp;':MIN'&nbsp;min&nbsp;':MAX'&nbsp;max&nbsp;')'&nbsp;&nbsp;INTO&nbsp;lv_message.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ls_bapiret-type&nbsp;=&nbsp;'E'.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ls_bapiret-id&nbsp;=&nbsp;'ZMM_309'.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ls_bapiret-number&nbsp;=&nbsp;'011'.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ls_bapiret-message_v1&nbsp;=&nbsp;lv_message.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;APPEND&nbsp;ls_bapiret&nbsp;TO&nbsp;et_bapiret2.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CLEAR:&nbsp;ls_bapiret.<br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;SORT&nbsp;BY&nbsp;et_bapiret2&nbsp;.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;DELETE&nbsp;ADJACENT&nbsp;DUPLICATES&nbsp;FROM&nbsp;et_bapiret2.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ENDIF.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ENDIF.<br />
+ENDIF.<br />
+ENDIF.<br />
+ENDIF.<br />
+<br />
+<br />
+ENDLOOP.<br />
+<br />
+<br />
+&nbsp;&nbsp;"&nbsp;Set&nbsp;memory&nbsp;flag&nbsp;so&nbsp;we&nbsp;don't&nbsp;append&nbsp;again<br />
+   </div>
+   <div class="codeComment">
+*&nbsp;&nbsp;&nbsp;&nbsp;lv_already_processed&nbsp;=&nbsp;abap_true.<br />
+*&nbsp;&nbsp;&nbsp;&nbsp;EXPORT&nbsp;lv_already_processed&nbsp;=&nbsp;lv_already_processed&nbsp;TO&nbsp;MEMORY&nbsp;ID&nbsp;'Z_MIGO_ERR_FLAG'.<br />
+<br />
+*&nbsp;&nbsp;gv_last_lineid&nbsp;=&nbsp;i_line_id.<br />
+<br />
+   </div>
+   <div class="code">
+ENDMETHOD.<br />
+            </div>
+          </td>
+        </tr>
+      </table>
+      </td>
+      </tr>
+   <tr>
+<td class="footer">Extracted by Mass Download version 1.5.5 - E.G.Mellodew. 1998-2025. Sap Release 755</td>
+   </tr>
+</table>
+</body>
+</html>
